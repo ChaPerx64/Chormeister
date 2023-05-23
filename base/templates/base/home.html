@@ -1,0 +1,24 @@
+{% extends 'main.html' %} 
+
+{% block content %} 
+
+<h1>Home Template</h1>
+
+<div>
+  <a href="{% url 'create-song' %}">Create Song</a><br>
+  <a href="{% url 'import-songlist' %}">import from json</a><br>
+  <a href="{% url 'import-performances' %}">import performances</a><br>
+  <hr>
+  <div>
+    {% for song in songs%}
+
+    <div>
+      <h5>{{song.id}} -- <a href="{% url 'song' song.id %}">{{song.name}}</a></h5>
+    </div>
+
+    {% endfor %}
+  </div>
+</div>
+
+
+{% endblock %}
