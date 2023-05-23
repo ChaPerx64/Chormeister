@@ -1,0 +1,20 @@
+{% extends 'main.html' %}  
+
+{% block content %}
+
+<h1>Song Template</h1>
+
+<div>
+  Song id: -- {{song.id}}
+</div>
+<div>
+  Song name: -- {{song.name}}<br>
+  <a href="{% url 'update-song' song.id %}">Edit song</a><br>
+  <a href="{% url 'delete-song' song.id %}">Delete song</a><br>
+  <hr>
+  {% for attribute in attributes %}
+  {{attribute.songpropertyname.name}}: -- {{attribute.value}}<br>
+  {% endfor %}
+
+</div>
+{% endblock %}
