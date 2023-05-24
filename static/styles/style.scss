@@ -1,0 +1,172 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
+
+//Dimensions
+$border-rad: 1rem;
+$mainwidth: 100%;
+$cardmargin: .5rem;
+// $cardwidth: calc(($mainwidth - (4 * $cardmargin)) / 2);
+$cardwidth: 25rem;
+
+//Fonts
+$mainfont: 'Jost', sans-serif;
+$labelfont: 'Unbounded', cursive;
+$biggestsize: 1.8rem;
+$sizeh3: 1.2rem;
+
+//Colors
+$color-bg-main: #F0DFF6;
+// $color-bg-second: #AFD3E2;
+// $color-bg-darker: #19A7CE;
+// $color-bg-darkest: #146C94;
+$color-bg-darkest: #392D32;
+$color-font-main: #392D32;
+$color-accent1: #F07167;
+// $color-accent2: #784FBA;
+$color-accent2: #67515A;
+$color-accent3: #63ADF2;
+$color-font-light: #ffffff;
+// $gradient-bg-main: radial-gradient(at left top, #F6F1F1, #AFD3E2);
+$gradient-bg-main: radial-gradient(at left top, $color-bg-main, $color-accent3);
+
+//Old colors:
+// #146C94
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1, h2, h3 {
+  font-family: $labelfont;
+}
+
+body {
+  font-family: $mainfont;
+  height: 100vh;
+  background-color: $color-bg-main;
+  color: $color-font-main;
+  background: $gradient-bg-main;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  a {
+    color: $color-font-main;
+    text-decoration: none;
+    transition: 0.25s;
+    // transform: scale(1);
+  }
+  a:hover {
+    // transform: scale(1.05);
+    color: $color-accent1;
+  }
+}
+
+nav {
+  width: 100%;
+  height: 3rem;
+  padding: .5rem;
+  background-color: $color-bg-darkest;
+  color: $color-font-light;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.navlogo {
+  margin: auto;
+  // font-size: $biggestsize;
+  // font-family: $labelfont;
+  a {
+    color: $color-font-light;
+    text-decoration: none;
+  }
+}
+
+main {
+  max-width: $mainwidth;
+  margin: auto;
+}
+
+.titlediv {
+  // font-family: $labelfont;
+  height: 15rem;
+  // background-color: $color-bg-darker;
+  border-radius: $border-rad;
+  margin: $cardmargin;
+  margin-top: calc(2 * $cardmargin);
+  // color: $color-accent2;
+  color: $color-bg-darkest;
+  display: grid;
+  // grid-template-columns: 2fr 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.cardbox {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+
+  .card {
+    background-color: rgba(255,255,255,0.25);
+    border-radius: $border-rad;
+    padding: 1rem;
+    margin: $cardmargin;
+    width: $cardwidth;
+    min-height: 20rem;
+    overflow-y: hidden;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
+
+  .widecard {
+    @extend .card;
+    width: calc($cardwidth * 2);
+    max-width: 60rem;
+    height: auto;
+  }
+  .cardtitle {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    background-color: $color-accent2;
+    border-radius: calc($border-rad*.5);
+    text-align: center;
+    color: $color-font-light;
+    font-size: $sizeh3;
+    font-family: $labelfont;
+  }
+  .cardtext {
+    height: auto;
+    width: 100%;
+    margin: auto;
+    border-radius: calc($border-rad*.5);
+    padding: 1rem;
+  }
+  .cardtable {
+    @extend .cardtext;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 0 1rem;
+    .justr{
+      justify-self: right;
+    }
+    .justl {
+      justify-self: left;
+    }
+  }
+  .cardtable2 {
+    @extend .cardtable;
+    grid-template-columns: 1fr 2fr;
+  }
+  .cardtable3 {
+    @extend .cardtable;
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+}
+

@@ -1,20 +1,42 @@
 {% extends 'main.html' %}  
 
+{% block title %}
+
+<h1>{{song.name}}</h1>
+
+{% endblock title %}
+
 {% block content %}
 
-<h1>Song Template</h1>
-
-<div>
-  Song id: -- {{song.id}}
+<div class="card">
+  <div class="cardtitle">
+    Song info
+  </div>
+  <div class="cardtable2">
+    {% for attribute in attributes %}
+    <div class="justr">{{attribute.songpropertyname.name}}</div><div class="justl">{{attribute.value}}</div>
+    {% endfor %}
+  </div>
 </div>
-<div>
-  Song name: -- {{song.name}}<br>
-  <a href="{% url 'update-song' song.id %}">Edit song</a><br>
-  <a href="{% url 'delete-song' song.id %}">Delete song</a><br>
-  <hr>
-  {% for attribute in attributes %}
-  {{attribute.songpropertyname.name}}: -- {{attribute.value}}<br>
-  {% endfor %}
 
+<div class="card">
+  <div class="cardtitle">
+    Actions
+  </div>
+  <div class="cardtable">
+    <a href="{% url 'update-song' song.id %}">Edit song</a>
+    <a href="{% url 'delete-song' song.id %}">Delete song</a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="cardtitle">
+    Performances
+  </div>
+  <div class="cardtable">
+    {% for performance in performances %}
+      <p>{{performance.datetime|date:'Y-m-d'}}</p>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

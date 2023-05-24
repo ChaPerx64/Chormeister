@@ -19,7 +19,7 @@ class Song (models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return ' - '.join((str(self.chor), self.name))
+        return ' - '.join((self.name, str(self.chor)))
 
 
 class SongPropertyName (models.Model):
@@ -56,4 +56,4 @@ class SongPerformance (models.Model):
     datetime = models.DateTimeField(null=True)
 
     def __str__(self) -> str:
-        return ' - '.join((str(self.song), str(self.datetime)))
+        return ' - '.join((str(self.datetime), str(self.song)))

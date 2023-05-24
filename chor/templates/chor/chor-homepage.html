@@ -1,0 +1,43 @@
+{% extends 'main.html' %}
+
+
+{% block title %}
+
+  <h1>{{chor.name}}</h1>
+
+{% endblock title %}
+
+{% block content %}
+<div class="card">
+  <div class="cardtitle">
+    About
+  </div>
+  <div class="cardtable">
+    <p>Name: {{chor.name}}</p>
+    <p>Description:</p>
+  </div>
+</div>
+<div class="card">
+  <div class="cardtitle">
+    Songs
+  </div>
+  <div class="cardtable">
+    <a href="{% url 'create-song' %}">Create Song</a>
+    <a href="{% url 'chor-songs' chor.id %}">See songs</a>
+  </div>
+</div>
+<div class="card">
+  <div class="cardtitle">
+    Past Activity
+  </div>
+  <div class="cardtable">
+    <a href="{% url 'chor-performances' chor.id %}">See performances</a>
+  </div>
+</div>
+<div class="card">
+  <div class="cardtitle">
+    Upcoming Activity
+  </div>
+</div>
+
+{% endblock content %}

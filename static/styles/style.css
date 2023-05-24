@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Unbounded&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1, h2, h3 {
+  font-family: "Unbounded", cursive;
+}
+
+body {
+  font-family: "Jost", sans-serif;
+  height: 100vh;
+  background-color: #F0DFF6;
+  color: #392D32;
+  background: radial-gradient(at left top, #F0DFF6, #63ADF2);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+body a {
+  color: #392D32;
+  text-decoration: none;
+  transition: 0.25s;
+}
+body a:hover {
+  color: #F07167;
+}
+
+nav {
+  width: 100%;
+  height: 3rem;
+  padding: 0.5rem;
+  background-color: #392D32;
+  color: #ffffff;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.navlogo {
+  margin: auto;
+}
+.navlogo a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+main {
+  max-width: 100%;
+  margin: auto;
+}
+
+.titlediv {
+  height: 15rem;
+  border-radius: 1rem;
+  margin: 0.5rem;
+  margin-top: 1rem;
+  color: #392D32;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.cardbox {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+.cardbox .card, .cardbox .widecard {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 0.5rem;
+  width: 25rem;
+  min-height: 20rem;
+  overflow-y: hidden;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.cardbox .widecard {
+  width: 50rem;
+  max-width: 60rem;
+  height: auto;
+}
+.cardbox .cardtitle {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  background-color: #67515A;
+  border-radius: 0.5rem;
+  text-align: center;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-family: "Unbounded", cursive;
+}
+.cardbox .cardtext, .cardbox .cardtable, .cardbox .cardtable3, .cardbox .cardtable2 {
+  height: auto;
+  width: 100%;
+  margin: auto;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+.cardbox .cardtable, .cardbox .cardtable3, .cardbox .cardtable2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 0 1rem;
+}
+.cardbox .cardtable .justr, .cardbox .cardtable3 .justr, .cardbox .cardtable2 .justr {
+  justify-self: right;
+}
+.cardbox .cardtable .justl, .cardbox .cardtable3 .justl, .cardbox .cardtable2 .justl {
+  justify-self: left;
+}
+.cardbox .cardtable2 {
+  grid-template-columns: 1fr 2fr;
+}
+.cardbox .cardtable3 {
+  grid-template-columns: 1fr 2fr 1fr;
+}/*# sourceMappingURL=style.css.map */
