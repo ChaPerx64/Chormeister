@@ -70,19 +70,19 @@ nav {
   background-color: $color-bg-darkest;
   color: $color-font-light;
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 0.5fr 1fr 3fr;
   align-items: center;
   justify-items: center;
-}
 
-.navlogo {
-  margin: auto;
-  // font-size: $biggestsize;
-  // font-family: $labelfont;
   a {
     color: $color-font-light;
     text-decoration: none;
   }
+}
+
+.navlogo {
+  // margin: auto;
+  justify-self: left;
 }
 
 main {
@@ -91,18 +91,15 @@ main {
 }
 
 .titlediv {
-  // font-family: $labelfont;
   height: 15rem;
-  // background-color: $color-bg-darker;
   border-radius: $border-rad;
   margin: $cardmargin;
   margin-top: calc(2 * $cardmargin);
-  // color: $color-accent2;
   color: $color-bg-darkest;
   display: grid;
-  // grid-template-columns: 2fr 1fr;
   align-items: center;
   justify-items: center;
+  text-align: center;
 }
 
 .cardbox {
@@ -151,13 +148,16 @@ main {
     @extend .cardtext;
     display: grid;
     grid-template-columns: 1fr;
+    text-align: center;
     justify-items: center;
     gap: 0 1rem;
     .justr{
       justify-self: right;
+      text-align: right;
     }
     .justl {
       justify-self: left;
+      text-align: left;
     }
   }
   .cardtable2 {
@@ -166,7 +166,7 @@ main {
   }
   .cardtable3 {
     @extend .cardtable;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 2fr 2fr;
   }
 }
 

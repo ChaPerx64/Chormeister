@@ -34,17 +34,17 @@ nav {
   background-color: #392D32;
   color: #ffffff;
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 0.5fr 1fr 3fr;
   align-items: center;
   justify-items: center;
 }
-
-.navlogo {
-  margin: auto;
-}
-.navlogo a {
+nav a {
   color: #ffffff;
   text-decoration: none;
+}
+
+.navlogo {
+  justify-self: left;
 }
 
 main {
@@ -61,6 +61,7 @@ main {
   display: grid;
   align-items: center;
   justify-items: center;
+  text-align: center;
 }
 
 .cardbox {
@@ -106,18 +107,21 @@ main {
 .cardbox .cardtable, .cardbox .cardtable3, .cardbox .cardtable2 {
   display: grid;
   grid-template-columns: 1fr;
+  text-align: center;
   justify-items: center;
   gap: 0 1rem;
 }
 .cardbox .cardtable .justr, .cardbox .cardtable3 .justr, .cardbox .cardtable2 .justr {
   justify-self: right;
+  text-align: right;
 }
 .cardbox .cardtable .justl, .cardbox .cardtable3 .justl, .cardbox .cardtable2 .justl {
   justify-self: left;
+  text-align: left;
 }
 .cardbox .cardtable2 {
   grid-template-columns: 1fr 2fr;
 }
 .cardbox .cardtable3 {
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 2fr 2fr;
 }/*# sourceMappingURL=style.css.map */

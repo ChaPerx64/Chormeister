@@ -1,12 +1,25 @@
 {% extends 'main.html' %}
 
-{% block content %}
+{% block title %}
 
-<form method="POST" action="">
-  {% csrf_token %}
-  <p>Are you sure you want to delete "{{obj}}"?</p>
-  <a href="{{request.META.HTTP_REFERER}}">Go back</a>
-  <input type="submit" value="Confirm">
-</form>
+  <h1>SONG<br>{{song.name}}</h1>
+
+{% endblock title%}
+
+{% block content %}
+<div class="card">
+  <div class="cardtitle">
+    Delete song?
+  </div>
+  <form method="POST" action="">
+    <div class="cardtable">
+      {% csrf_token %}
+      <p>Are you sure you want to delete "{{song.name}}"?</p>
+      &nbsp
+      <a href="{{request.META.HTTP_REFERER}}">Go back</a>
+      <input type="submit" value="Confirm">
+    </div>
+  </form>
+</div>
 
 {% endblock content %}

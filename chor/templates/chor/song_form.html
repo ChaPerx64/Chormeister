@@ -2,11 +2,25 @@
 
 {% block content %}
 
-<div>
+<div class="widecard">
+  <div class="cardtitle">
+    Creating/Editing a song
+  </div>
   <form method="POST" action="">
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Submit">
+    <div class="cardtable2">
+      {% csrf_token %}
+      {{form}}
+      {% comment %}
+      <p></p><p></p>
+      <div class="justr"><label for="name">Name:</label></div>
+      <div class="justl"><input type="text" id="name" name="name"></div>
+      {% for attr in attrnames %}
+        <div class="justr"><label for="{{attr}}">{{attr}}</label></div>
+        <div class="justl"><input type="text" id="{{attr}}" name="{{attr}}"></div>
+      {% endfor %}
+      {% endcomment %}
+      <p></p><p><input type="submit" value="Submit"></p>
+    </div>
   </form>
 </div>
 
