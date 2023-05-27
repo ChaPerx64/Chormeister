@@ -13,8 +13,8 @@
     Song info
   </div>
   <div class="cardtable2">
-    {% for attribute in attributes %}
-    <div class="justr">{{attribute.songpropertyname.name}}</div><div class="justl">{{attribute.value}}</div>
+    {% for key, value in attributes.items %}
+    <div class="justr">{{key}}</div><div class="justl">{{value}}</div>
     {% endfor %}
   </div>
 </div>

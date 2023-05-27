@@ -1,17 +1,23 @@
 {% extends 'main.html' %}
 
+{% block title %}
+
+  <h1>Creating/Editing a property</h1>
+
+{% endblock title %}
+
 {% block content %}
 
 <div class="widecard">
   <div class="cardtitle">
-    Creating/Editing a song
+    Enter a new name for property
   </div>
   <form method="POST" action="">
     <div class="cardtable2">
       {% csrf_token %}
+      <p></p><p></p>
       {{form}}
-      <button onclick="window.location.href='{% url 'create-property' chor.id %}'">Add new property field</button>
-      <p><input type="submit" value="Submit"></p>
+      <p></p><p><input type="submit" value="Submit"></p>
     </div>
   </form>
 </div>

@@ -1,0 +1,35 @@
+{% extends 'main.html' %}
+
+
+{% block title %}
+
+  <h1>Song properties of {{chor.name}}</h1>
+
+{% endblock title %}
+
+
+
+{% block content %}
+
+<div class="card">
+  <div class="cardtitle">
+    Actions
+  </div>
+  <div class="cardtable">
+    <a href="{% url 'create-property' chor.id %}">Add a new property</a>
+  </div>
+</div>
+
+
+<div class="widecard">
+  <div class="cardtitle">
+    List of song property fields:
+  </div>
+  <div class="cardtable2">
+    {% for prop in properties %}
+      <div class="justr">{{prop.name.capitalize}}</div><div class="justl"><button onclick="window.location.href='{% url 'songpropertyname-delete' prop.id %}'">Delete</button></div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}

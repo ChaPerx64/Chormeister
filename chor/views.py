@@ -40,22 +40,43 @@ def chorsongs(request, chor_id):
 
 def song(request, pk):
     song = Song.objects.get(id=pk)
-    attributes = song.songpropertyvalue_set.all()
+    songpropertynames = song.chor.songpropertyname_set.all()
+
+    ''' Initializing attributes dict with empty values of all fields '''
+    attributes = dict()
+    for name in songpropertynames:
+        attributes.update({name.name: ''})
+    songpropvalues = song.songpropertyvalue_set.all()
+    
+    ''' Filling attributes dict with proopertyvalues from database '''
+    for spv in songpropvalues:
+        attributes.update({spv.songpropertyname.name: spv.value})
+    
+    ''' Finding performances of the song '''
     performances = song.songperformance_set.all()
-    context = {'song': song, 'attributes': attributes, 'performances':performances}
+    
+    ''' Putting out '''
+    context = {
+        'song': song,
+        'attributes': attributes,
+        'performances':performances
+    }
     return render(request, 'chor/song.html', context)
 
 def createSong(request, chor_id):
     chor = Chor.objects.get(id=chor_id)
 
+    ''' Creating fields list for a custom form '''
     attrnames = chor.songpropertyname_set.all()
     attrlist = list()
     for attr in attrnames:
         attrlist.append(attr.name)
     
+    ''' Creating Form Class dynamically with custom constructor '''
     SongCreationForm = SongCreationFormConstructor(attrlist)
     form = SongCreationForm()
 
+    ''' Logic for dealing with saving of the created data '''
     if request.method == "POST":
         form = SongCreationForm(request.POST)
         if form.is_valid():
@@ -77,24 +98,61 @@ def createSong(request, chor_id):
                 song.save()
                 for val in new_attr_values:
                     val.save()
-                return redirect('chor-homepage', chor_id=chor_id)
+                return redirect('chor-songs', chor_id=chor_id)
     context = {
         'form': form,
+        'chor': chor
     }
     return render(request, 'chor/song_form.html', context)
 
-
 def updateSong(request, pk):
     song = Song.objects.get(id = pk)
-    form = SongForm(instance=song)
+    chor = song.chor
 
+    ''' Creating fields list for a custom form '''
+    attrnames = chor.songpropertyname_set.all()
+    attrlist = list()
+    for attr in attrnames:
+        attrlist.append(attr.name)
+
+    ''' Gathering initial data for the form '''
+    initialdata = {'name': song.name}
+    songattribs = song.songpropertyvalue_set.all()
+    for item in songattribs:
+        initialdata.update({item.songpropertyname.name: item.value})
+
+    ''' Creating Form Class dynamically with custom constructor '''
+    SongCreationForm = SongCreationFormConstructor(attrlist)
+    form = SongCreationForm(initial=initialdata)
+
+    ''' Logic for dealing with saving changes '''
     if request.method == "POST":
-        form = SongForm(request.POST, instance=song)
+        form = SongCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('chor-homepage')
+            for key, value in form.cleaned_data.items():
+                if key == 'name':
+                    song.name = value
+                    song.save()
+                else:
+                    isnew = True
+                    for attr in songattribs:
+                        if key == attr.songpropertyname.name:
+                            attr.value = value
+                            attr.save()
+                            isnew = False
+                    if isnew:
+                        spn = SongPropertyName.objects.filter(Q(chor=chor) & Q(name=key))[0]
+                        SongPropertyValue.objects.create(
+                            songpropertyname=spn,
+                            song=song,
+                            value=value,
+                        ).save()
+            return redirect('chor-songs', chor_id=chor.id)
 
-    context = {'form': form}
+    context = {
+        'form': form,
+        'chor': chor
+    }
     return render(request, 'chor/song_form.html', context)
 
 def deleteSong(request, pk):
@@ -103,8 +161,43 @@ def deleteSong(request, pk):
     if request.method == "POST":
         song.delete()
         return redirect('chor-songs', chor_id=chor_id)
-    context = {'song': song}
+    context = {'obj': song}
     return render(request, 'chor/delete.html', context)
+
+
+def createProperty(request, chor_id):
+    form = SongPropertyNameForm()
+    
+    if request.method == "POST":
+        form = SongPropertyNameForm(request.POST)
+        if form.is_valid():
+            songpn = SongPropertyName.objects.create(chor_id=chor_id, name=form.cleaned_data.get('name'))
+            songpn.save()
+            return redirect('chor-homepage', chor_id=chor_id)
+    
+    context = {'form': form}
+    return render(request, 'chor/property_form.html', context)
+
+def chorSongProperties(request, chor_id):
+    chor = Chor.objects.get(id=chor_id)
+    properties = chor.songpropertyname_set.all()
+    context = {
+        'chor': chor,
+        'properties': properties
+    }
+    return render(request, 'chor/chor-songproperties.html', context)
+
+def songPropertyNameDelete(request, prop_id):
+    prop = SongPropertyName.objects.get(id=prop_id)
+    chor_id = prop.chor.id
+    if request.method == "POST":
+        prop.delete()
+        return redirect('chor-songproperties', chor_id=chor_id)
+    context = {
+        'obj': prop
+    }
+    return render(request, 'chor/delete.html', context)
+
 
 def chorPerformances(request, chor_id):
     chor = Chor.objects.get(id=chor_id)

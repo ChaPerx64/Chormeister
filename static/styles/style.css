@@ -109,7 +109,7 @@ main {
   grid-template-columns: 1fr;
   text-align: center;
   justify-items: center;
-  gap: 0 1rem;
+  gap: 0.25rem 1rem;
 }
 .cardbox .cardtable .justr, .cardbox .cardtable3 .justr, .cardbox .cardtable2 .justr {
   justify-self: right;

@@ -21,7 +21,7 @@ def SongCreationFormConstructor(fieldnames: list[str]):
 class SongPropertyNameForm(ModelForm):
     class Meta:
         model = SongPropertyName
-        fields = '__all__'
+        fields = ['name']
 
 
 class SongPropertyValueForm(ModelForm):

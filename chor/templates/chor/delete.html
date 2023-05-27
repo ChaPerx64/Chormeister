@@ -2,19 +2,19 @@
 
 {% block title %}
 
-  <h1>SONG<br>{{song.name}}</h1>
+  <h1>{{obj}}</h1>
 
 {% endblock title%}
 
 {% block content %}
 <div class="card">
   <div class="cardtitle">
-    Delete song?
+    Confirm deletion
   </div>
   <form method="POST" action="">
     <div class="cardtable">
       {% csrf_token %}
-      <p>Are you sure you want to delete "{{song.name}}"?</p>
+      <p>Are you sure you want to delete<br>"{{obj}}"?</p>
       &nbsp
       <a href="{{request.META.HTTP_REFERER}}">Go back</a>
       <input type="submit" value="Confirm">
