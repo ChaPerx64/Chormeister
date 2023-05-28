@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.db.models import Count, Q
 from .models import Chor, Song, SongPropertyValue, SongPropertyName, SongPerformance
-from .forms import SongForm, SongPropertyNameForm, SongPropertyValueForm, SongCreationFormConstructor
+from .forms import SongPropertyNameForm, SongCreationFormConstructor, SongPerformanceForm
 
 
 def chorhomepage(request, chor_id):
@@ -204,3 +204,21 @@ def chorPerformances(request, chor_id):
     performances = SongPerformance.objects.filter(song__chor=chor).order_by('-datetime')
     context = {'chor': chor, 'performances': performances}
     return render(request, 'chor/chor-performances.html', context)
+
+def createPerformance(request, song_id):
+    song = Song.objects.get(id=song_id)
+    form = SongPerformanceForm()
+
+    if request.method == "POST":
+        form = SongPerformanceForm(request.POST)
+        if form.is_valid():
+            songperf = SongPerformance.objects.create(song_id=song_id, dtofperformance=form.cleaned_data.get('dtofperformance'))
+            print(songperf)
+            songperf.save()
+            return redirect('song', pk=song_id)
+    
+    context = {
+        'form': form,
+        'song': song
+    }
+    return render(request, 'chor/performance_form.html', context)

@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="widecard">
+  <div class="cardtitle">
+    Creating/Editing a performance
+  </div>
+  <form method="POST" action="">
+    <div class="cardtable2">
+      {% csrf_token %}
+      {{form}}
+      <p></p><p><input type="submit" value="Submit"></p>
+    </div>
+  </form>
+</div>
+
+{% endblock content %}

@@ -14,7 +14,7 @@
   </div>
   <div class="cardtable2">
     {% for key, value in attributes.items %}
-    <div class="justr">{{key}}</div><div class="justl">{{value}}</div>
+    <div class="justr">{{key.capitalize}}:</div><div class="justl">{{value}}</div>
     {% endfor %}
   </div>
 </div>
@@ -26,6 +26,7 @@
   <div class="cardtable">
     <a href="{% url 'update-song' song.id %}">Edit song</a>
     <a href="{% url 'delete-song' song.id %}">Delete song</a>
+    <a href="{% url 'create-performance' song.id %}">Add performance date</a>
   </div>
 </div>
 
@@ -35,7 +36,7 @@
   </div>
   <div class="cardtable">
     {% for performance in performances %}
-      <p>{{performance.datetime|date:'Y-m-d'}}</p>
+      <p>{{performance.dtofperformance|date:'Y-m-d'}}</p>
     {% endfor %}
   </div>
 </div>

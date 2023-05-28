@@ -1,8 +1,8 @@
-from typing import Any, Mapping, Optional, Type, Union
+# from typing import Any, Mapping, Optional, Type, Union
 from django.forms import ModelForm, Form
 from django import forms
 from django.forms.utils import ErrorList
-from .models import Song, SongPropertyName, SongPropertyValue
+from .models import Song, SongPropertyName, SongPropertyValue, SongPerformance
 
 
 class SongForm(ModelForm):
@@ -29,4 +29,8 @@ class SongPropertyValueForm(ModelForm):
         model = SongPropertyValue
         fields = '__all__'
 
+class SongPerformanceForm(ModelForm):
+    class Meta:
+        model = SongPerformance
+        fields = ['dtofperformance']
         

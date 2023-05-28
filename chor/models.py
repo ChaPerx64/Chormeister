@@ -6,6 +6,9 @@ class Chor (models.Model):
     name = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['name']
+
     def __str__(self) -> str:
         return self.name
 
@@ -17,6 +20,9 @@ class Song (models.Model):
     )
     name = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['name']
 
     def __str__(self) -> str:
         return ' - '.join((self.name, str(self.chor)))
@@ -56,7 +62,10 @@ class SongPerformance (models.Model):
         Song,
         on_delete=models.CASCADE
     )
-    datetime = models.DateTimeField(null=True)
+    dtofperformance = models.DateTimeField()
+
+    class Meta:
+        ordering = ['-dtofperformance']
 
     def __str__(self) -> str:
-        return ' - '.join((str(self.datetime), str(self.song)))
+        return ' - '.join((str(self.dtofperformance), str(self.song)))
