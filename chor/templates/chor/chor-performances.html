@@ -21,10 +21,15 @@
   <div class="cardtitle">
     Past performances:
   </div>
-  <div class="cardtable2">
+  <div class="cardtable3">
     {% for performance in performances%}
-    <div class="justr">{{performance.datetime|date:'Y-m-d'}}</div>
-    <div class="justl">{{performance.song.name}}</div>
+      {% if performance %}
+        <div class="justr">{{performance.dtofperformance|date:'Y-m-d, D'}}</div>
+        <div class="justl">{{performance.song.name}}</div>
+        <button class="button" onclick="window.location.href='{% url 'delete-performance' performance.id %}'">❌</button>
+      {% else %}
+        <p>&nbsp</p><p></p><p></p>
+      {% endif %}
     {% endfor %}
   </div>
 </div>

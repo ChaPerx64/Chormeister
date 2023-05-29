@@ -18,9 +18,9 @@ urlpatterns = [
     path('chor<str:chor_id>/songproperties/', views.chorSongProperties, name="chor-songproperties"),
     path('propertyname<str:prop_id>/delete/', views.songPropertyNameDelete, name="songpropertyname-delete"),
 
-    # Performance creation page
-    path('song/<str:song_id>/create-performance/', views.createPerformance, name='create-performance')
-
+    # Performance pages
+    path('song/<str:song_id>/create-performance/', views.createPerformance, name='create-performance'),
+    path('deletePerformance/<str:perf_id>/', views.deletePerformance, name='delete-performance'),
     # path('import-songlist/', views.importSonglist, name='import-songlist'),
     # path('import-performances/', views.importPerformances, name='import-performances'),
 ]

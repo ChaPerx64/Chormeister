@@ -30,7 +30,7 @@
     <a href="{% url 'chor-songs' chor.id %}">Sort alphabetically</a>
     <a href="{% url 'chor-songs' chor.id %}?s=-numperformances">Sort by performances</a>
     {% for attr in attributes %}
-      <a href="{% url 'chor-songs' chor.id %}?s={{attr.name}}">Sort by {{attr.name}}</a>
+      <a href="{% url 'chor-songs' chor.id %}?s={{attr.name}}">Sort by "{{attr.name}}"</a>
     {% endfor %}
   </div>
 </div>

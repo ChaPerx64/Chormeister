@@ -34,9 +34,10 @@
   <div class="cardtitle">
     Performances
   </div>
-  <div class="cardtable">
+  <div class="cardtable2">
     {% for performance in performances %}
-      <p>{{performance.dtofperformance|date:'Y-m-d'}}</p>
+      <div class="justr">{{performance.dtofperformance|date:'Y-m-d, D'}}</div>
+      <div class="justl"><button class="button" onclick="window.location.href='{% url 'delete-performance' performance.id %}'">❌</button></div>
     {% endfor %}
   </div>
 </div>

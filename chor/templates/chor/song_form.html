@@ -10,8 +10,8 @@
     <div class="cardtable2">
       {% csrf_token %}
       {{form}}
-      <button onclick="window.location.href='{% url 'create-property' chor.id %}'">Add new property field</button>
-      <p><input type="submit" value="Submit"></p>
+      <button class="button" onclick="window.location.href='{% url 'create-property' chor.id %}'">Add new property field</button>
+      <p><input class="button" type="submit" value="Submit"></p>
     </div>
   </form>
 </div>

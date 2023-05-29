@@ -150,6 +150,7 @@ main {
     grid-template-columns: 1fr;
     text-align: center;
     justify-items: center;
+    align-items: center;
     gap: 0.25rem 1rem;
     .justr{
       justify-self: right;
@@ -162,7 +163,7 @@ main {
   }
   .cardtable2 {
     @extend .cardtable;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 1fr;
   }
   .cardtable3 {
     @extend .cardtable;
@@ -170,3 +171,27 @@ main {
   }
 }
 
+input[type=text] {
+  padding: 0.25rem;
+  margin: 0.1rem;
+  border: 0px solid $color-font-main;
+  border-radius: 0.25rem;
+  // border-style: solid;
+}
+
+.button {
+  background-color: $color-accent3;
+  color: $color-font-light;
+  padding: 0.3rem;
+  border-radius: 0.25rem;
+  border: 0px;
+  // outline: none;
+  transition: 0.5s;
+  // display: inline-block;
+}
+.button:hover {
+  background-color: $color-accent1;
+}
+.button:active {
+  background-color: $color-bg-main;
+}

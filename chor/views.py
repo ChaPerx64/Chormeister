@@ -10,6 +10,7 @@ def chorhomepage(request, chor_id):
     context = {'songs': songs, 'chor': chor}
     return render(request, 'chor/chor-homepage.html', context)
 
+
 def chorsongs(request, chor_id):
     chor = Chor.objects.get(id=chor_id)
     sortby = request.GET.get('s')
@@ -38,6 +39,7 @@ def chorsongs(request, chor_id):
     context = {'songs': songs, 'chor': chor, 'attributes': attr, 'sortby': sortby}
     return render(request, 'chor/chor-songs.html', context)
 
+
 def song(request, pk):
     song = Song.objects.get(id=pk)
     songpropertynames = song.chor.songpropertyname_set.all()
@@ -62,6 +64,7 @@ def song(request, pk):
         'performances':performances
     }
     return render(request, 'chor/song.html', context)
+
 
 def createSong(request, chor_id):
     chor = Chor.objects.get(id=chor_id)
@@ -104,6 +107,7 @@ def createSong(request, chor_id):
         'chor': chor
     }
     return render(request, 'chor/song_form.html', context)
+
 
 def updateSong(request, pk):
     song = Song.objects.get(id = pk)
@@ -155,6 +159,7 @@ def updateSong(request, pk):
     }
     return render(request, 'chor/song_form.html', context)
 
+
 def deleteSong(request, pk):
     song = Song.objects.get(id=pk)
     chor_id = song.chor.id
@@ -178,6 +183,7 @@ def createProperty(request, chor_id):
     context = {'form': form}
     return render(request, 'chor/property_form.html', context)
 
+
 def chorSongProperties(request, chor_id):
     chor = Chor.objects.get(id=chor_id)
     properties = chor.songpropertyname_set.all()
@@ -186,6 +192,7 @@ def chorSongProperties(request, chor_id):
         'properties': properties
     }
     return render(request, 'chor/chor-songproperties.html', context)
+
 
 def songPropertyNameDelete(request, prop_id):
     prop = SongPropertyName.objects.get(id=prop_id)
@@ -201,9 +208,32 @@ def songPropertyNameDelete(request, prop_id):
 
 def chorPerformances(request, chor_id):
     chor = Chor.objects.get(id=chor_id)
-    performances = SongPerformance.objects.filter(song__chor=chor).order_by('-datetime')
-    context = {'chor': chor, 'performances': performances}
+    performances = SongPerformance.objects.filter(song__chor=chor) #.order_by('-datetime')
+    out_list = list()
+    prev_month = performances[0].dtofperformance.month
+    for perf in performances:
+        if prev_month != perf.dtofperformance.month:
+            out_list.append('')
+        out_list.append(perf)
+        prev_month = perf.dtofperformance.month
+    context = {
+        'chor': chor,
+        'performances': out_list,
+    }
     return render(request, 'chor/chor-performances.html', context)
+
+
+def deletePerformance(request, perf_id):
+    perf = SongPerformance.objects.get(id=perf_id)
+    chor_id = perf.song.chor.id
+    if request.method == "POST":
+        perf.delete()
+        return redirect('chor-performances', chor_id=chor_id)
+    context = {
+        'obj': perf
+    }
+    return render(request, 'chor/delete.html', context)
+
 
 def createPerformance(request, song_id):
     song = Song.objects.get(id=song_id)
@@ -213,7 +243,6 @@ def createPerformance(request, song_id):
         form = SongPerformanceForm(request.POST)
         if form.is_valid():
             songperf = SongPerformance.objects.create(song_id=song_id, dtofperformance=form.cleaned_data.get('dtofperformance'))
-            print(songperf)
             songperf.save()
             return redirect('song', pk=song_id)
     
