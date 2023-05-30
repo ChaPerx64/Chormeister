@@ -39,6 +39,11 @@
   <div class="cardtitle">
     Search
   </div>
+  <div class="cardtable">
+    <form method="GET" action="{% url 'chor-songs' chor.id %}">
+      <input type="text" name="q" placeholder="Search Songs...">
+    </form>
+  </div>
 </div>
 
 <div class="widecard">

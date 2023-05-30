@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+
+{% block title %}
+
+<h1>WELCOME!</h1>
+
+{% endblock title%}
+
+{% block content %}
+<div>
+  <form method="POST" action="">
+    {% csrf_token %}
+    <div class="card">
+      <div class="cardtitle">
+        Authorization
+      </div>
+      <div class="cardtable2shifted">
+
+        <div class="justr">
+          <label>Username:</label>
+        </div>
+        <div class="justl">
+          <input type="text" name="username" placeholder="Enter Username">
+        </div>
+
+        <div class="justr">
+          <label>Password:</label>
+        </div>
+        <div class="justl">
+          <input type="password" name="password" placeholder="Enter Password">
+        </div>
+        <p>&nbsp;</p><p></p>
+        <p></p><input class="button" type="submit" value="Login">
+
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock content %}

@@ -1,5 +1,6 @@
 {% extends 'main.html' %}
 
+{% load static %}
 
 {% block title %}
 
@@ -27,7 +28,12 @@
   </div>
   <div class="cardtable2">
     {% for prop in properties %}
-      <div class="justr">{{prop.name.capitalize}}</div><div class="justl"><button onclick="window.location.href='{% url 'songpropertyname-delete' prop.id %}'">Delete</button></div>
+      <div class="justr">{{prop.name.capitalize}}</div>
+      <div class="justl">
+        <button class="dangerbtnicon" onclick="window.location.href='{% url 'songpropertyname-delete' prop.id %}'">
+          <img class="smallicon" src="{% static 'img/trash-svgrepo-com.svg' %}">
+        </button>
+      </div>
     {% endfor %}
   </div>
 </div>

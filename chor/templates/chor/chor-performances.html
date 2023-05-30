@@ -1,5 +1,6 @@
 {% extends 'main.html' %}
 
+{% load static %}
 
 {% block title %}
 
@@ -26,7 +27,7 @@
       {% if performance %}
         <div class="justr">{{performance.dtofperformance|date:'Y-m-d, D'}}</div>
         <div class="justl">{{performance.song.name}}</div>
-        <button class="button" onclick="window.location.href='{% url 'delete-performance' performance.id %}'">❌</button>
+        <button class="dangerbtnicon" onclick="window.location.href='{% url 'delete-performance' performance.id %}'"><img class="smallicon" src="{% static 'img/trash-svgrepo-com.svg' %}"></button>
       {% else %}
         <p>&nbsp</p><p></p><p></p>
       {% endif %}

@@ -16,8 +16,10 @@
       {% csrf_token %}
       <p>Are you sure you want to delete<br>"{{obj}}"?</p>
       &nbsp
-      <a href="{{request.META.HTTP_REFERER}}">Go back</a>
-      <input class="button" type="submit" value="Confirm">
+      <div>
+        <button class="button" onclick="window.location.href='{{request.META.HTTP_REFERER}}'">Go back</button>
+        <input class="dangerbtn" type="submit" value="Confirm">
+      </div>
     </div>
   </form>
 </div>

@@ -5,6 +5,7 @@ from django.db import models
 class Chor (models.Model):
     name = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
+    description = models.TextField(null=True)
 
     class Meta:
         ordering = ['name']

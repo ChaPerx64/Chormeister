@@ -25,6 +25,7 @@ $color-accent1: #F07167;
 // $color-accent2: #784FBA;
 $color-accent2: #67515A;
 $color-accent3: #63ADF2;
+$color-accent4: orange;
 $color-font-light: #ffffff;
 // $gradient-bg-main: radial-gradient(at left top, #F6F1F1, #AFD3E2);
 $gradient-bg-main: radial-gradient(at left top, $color-bg-main, $color-accent3);
@@ -70,7 +71,7 @@ nav {
   background-color: $color-bg-darkest;
   color: $color-font-light;
   display: grid;
-  grid-template-columns: 0.5fr 1fr 3fr;
+  grid-template-columns: 0.5fr 1fr 3fr 5rem;
   align-items: center;
   justify-items: center;
 
@@ -165,6 +166,10 @@ main {
     @extend .cardtable;
     grid-template-columns: 1fr 1fr;
   }
+  .cardtable2shifted {
+    @extend .cardtable;
+    grid-template-columns: 1fr 2fr;
+  }
   .cardtable3 {
     @extend .cardtable;
     grid-template-columns: 1fr 2fr 2fr;
@@ -176,22 +181,41 @@ input[type=text] {
   margin: 0.1rem;
   border: 0px solid $color-font-main;
   border-radius: 0.25rem;
-  // border-style: solid;
+}
+input[type=password] {
+  padding: 0.25rem;
+  margin: 0.1rem;
+  border: 0px solid $color-font-main;
+  border-radius: 0.25rem;
 }
 
+
+
 .button {
-  background-color: $color-accent3;
-  color: $color-font-light;
   padding: 0.3rem;
   border-radius: 0.25rem;
   border: 0px;
-  // outline: none;
   transition: 0.5s;
-  // display: inline-block;
+  overflow: hidden;
 }
-.button:hover {
+
+.dangerbtn {
+  @extend .button;
   background-color: $color-accent1;
+  color: $color-font-light;
+  &:hover {
+    background-color: $color-accent4;
+  }
+  &:active {
+    background-color: $color-bg-main;
+  }
 }
-.button:active {
-  background-color: $color-bg-main;
+
+.dangerbtnicon {
+  @extend .dangerbtn;
+  padding: 0rem;
+}
+
+.smallicon {
+  width: 1.8rem;
 }
