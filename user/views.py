@@ -14,7 +14,7 @@ def loginPage(request):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            return redirect('user-homepage', user_id=user.id)
+            return redirect('user-homepage', user_id=user.pk)
         else:
             messages.error(request, "Username-passord pair is incorrect")
     context = {}
@@ -33,9 +33,3 @@ def logoutUser(request):
     logout(request)
     return redirect('landing')
 
-def landingPage(request):
-    user = request.user
-    if user.is_authenticated:
-        return redirect('user-homepage', user.id)
-    context = {}
-    return render(request, 'landing.html', context)

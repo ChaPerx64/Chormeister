@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect
 from django.db.models import Count, Q
 from .models import Chor, Song, SongPropertyValue, SongPropertyName, SongPerformance
 from .forms import SongPropertyNameForm, SongCreationFormConstructor, SongPerformanceForm
+from django.contrib.auth.decorators import login_required
 
 
 """ General chor views """
 
+@login_required
 def chorhomepage(request, chor_id):
     chor = Chor.objects.get(id=chor_id)
     songs = Song.objects.filter(chor=chor_id)
@@ -29,7 +31,10 @@ def chorsongs(request, chor_id):
             else:
                 sortq = 'value'
             songs = SongPropertyValue.objects\
-                .filter(Q(song__chor__id=chor_id) & Q(songpropertyname__name=sortby))\
+                .filter(
+                Q(song__chor__id=chor_id) &
+                Q(songpropertyname__name=sortby)
+                )\
                 .values("song__id", "song__name", 'value')\
                 .order_by(sortq, 'song__name')
             sortby = sortby.capitalize()
@@ -39,14 +44,17 @@ def chorsongs(request, chor_id):
                 Q(name__icontains=qstr) |
                 Q(songpropertyvalue__value__icontains=qstr)
                 )\
-                .annotate(numperformances=Count('songperformance'))\
-                .order_by('name')
+                .annotate(numperformances=Count('songperformance'))
         else:
             songs = chor.song_set.all()\
-                .annotate(numperformances=Count('songperformance'))\
-                .order_by('name')
+                .annotate(numperformances=Count('songperformance'))
     attr = SongPropertyName.objects.filter(chor_id=chor_id)
-    context = {'songs': songs, 'chor': chor, 'attributes': attr, 'sortby': sortby}
+    context = {
+        'songs': songs,
+        'chor': chor,
+        'attributes': attr,
+        'sortby': sortby
+    }
     return render(request, 'chor/chor-songs.html', context)
 
 def chorPerformances(request, chor_id):
@@ -186,7 +194,7 @@ def updateSong(request, pk):
                             song=song,
                             value=value,
                         ).save()
-            return redirect('chor-songs', chor_id=chor.id)
+            return redirect('chor-songs', chor_id=chor.pk)
 
     context = {
         'form': form,
@@ -196,7 +204,7 @@ def updateSong(request, pk):
 
 def deleteSong(request, pk):
     song = Song.objects.get(id=pk)
-    chor_id = song.chor.id
+    chor_id = song.chor.pk
     if request.method == "POST":
         song.delete()
         return redirect('chor-songs', chor_id=chor_id)
@@ -219,7 +227,7 @@ def createProperty(request, chor_id):
 
 def songPropertyNameDelete(request, prop_id):
     prop = SongPropertyName.objects.get(id=prop_id)
-    chor_id = prop.chor.id
+    chor_id = prop.chor.pk
     if request.method == "POST":
         prop.delete()
         return redirect('chor-songproperties', chor_id=chor_id)
@@ -233,7 +241,7 @@ def songPropertyNameDelete(request, prop_id):
 
 def deletePerformance(request, perf_id):
     perf = SongPerformance.objects.get(id=perf_id)
-    chor_id = perf.song.chor.id
+    chor_id = perf.song.chor.pk
     if request.method == "POST":
         perf.delete()
         return redirect('chor-performances', chor_id=chor_id)
