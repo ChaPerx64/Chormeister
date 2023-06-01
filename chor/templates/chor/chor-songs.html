@@ -41,7 +41,11 @@
   </div>
   <div class="cardtable">
     <form method="GET" action="{% url 'chor-songs' chor.id %}">
-      <input type="text" name="q" placeholder="Search Songs...">
+      {% if qstr %}
+        <input type="text" name="q" placeholder="{{qstr}}">
+      {% else %}
+        <input type="text" name="q" placeholder="Search Songs...">
+      {% endif %}
     </form>
   </div>
 </div>

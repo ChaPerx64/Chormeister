@@ -2,6 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 from chor.models import Chor
 
+# class ChorUser(models.Model):
+#     inneruser = models.OneToOneField(
+#         User,
+#         on_delete=models.CASCADE
+#     )
+#     email = models.OneToOneField(
+#         inneruser.email,
+#         on_delete=models.CASCADE
+#     )
+
+
 class UserRoleName(models.Model):
     name = models.CharField(
         max_length=255,
@@ -10,7 +21,7 @@ class UserRoleName(models.Model):
 
     @classmethod
     def get_default_pk(cls):
-        userolename, created = cls.objects.get_or_create(name='Member')
+        userolename, created = cls.objects.get_or_create(name='Chor member')
         return userolename.pk
 
     def __str__(self) -> str:

@@ -7,13 +7,14 @@ from django.contrib.auth.decorators import login_required
 
 """ General chor views """
 
-@login_required
+@login_required(login_url='user-login')
 def chorhomepage(request, chor_id):
     chor = Chor.objects.get(id=chor_id)
     songs = Song.objects.filter(chor=chor_id)
     context = {'songs': songs, 'chor': chor}
     return render(request, 'chor/chor-homepage.html', context)
 
+@login_required(login_url='user-login')
 def chorsongs(request, chor_id):
     chor = Chor.objects.get(id=chor_id)
     sortby = request.GET.get('s')
@@ -53,10 +54,12 @@ def chorsongs(request, chor_id):
         'songs': songs,
         'chor': chor,
         'attributes': attr,
-        'sortby': sortby
+        'sortby': sortby,
+        'qstr': qstr,
     }
     return render(request, 'chor/chor-songs.html', context)
 
+@login_required(login_url='user-login')
 def chorPerformances(request, chor_id):
     chor = Chor.objects.get(id=chor_id)
     performances = SongPerformance.objects.filter(song__chor=chor) #.order_by('-datetime')
@@ -73,6 +76,7 @@ def chorPerformances(request, chor_id):
     }
     return render(request, 'chor/chor-performances.html', context)
 
+@login_required(login_url='user-login')
 def chorSongProperties(request, chor_id):
     chor = Chor.objects.get(id=chor_id)
     properties = chor.songpropertyname_set.all()
@@ -85,6 +89,7 @@ def chorSongProperties(request, chor_id):
 
 """ Song pages """
 
+@login_required(login_url='user-login')
 def song(request, pk):
     song = Song.objects.get(id=pk)
     songpropertynames = song.chor.songpropertyname_set.all()
@@ -110,6 +115,7 @@ def song(request, pk):
     }
     return render(request, 'chor/song.html', context)
 
+@login_required(login_url='user-login')
 def createSong(request, chor_id):
     chor = Chor.objects.get(id=chor_id)
 
@@ -152,6 +158,7 @@ def createSong(request, chor_id):
     }
     return render(request, 'chor/song_form.html', context)
 
+@login_required(login_url='user-login')
 def updateSong(request, pk):
     song = Song.objects.get(id = pk)
     chor = song.chor
@@ -202,6 +209,7 @@ def updateSong(request, pk):
     }
     return render(request, 'chor/song_form.html', context)
 
+@login_required(login_url='user-login')
 def deleteSong(request, pk):
     song = Song.objects.get(id=pk)
     chor_id = song.chor.pk
@@ -214,6 +222,7 @@ def deleteSong(request, pk):
 
 """ SongProperty views """
 
+@login_required(login_url='user-login')
 def createProperty(request, chor_id):
     form = SongPropertyNameForm()
     if request.method == "POST":
@@ -225,6 +234,7 @@ def createProperty(request, chor_id):
     context = {'form': form}
     return render(request, 'chor/property_form.html', context)
 
+@login_required(login_url='user-login')
 def songPropertyNameDelete(request, prop_id):
     prop = SongPropertyName.objects.get(id=prop_id)
     chor_id = prop.chor.pk
@@ -239,6 +249,7 @@ def songPropertyNameDelete(request, prop_id):
 
 """ Performance views """
 
+@login_required(login_url='user-login')
 def deletePerformance(request, perf_id):
     perf = SongPerformance.objects.get(id=perf_id)
     chor_id = perf.song.chor.pk
@@ -250,6 +261,7 @@ def deletePerformance(request, perf_id):
     }
     return render(request, 'chor/delete.html', context)
 
+@login_required(login_url='user-login')
 def createPerformance(request, song_id):
     song = Song.objects.get(id=song_id)
     form = SongPerformanceForm()

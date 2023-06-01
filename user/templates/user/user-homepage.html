@@ -18,6 +18,11 @@
   <div class="cardtitle">
     My "Chors"
   </div>
+  <div class="cardtable">
+    {% for chor in chors %}
+      <a href="{% url 'chor-homepage' chor.id %}">{{chor.name}}</a>
+    {% endfor %}
+  </div>
 
 </div>
 <div class="card">
