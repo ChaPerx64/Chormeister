@@ -8,36 +8,41 @@
   <div class="cardtable">
     {% if chors %} {% for chor in chors %}
     <a href="{% url 'chor-homepage' chor.id %}">{{chor.name}}</a>
-    {% endfor %} {% else %}
+    {% endfor %} {% else %} {% if ownerview %}
     <p>You are not participating in any "Chor"!</p>
-    {% endif %} {% if ownerview %}
-    <p>&nbsp;</p>
-    <p>Create a "Chor"</p>
-    <p>Find a "Chor" to join</p>
-    {% endif %}
+    {% else %}
+    <p>This user is not a part of any "Chor"</p>
+    {% endif %} {% endif %}
   </div>
+  {% if ownerview %}
+  <div class="card_actions">
+    <div class="cardtable">
+      <p>Create a "Chor"</p>
+      <p>Find a "Chor" to join</p>
+    </div>
+  </div>
+  {% endif %}
 </div>
 <div class="card">
-  <div class="cardtitle">Past Activity</div>
+  <div class="cardtitle">Recent activity</div>
 </div>
 <div class="card">
-  <div class="cardtitle">About me</div>
+  <div class="cardtitle">About</div>
   <div class="cardtable2">
     {% for key, value in usr_attribs.items %}
     <div class="justr">{{key}}</div>
     <div class="justl">{{value}}</div>
     {% endfor %}
   </div>
-</div>
-<div class="card">
-  <div class="cardtitle">Actions</div>
-  <div class="cardtable">
-    {% if ownerview %}
-    <a href="{% url 'user-edit' %}">Edit my profile</a>
-    <a href="{% url 'user-delete' %}">Delete my profile</a>
-    {% else %}
-    <p>Send invitation to "Chor"</p>
-    {% endif %}
+  <div class="card_actions">
+    <div class="cardtable">
+      {% if ownerview %}
+      <a href="{% url 'user-edit' %}">Edit my profile</a>
+      <a href="{% url 'user-delete' %}">Delete my profile</a>
+      {% else %}
+      <p>Send invitation to "Chor"</p>
+      {% endif %}
+    </div>
   </div>
 </div>
 {% endblock content %}

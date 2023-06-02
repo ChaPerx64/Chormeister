@@ -1,50 +1,45 @@
-{% extends 'main.html' %}  
-
-{% load static %}
-
-{% block title %}
+{% extends 'main.html' %} {% load static %} {% block title %}
 
 <h1>{{song.name}}</h1>
 
-{% endblock title %}
-
-{% block content %}
+{% endblock title %} {% block content %}
 
 <div class="card">
-  <div class="cardtitle">
-    Song info
-  </div>
+  <div class="cardtitle">Song info</div>
   <div class="cardtable2shifted">
     {% for key, value in attributes.items %}
-    <div class="justr">{{key.capitalize}}:</div><div class="justl">{{value}}</div>
+    <div class="justr">{{key.capitalize}}:</div>
+    <div class="justl">{{value}}</div>
     {% endfor %}
   </div>
-</div>
-
-<div class="card">
-  <div class="cardtitle">
-    Actions
-  </div>
-  <div class="cardtable">
-    <a href="{% url 'update-song' song.id %}">Edit song</a>
-    <a href="{% url 'delete-song' song.id %}">Delete song</a>
-    <a href="{% url 'create-performance' song.id %}">Add performance date</a>
+  <div class="card_actions">
+    <div class="cardtable">
+      <a href="{% url 'update-song' song.id %}">Edit song</a>
+      <a href="{% url 'delete-song' song.id %}">Delete song</a>
+      <a href="{% url 'create-performance' song.id %}">Add performance date</a>
+    </div>
   </div>
 </div>
 
 <div class="card">
-  <div class="cardtitle">
-    Performances
-  </div>
+  <div class="cardtitle">Performances</div>
+  {% if performances %}
   <div class="cardtable2">
     {% for performance in performances %}
-      <div class="justr">{{performance.dtofperformance|date:'Y-m-d, D'}}</div>
-      <div class="justl">
-        <button class="dangerbtnicon" onclick="window.location.href='{% url 'delete-performance' performance.id %}'">
-          <img class="smallicon" src="{% static 'img/trash-svgrepo-com.svg' %}">
-        </button>
-      </div>
-    {% endfor %}
+    <div class="justr">{{performance.dtofperformance|date:'Y-m-d, D'}}</div>
+    <div class="justl">
+      <button
+        class="dangerbtnicon"
+        onclick="window.location.href='{% url 'delete-performance' performance.id %}'"
+      >
+        <img class="smallicon" src="{% static 'img/trash-svgrepo-com.svg' %}" />
+      </button>
+    </div>
   </div>
+  {% endfor %} {% else %}
+  <div class="cardtable">
+    <p>No information</p>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}

@@ -11,6 +11,7 @@ h1, h2, h3 {
 
 body {
   font-family: "Jost", sans-serif;
+  font-size: 16px;
   background-color: #F0DFF6;
   color: #392D32;
   background: radial-gradient(at left top, #F0DFF6, #63ADF2);
@@ -85,13 +86,15 @@ main {
   min-height: 20rem;
   overflow-y: hidden;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  display: flex;
+  flex-direction: column;
 }
 .cardbox .widecard {
   width: 50rem;
   max-width: 60rem;
   height: auto;
 }
-.cardbox .cardtitle {
+.cardbox .cardtitle, .cardbox .card_actions {
   margin: 0.5rem;
   padding: 0.5rem;
   background-color: #67515A;
@@ -100,6 +103,19 @@ main {
   color: #ffffff;
   font-size: 1.2rem;
   font-family: "Unbounded", cursive;
+}
+.cardbox .card_actions {
+  padding: 0px;
+  background-color: #63ADF2;
+  color: #ffffff;
+  font-size: 16px;
+  font-family: "Jost", sans-serif;
+}
+.cardbox .card_actions a {
+  color: #ffffff;
+}
+.cardbox .card_actions a:hover {
+  color: #F07167;
 }
 .cardbox .cardtext, .cardbox .cardtable, .cardbox .cardtable3, .cardbox .cardtable2shifted, .cardbox .form_reg_user, .cardbox .cardtable2 {
   height: auto;

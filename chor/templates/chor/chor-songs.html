@@ -1,75 +1,84 @@
-{% extends 'main.html' %}
+{% extends 'main.html' %} {% block title %}
 
+<h1>Songs of {{chor.name}}</h1>
 
-{% block title %}
-
-  <h1>Songs of {{chor.name}}</h1>
-
-{% endblock title %}
-
-
-
-{% block content %}
+{% endblock title %} {% block content %}
 
 <div class="card">
-  <div class="cardtitle">
-    Actions
+  <div class="cardtitle">Search</div>
+  <div class="card_actions">
+    <div class="cardtable">
+      <form method="GET" action="{% url 'chor-songs' chor.id %}">
+        {% if qstr %}
+        <input type="text" name="q" placeholder="{{qstr}}" />
+        {% else %}
+        <input type="text" name="q" placeholder="Search Songs..." />
+        {% endif %}
+      </form>
+    </div>
   </div>
-  <div class="cardtable">
-    <a href="{% url 'create-song' chor.id %}">Add a new song</a>
-    <a href="{% url 'chor-songproperties' chor.id %}">See the list of song properties</a>
+  <div class="card_actions">
+    <div class="cardtable">
+      <a href="{% url 'chor-songs' chor.id %}">Sort alphabetically</a>
+      <a href="{% url 'chor-songs' chor.id %}?s=-numperformances"
+        >Sort by performances</a
+      >
+      {% for attr in attributes %}
+      <a href="{% url 'chor-songs' chor.id %}?s={{attr.name}}"
+        >Sort by "{{attr.name}}"</a
+      >
+      {% endfor %}
+    </div>
+  </div>
+  <div class="card_actions">
+    <div class="cardtable">
+      <a href="{% url 'chor-songproperties' chor.id %}"
+        >See the list of kept song properties</a
+      >
+    </div>
   </div>
 </div>
 
-
-<div class="card">
-  <div class="cardtitle">
-    Sort
-  </div>
-  <div class="cardtable">
-    <a href="{% url 'chor-songs' chor.id %}">Sort alphabetically</a>
-    <a href="{% url 'chor-songs' chor.id %}?s=-numperformances">Sort by performances</a>
-    {% for attr in attributes %}
-      <a href="{% url 'chor-songs' chor.id %}?s={{attr.name}}">Sort by "{{attr.name}}"</a>
-    {% endfor %}
-  </div>
-</div>
-
-<div class="card">
-  <div class="cardtitle">
-    Search
-  </div>
+<!-- <div class="card">
+  <div class="cardtitle">Search</div>
   <div class="cardtable">
     <form method="GET" action="{% url 'chor-songs' chor.id %}">
       {% if qstr %}
-        <input type="text" name="q" placeholder="{{qstr}}">
+      <input type="text" name="q" placeholder="{{qstr}}" />
       {% else %}
-        <input type="text" name="q" placeholder="Search Songs...">
+      <input type="text" name="q" placeholder="Search Songs..." />
       {% endif %}
     </form>
   </div>
-</div>
+</div> -->
 
 <div class="widecard">
-  <div class="cardtitle">
-    List of songs:
+  <div class="cardtitle">List of songs:</div>
+  <div class="card_actions">
+    <div class="cardtable">
+      <a href="{% url 'create-song' chor.id %}">Add a new song</a>
+    </div>
   </div>
   <div class="cardtable3">
     {% if sortby %}
-      <div class="justr">#</div><p>Name</p><p>{{sortby}}</p>
-      {% for song in songs%}
-        <div class="justr">{{song.song__id}}</div>
-        <div class="justl"><a href="{% url 'song' song.song__id%}">{{song.song__name}}</a></div>
-        <div class="justl">{{song.value}}</div>
-      {% endfor %}
-    {% else %}
-      <div class="justr">#</div><p>Name</p><p>Performances</p>    
-      {% for song in songs%}
-        <div class="justr">{{song.id}}</div>
-        <div class="justl"><a href="{% url 'song' song.id%}">{{song.name}}</a></div>
-        <div>{{song.numperformances}}</div>
-      {% endfor %}
-    {% endif %}
+    <div class="justr">#</div>
+    <p>Name</p>
+    <p>{{sortby}}</p>
+    {% for song in songs%}
+    <div class="justr">{{song.song__id}}</div>
+    <div class="justl">
+      <a href="{% url 'song' song.song__id%}">{{song.song__name}}</a>
+    </div>
+    <div class="justl">{{song.value}}</div>
+    {% endfor %} {% else %}
+    <div class="justr">#</div>
+    <p>Name</p>
+    <p>Performances</p>
+    {% for song in songs%}
+    <div class="justr">{{song.id}}</div>
+    <div class="justl"><a href="{% url 'song' song.id%}">{{song.name}}</a></div>
+    <div>{{song.numperformances}}</div>
+    {% endfor %} {% endif %}
   </div>
 </div>
 

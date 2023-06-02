@@ -11,6 +11,7 @@ $cardwidth: 25rem;
 //Fonts
 $mainfont: 'Jost', sans-serif;
 $labelfont: 'Unbounded', cursive;
+$mainsize: 16px;
 $biggestsize: 1.8rem;
 $sizeh3: 1.2rem;
 $smallsize: 0.8rem;
@@ -47,6 +48,7 @@ h1, h2, h3 {
 body {
   font-family: $mainfont;
   // height: 100vh;
+  font-size: $mainsize;
   background-color: $color-bg-main;
   color: $color-font-main;
   background: $gradient-bg-main;
@@ -59,10 +61,8 @@ body {
     color: $color-font-main;
     text-decoration: none;
     transition: 0.25s;
-    // transform: scale(1);
   }
   a:hover {
-    // transform: scale(1.05);
     color: $color-accent1;
   }
 }
@@ -87,7 +87,6 @@ nav {
 }
 
 .navlogo {
-  // margin: auto;
   justify-self: center;
 }
 
@@ -126,6 +125,8 @@ main {
     min-height: 20rem;
     overflow-y: hidden;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    display: flex;
+    flex-direction: column;
   }
 
   .widecard {
@@ -143,6 +144,20 @@ main {
     color: $color-font-light;
     font-size: $sizeh3;
     font-family: $labelfont;
+  }
+  .card_actions {
+    @extend .cardtitle;
+    padding: 0px;
+    background-color: $color-accent3;
+    color: $color-font-light;
+    font-size: $mainsize;
+    font-family: $mainfont;
+    a {
+      color: $color-font-light;
+    }
+    a:hover {
+      color: $color-accent1;
+    }
   }
   .cardtext {
     height: auto;

@@ -1,42 +1,55 @@
-{% extends 'main.html' %}
+{% extends 'main.html' %} {% block title %}
 
+<h1>{{chor.name}}</h1>
 
-{% block title %}
-
-  <h1>{{chor.name}}</h1>
-
-{% endblock title %}
-
-{% block content %}
+{% endblock title %} {% block content %}
 <div class="card">
-  <div class="cardtitle">
-    About
-  </div>
+  <div class="cardtitle">About</div>
   <div class="cardtable2shifted">
-    <div class="justr">Name:</div><div class="justl">{{chor.name}}</div>
-    <div class="justr">Description:</div><div class="justl">{{chor.description}}</div>
+    <div class="justr">Name:</div>
+    <div class="justl">{{chor.name}}</div>
+    <div class="justr">Description:</div>
+    <div class="justl">{{chor.description}}</div>
+  </div>
+  <div class="card_actions">
+    <div class="cardtable">
+      <p>Edit info</p>
+      <p>See the members</p>
+    </div>
   </div>
 </div>
 <div class="card">
-  <div class="cardtitle">
-    Songs
-  </div>
+  <div class="cardtitle">Songs</div>
   <div class="cardtable">
-    <a href="{% url 'create-song' chor.id %}">Create Song</a>
-    <a href="{% url 'chor-songs' chor.id %}">See songs</a>
+    {% for song in songs %}
+    <a href="{% url 'song' song.id %}">{{song.name}}</a>
+    {% endfor %}
+  </div>
+  <div class="card_actions">
+    <div class="cardtable">
+      <a href="{% url 'create-song' chor.id %}">Add a song</a>
+      <a href="{% url 'chor-songs' chor.id %}">See the songs</a>
+    </div>
   </div>
 </div>
 <div class="card">
-  <div class="cardtitle">
-    Past Activity
+  <div class="cardtitle">Recent performances</div>
+  <div class="cardtable2shifted">
+    {% for performance in performances %}
+    <div class="justr">{{performance.dtofperformance|date:'M, dS, D'}}</div>
+    <div class="justl">{{performance.song.name}}</div>
+    {% endfor %}
   </div>
+  <div class="card_actions">
+    <div class="cardtable">
+      <a href="{% url 'chor-performances' chor.id %}">See all performances</a>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="cardtitle">Upcoming Activity</div>
   <div class="cardtable">
-    <a href="{% url 'chor-performances' chor.id %}">See performances</a>
-  </div>
-</div>
-<div class="card">
-  <div class="cardtitle">
-    Upcoming Activity
+    <p>coming soon...</p>
   </div>
 </div>
 

@@ -1,37 +1,33 @@
-{% extends 'main.html' %}
+{% extends 'main.html' %} {% load static %} {% block title %}
 
-{% load static %}
+<h1>Performances of {{chor.name}}</h1>
 
-{% block title %}
+{% endblock title %} {% block content %}
 
-  <h1>Performances of {{chor.name}}</h1>
-
-{% endblock title %}
-
-{% block content %}
-
-<div class="card">
-  <div class="cardtitle">
-    Actions
-  </div>
-  <div class="cardtext">
-    <a href="{% url 'chor-songs' chor.id %}">Choose a song and add a performance record</a>
-  </div>
-</div>
 <div class="widecard">
-  <div class="cardtitle">
-    Past performances:
+  <div class="cardtitle">Past performances:</div>
+  <div class="card_actions">
+    <div class="cardtext">
+      <a href="{% url 'chor-songs' chor.id %}"
+        >Choose a song and add a performance record</a
+      >
+    </div>
   </div>
   <div class="cardtable3">
-    {% for performance in performances%}
-      {% if performance %}
-        <div class="justr">{{performance.dtofperformance|date:'Y-m-d, D'}}</div>
-        <div class="justl">{{performance.song.name}}</div>
-        <button class="dangerbtnicon" onclick="window.location.href='{% url 'delete-performance' performance.id %}'"><img class="smallicon" src="{% static 'img/trash-svgrepo-com.svg' %}"></button>
-      {% else %}
-        <p>&nbsp</p><p></p><p></p>
-      {% endif %}
-    {% endfor %}
+    {% for performance in performances%} {% if performance %}
+    <div class="justr">{{performance.dtofperformance|date:'d-m-Y, D'}}</div>
+    <div class="justl">{{performance.song.name}}</div>
+    <button
+      class="dangerbtnicon"
+      onclick="window.location.href='{% url 'delete-performance' performance.id %}'"
+    >
+      <img class="smallicon" src="{% static 'img/trash-svgrepo-com.svg' %}" />
+    </button>
+    {% else %}
+    <p>&nbsp</p>
+    <p></p>
+    <p></p>
+    {% endif %} {% endfor %}
   </div>
 </div>
 

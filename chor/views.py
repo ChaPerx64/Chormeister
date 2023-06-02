@@ -9,10 +9,18 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url='user-login')
 def chorhomepage(request, chor_id):
     chor = Chor.objects.get(id=chor_id)
-    songs = Song.objects.filter(chor=chor_id)
+    # songs = Song.objects.filter(chor=chor_id)
+    songs = chor.song_set.all()\
+        .annotate(numperformances=Count('songperformance'))\
+        .order_by('-numperformances')[0:3]
+    performances = SongPerformance.objects\
+        .filter(song__chor=chor)[0:4]
+    members = list()
     context = {
         'songs': songs,
         'chor': chor,
+        'members': members,
+        'performances': performances,
         'backlink': '/',
     }
     return render(request, 'chor/chor-homepage.html', context)
