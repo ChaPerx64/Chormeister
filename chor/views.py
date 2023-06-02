@@ -5,14 +5,16 @@ from .forms import SongPropertyNameForm, SongCreationFormConstructor, SongPerfor
 from django.contrib.auth.decorators import login_required
 
 
-""" General chor views """
-
-
+# General chor views
 @login_required(login_url='user-login')
 def chorhomepage(request, chor_id):
     chor = Chor.objects.get(id=chor_id)
     songs = Song.objects.filter(chor=chor_id)
-    context = {'songs': songs, 'chor': chor}
+    context = {
+        'songs': songs,
+        'chor': chor,
+        'backlink': '/',
+    }
     return render(request, 'chor/chor-homepage.html', context)
 
 
@@ -47,10 +49,12 @@ def chorsongs(request, chor_id):
                 Q(name__icontains=qstr) |
                 Q(songpropertyvalue__value__icontains=qstr)
             )\
-                .annotate(numperformances=Count('songperformance'))
+                .annotate(numperformances=Count('songperformance'))\
+                .order_by('name')
         else:
             songs = chor.song_set.all()\
-                .annotate(numperformances=Count('songperformance'))
+                .annotate(numperformances=Count('songperformance'))\
+                .order_by('name')
     attr = SongPropertyName.objects.filter(chor_id=chor_id)
     context = {
         'songs': songs,
@@ -58,6 +62,7 @@ def chorsongs(request, chor_id):
         'attributes': attr,
         'sortby': sortby,
         'qstr': qstr,
+        'backlink': "../"
     }
     return render(request, 'chor/chor-songs.html', context)
 
@@ -76,6 +81,7 @@ def chorPerformances(request, chor_id):
     context = {
         'chor': chor,
         'performances': out_list,
+        'backlink': '../'
     }
     return render(request, 'chor/chor-performances.html', context)
 
@@ -86,14 +92,13 @@ def chorSongProperties(request, chor_id):
     properties = chor.songpropertyname_set.all()
     context = {
         'chor': chor,
-        'properties': properties
+        'properties': properties,
+        'backlink': f'/chor{chor.pk}/songs/',
     }
     return render(request, 'chor/chor-songproperties.html', context)
 
 
-""" Song pages """
-
-
+# Song pages
 @login_required(login_url='user-login')
 def song(request, pk):
     song = Song.objects.get(id=pk)
@@ -116,7 +121,8 @@ def song(request, pk):
     context = {
         'song': song,
         'attributes': attributes,
-        'performances': performances
+        'performances': performances,
+        'backlink': f'/chor{song.chor.pk}/songs/'
     }
     return render(request, 'chor/song.html', context)
 
@@ -160,7 +166,8 @@ def createSong(request, chor_id):
                 return redirect('chor-songs', chor_id=chor_id)
     context = {
         'form': form,
-        'chor': chor
+        'chor': chor,
+        'backlink': f'/chor{chor.pk}/songs/'
     }
     return render(request, 'chor/song_form.html', context)
 
@@ -213,7 +220,8 @@ def updateSong(request, pk):
 
     context = {
         'form': form,
-        'chor': chor
+        'chor': chor,
+        'backlink': f'/song/{song.pk}/'
     }
     return render(request, 'chor/song_form.html', context)
 
@@ -225,13 +233,14 @@ def deleteSong(request, pk):
     if request.method == "POST":
         song.delete()
         return redirect('chor-songs', chor_id=chor_id)
-    context = {'obj': song}
+    context = {
+        'obj': song,
+        'backlink': f'/song/{song.pk}/',
+    }
     return render(request, 'delete.html', context)
 
 
-""" SongProperty views """
-
-
+# SongProperty views
 @login_required(login_url='user-login')
 def createProperty(request, chor_id):
     form = SongPropertyNameForm()
@@ -242,7 +251,9 @@ def createProperty(request, chor_id):
                 chor_id=chor_id, name=form.cleaned_data.get('name'))
             songpn.save()
             return redirect('chor-homepage', chor_id=chor_id)
-    context = {'form': form}
+    context = {
+        'form': form,
+    }
     return render(request, 'chor/property_form.html', context)
 
 
@@ -254,14 +265,12 @@ def songPropertyNameDelete(request, prop_id):
         prop.delete()
         return redirect('chor-songproperties', chor_id=chor_id)
     context = {
-        'obj': prop
+        'obj': prop,
     }
     return render(request, 'delete.html', context)
 
 
-""" Performance views """
-
-
+# Performance views """
 @login_required(login_url='user-login')
 def deletePerformance(request, perf_id):
     perf = SongPerformance.objects.get(id=perf_id)
@@ -270,7 +279,8 @@ def deletePerformance(request, perf_id):
         perf.delete()
         return redirect('chor-performances', chor_id=chor_id)
     context = {
-        'obj': perf
+        'obj': perf,
+        'backlink': f'/song/{perf.song.pk}'
     }
     return render(request, 'delete.html', context)
 
@@ -288,6 +298,6 @@ def createPerformance(request, song_id):
             return redirect('song', pk=song_id)
     context = {
         'form': form,
-        'song': song
+        'song': song,
     }
     return render(request, 'chor/performance_form.html', context)

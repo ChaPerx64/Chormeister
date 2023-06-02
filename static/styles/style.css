@@ -11,12 +11,13 @@ h1, h2, h3 {
 
 body {
   font-family: "Jost", sans-serif;
-  height: 100vh;
   background-color: #F0DFF6;
   color: #392D32;
   background: radial-gradient(at left top, #F0DFF6, #63ADF2);
   background-repeat: no-repeat;
   background-attachment: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 body a {
   color: #392D32;
@@ -34,9 +35,11 @@ nav {
   background-color: #392D32;
   color: #ffffff;
   display: grid;
-  grid-template-columns: 0.5fr 1fr 3fr 5rem;
+  grid-template-columns: 5rem 1fr 5rem;
   align-items: center;
   justify-items: center;
+  position: sticky;
+  top: 0;
 }
 nav a {
   color: #ffffff;
@@ -44,12 +47,13 @@ nav a {
 }
 
 .navlogo {
-  justify-self: left;
+  justify-self: center;
 }
 
 main {
   max-width: 100%;
   margin: auto;
+  overflow-x: hidden;
 }
 
 .titlediv {

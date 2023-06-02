@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Chor (models.Model):
     name = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
@@ -23,7 +24,7 @@ class Song (models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['name']
+        ordering = ['name',]
 
     def __str__(self) -> str:
         return ' - '.join((self.name, str(self.chor)))
@@ -38,7 +39,7 @@ class SongPropertyName (models.Model):
 
     class Meta:
         ordering = ['name']
-    
+
     def __str__(self) -> str:
         return self.name
 

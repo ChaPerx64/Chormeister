@@ -22,7 +22,9 @@ def loginPage(request: WSGIRequest):
             return redirect('user-homepage', user_id=user.pk)
         else:
             messages.error(request, "Username-passord pair is incorrect")
-    context = {}
+    context = {
+        'backlink': '/'
+    }
     return render(request, 'user/login-register.html', context)
 
 
@@ -38,6 +40,7 @@ def registerPage(request: WSGIRequest):
     context = {
         'renderreg': True,
         'form': form,
+        'backlink': '/'
     }
     return render(request, 'user/login-register.html', context)
 
@@ -88,6 +91,7 @@ def editUser(request: WSGIRequest):
     context = {
         'renderreg': True,
         'form': form,
+        'backlink': f'/user/{user.pk}/'
     }
     return render(request, 'user/login-register.html', context)
 
@@ -100,6 +104,7 @@ def deleteUser(request: WSGIRequest):
         user.delete()
         return redirect('landing')
     context = {
-        'obj': user
+        'obj': user,
+        'backlink': f'/user/{user.pk}/'
     }
     return render(request, 'delete.html', context)

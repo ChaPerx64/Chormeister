@@ -46,12 +46,14 @@ h1, h2, h3 {
 
 body {
   font-family: $mainfont;
-  height: 100vh;
+  // height: 100vh;
   background-color: $color-bg-main;
   color: $color-font-main;
   background: $gradient-bg-main;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
 
   a {
     color: $color-font-main;
@@ -72,9 +74,11 @@ nav {
   background-color: $color-bg-darkest;
   color: $color-font-light;
   display: grid;
-  grid-template-columns: 0.5fr 1fr 3fr 5rem;
+  grid-template-columns: 5rem 1fr 5rem;
   align-items: center;
   justify-items: center;
+  position: sticky;
+  top: 0;
 
   a {
     color: $color-font-light;
@@ -84,12 +88,13 @@ nav {
 
 .navlogo {
   // margin: auto;
-  justify-self: left;
+  justify-self: center;
 }
 
 main {
   max-width: $mainwidth;
   margin: auto;
+  overflow-x: hidden;
 }
 
 .titlediv {

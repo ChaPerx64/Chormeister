@@ -9,11 +9,11 @@
     {% if chors %} {% for chor in chors %}
     <a href="{% url 'chor-homepage' chor.id %}">{{chor.name}}</a>
     {% endfor %} {% else %}
-    <p>You are not participating in any group!</p>
+    <p>You are not participating in any "Chor"!</p>
     {% endif %} {% if ownerview %}
     <p>&nbsp;</p>
     <p>Create a "Chor"</p>
-    <p>Request to join a "Chor"</p>
+    <p>Find a "Chor" to join</p>
     {% endif %}
   </div>
 </div>
