@@ -1,41 +1,43 @@
-{% extends 'main.html' %}
-
-
-{% block title %}
-
-  <h1>Hello, {{user.username}}!</h1>
-
-{% endblock title %}
-
-{% block content %}
+{% extends 'main.html' %} {% block title %} {% if ownerview %}
+<h1>Hello, {{user.username}}!</h1>
+{% else %}
+<h1>Page of user<br />{{user.username}}</h1>
+{% endif %} {% endblock title %} {% block content %}
 <div class="card">
-  <div class="cardtitle">
-    About
+  <div class="cardtitle">My "Chors"</div>
+  <div class="cardtable">
+    {% if chors %} {% for chor in chors %}
+    <a href="{% url 'chor-homepage' chor.id %}">{{chor.name}}</a>
+    {% endfor %} {% else %}
+    <p>You are not participating in any group!</p>
+    {% endif %} {% if ownerview %}
+    <p>&nbsp;</p>
+    <p>Create a "Chor"</p>
+    <p>Request to join a "Chor"</p>
+    {% endif %}
   </div>
-
 </div>
 <div class="card">
-  <div class="cardtitle">
-    My "Chors"
-  </div>
-  <div class="cardtable">
-    {% for chor in chors %}
-      <a href="{% url 'chor-homepage' chor.id %}">{{chor.name}}</a>
+  <div class="cardtitle">Past Activity</div>
+</div>
+<div class="card">
+  <div class="cardtitle">About me</div>
+  <div class="cardtable2">
+    {% for key, value in usr_attribs.items %}
+    <div class="justr">{{key}}</div>
+    <div class="justl">{{value}}</div>
     {% endfor %}
   </div>
-
 </div>
 <div class="card">
-  <div class="cardtitle">
-    Past Activity
+  <div class="cardtitle">Actions</div>
+  <div class="cardtable">
+    {% if ownerview %}
+    <a href="{% url 'user-edit' %}">Edit my profile</a>
+    <a href="{% url 'user-delete' %}">Delete my profile</a>
+    {% else %}
+    <p>Send invitation to "Chor"</p>
+    {% endif %}
   </div>
-
 </div>
-<div class="card">
-  <div class="cardtitle">
-    Upcoming Activity
-  </div>
-
-</div>
-
 {% endblock content %}

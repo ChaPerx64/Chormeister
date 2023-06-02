@@ -1,40 +1,18 @@
-{% extends 'main.html' %}
-
-{% block title %}
+{% extends 'main.html' %} {% block title %}
 
 <h1>WELCOME!</h1>
 
-{% endblock title%}
-
-{% block content %}
-{% if page == 'login' %}
+{% endblock title%} {% block content %} {% if renderreg %}
 <div>
   <form method="POST" action="">
     {% csrf_token %}
-    <div class="card">
-      <div class="cardtitle">
-        Authorization
-      </div>
-      <div class="cardtable2shifted">
-
-        <div class="justr">
-          <label>Username:</label>
-        </div>
-        <div class="justl">
-          <input type="text" name="username" placeholder="Enter Username">
-        </div>
-
-        <div class="justr">
-          <label>Password:</label>
-        </div>
-        <div class="justl">
-          <input type="password" name="password" placeholder="Enter Password">
-        </div>
-      </div>
+    <div class="widecard">
+      <div class="cardtitle">Registration</div>
+      <div class="form_reg_user">{{form}}</div>
       <div class="cardtable">
-        <p></p><input class="button" type="submit" value="Login">
+        <input class="button" type="submit" value="Register" />
         <p>&nbsp;</p>
-        <a href="{% url 'user-register' %}"><p>Haven't signed up?</p></a>
+        <a href="{% url 'user-login' %}"><p>Already singed up?</p></a>
       </div>
     </div>
   </form>
@@ -44,19 +22,28 @@
   <form method="POST" action="">
     {% csrf_token %}
     <div class="card">
-      <div class="cardtitle">
-        Authorization
-      </div>
+      <div class="cardtitle">Authorization</div>
       <div class="cardtable2shifted">
-      
+        <div class="justr">
+          <label>Username:</label>
+        </div>
+        <div class="justl">
+          <input type="text" name="username" placeholder="Enter Username" />
+        </div>
+        <div class="justr">
+          <label>Password:</label>
+        </div>
+        <div class="justl">
+          <input type="password" name="password" placeholder="Enter Password" />
+        </div>
       </div>
       <div class="cardtable">
-        <input class="button" type="submit" value="Register">
+        <p></p>
+        <input class="button" type="submit" value="Login" />
         <p>&nbsp;</p>
-        <a href="{% url 'user-login' %}"><p>Already singed up?</p></a>
+        <a href="{% url 'user-register' %}"><p>Haven't signed up?</p></a>
       </div>
     </div>
   </form>
 </div>
-{% endif %}
-{% endblock content %}
+{% endif %} {% endblock content %}

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 
+
 def landingPage(request):
     user = request.user
     if user.is_authenticated:

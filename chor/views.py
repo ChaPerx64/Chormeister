@@ -7,12 +7,14 @@ from django.contrib.auth.decorators import login_required
 
 """ General chor views """
 
+
 @login_required(login_url='user-login')
 def chorhomepage(request, chor_id):
     chor = Chor.objects.get(id=chor_id)
     songs = Song.objects.filter(chor=chor_id)
     context = {'songs': songs, 'chor': chor}
     return render(request, 'chor/chor-homepage.html', context)
+
 
 @login_required(login_url='user-login')
 def chorsongs(request, chor_id):
@@ -33,8 +35,8 @@ def chorsongs(request, chor_id):
                 sortq = 'value'
             songs = SongPropertyValue.objects\
                 .filter(
-                Q(song__chor__id=chor_id) &
-                Q(songpropertyname__name=sortby)
+                    Q(song__chor__id=chor_id) &
+                    Q(songpropertyname__name=sortby)
                 )\
                 .values("song__id", "song__name", 'value')\
                 .order_by(sortq, 'song__name')
@@ -44,7 +46,7 @@ def chorsongs(request, chor_id):
             songs = chor.song_set.filter(
                 Q(name__icontains=qstr) |
                 Q(songpropertyvalue__value__icontains=qstr)
-                )\
+            )\
                 .annotate(numperformances=Count('songperformance'))
         else:
             songs = chor.song_set.all()\
@@ -59,10 +61,11 @@ def chorsongs(request, chor_id):
     }
     return render(request, 'chor/chor-songs.html', context)
 
+
 @login_required(login_url='user-login')
 def chorPerformances(request, chor_id):
     chor = Chor.objects.get(id=chor_id)
-    performances = SongPerformance.objects.filter(song__chor=chor) #.order_by('-datetime')
+    performances = SongPerformance.objects.filter(song__chor=chor)
     out_list = list()
     prev_month = performances[0].dtofperformance.month
     for perf in performances:
@@ -75,6 +78,7 @@ def chorPerformances(request, chor_id):
         'performances': out_list,
     }
     return render(request, 'chor/chor-performances.html', context)
+
 
 @login_required(login_url='user-login')
 def chorSongProperties(request, chor_id):
@@ -89,6 +93,7 @@ def chorSongProperties(request, chor_id):
 
 """ Song pages """
 
+
 @login_required(login_url='user-login')
 def song(request, pk):
     song = Song.objects.get(id=pk)
@@ -99,21 +104,22 @@ def song(request, pk):
     for name in songpropertynames:
         attributes.update({name.name: ''})
     songpropvalues = song.songpropertyvalue_set.all()
-    
+
     ''' Filling attributes dict with proopertyvalues from database '''
     for spv in songpropvalues:
         attributes.update({spv.songpropertyname.name: spv.value})
-    
+
     ''' Finding performances of the song '''
     performances = song.songperformance_set.all()
-    
+
     ''' Putting out '''
     context = {
         'song': song,
         'attributes': attributes,
-        'performances':performances
+        'performances': performances
     }
     return render(request, 'chor/song.html', context)
+
 
 @login_required(login_url='user-login')
 def createSong(request, chor_id):
@@ -124,7 +130,7 @@ def createSong(request, chor_id):
     attrlist = list()
     for attr in attrnames:
         attrlist.append(attr.name)
-    
+
     ''' Creating Form Class dynamically with custom constructor '''
     SongCreationForm = SongCreationFormConstructor(attrlist)
     form = SongCreationForm()
@@ -158,9 +164,10 @@ def createSong(request, chor_id):
     }
     return render(request, 'chor/song_form.html', context)
 
+
 @login_required(login_url='user-login')
 def updateSong(request, pk):
-    song = Song.objects.get(id = pk)
+    song = Song.objects.get(id=pk)
     chor = song.chor
 
     ''' Creating fields list for a custom form '''
@@ -195,7 +202,8 @@ def updateSong(request, pk):
                             attr.save()
                             isnew = False
                     if isnew:
-                        spn = SongPropertyName.objects.filter(Q(chor=chor) & Q(name=key))[0]
+                        spn = SongPropertyName.objects.filter(
+                            Q(chor=chor) & Q(name=key))[0]
                         SongPropertyValue.objects.create(
                             songpropertyname=spn,
                             song=song,
@@ -209,6 +217,7 @@ def updateSong(request, pk):
     }
     return render(request, 'chor/song_form.html', context)
 
+
 @login_required(login_url='user-login')
 def deleteSong(request, pk):
     song = Song.objects.get(id=pk)
@@ -217,10 +226,11 @@ def deleteSong(request, pk):
         song.delete()
         return redirect('chor-songs', chor_id=chor_id)
     context = {'obj': song}
-    return render(request, 'chor/delete.html', context)
+    return render(request, 'delete.html', context)
 
 
 """ SongProperty views """
+
 
 @login_required(login_url='user-login')
 def createProperty(request, chor_id):
@@ -228,11 +238,13 @@ def createProperty(request, chor_id):
     if request.method == "POST":
         form = SongPropertyNameForm(request.POST)
         if form.is_valid():
-            songpn = SongPropertyName.objects.create(chor_id=chor_id, name=form.cleaned_data.get('name'))
+            songpn = SongPropertyName.objects.create(
+                chor_id=chor_id, name=form.cleaned_data.get('name'))
             songpn.save()
             return redirect('chor-homepage', chor_id=chor_id)
     context = {'form': form}
     return render(request, 'chor/property_form.html', context)
+
 
 @login_required(login_url='user-login')
 def songPropertyNameDelete(request, prop_id):
@@ -244,10 +256,11 @@ def songPropertyNameDelete(request, prop_id):
     context = {
         'obj': prop
     }
-    return render(request, 'chor/delete.html', context)
+    return render(request, 'delete.html', context)
 
 
 """ Performance views """
+
 
 @login_required(login_url='user-login')
 def deletePerformance(request, perf_id):
@@ -259,7 +272,8 @@ def deletePerformance(request, perf_id):
     context = {
         'obj': perf
     }
-    return render(request, 'chor/delete.html', context)
+    return render(request, 'delete.html', context)
+
 
 @login_required(login_url='user-login')
 def createPerformance(request, song_id):
@@ -268,7 +282,8 @@ def createPerformance(request, song_id):
     if request.method == "POST":
         form = SongPerformanceForm(request.POST)
         if form.is_valid():
-            songperf = SongPerformance.objects.create(song_id=song_id, dtofperformance=form.cleaned_data.get('dtofperformance'))
+            songperf = SongPerformance.objects.create(
+                song_id=song_id, dtofperformance=form.cleaned_data.get('dtofperformance'))
             songperf.save()
             return redirect('song', pk=song_id)
     context = {

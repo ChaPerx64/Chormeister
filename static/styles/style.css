@@ -97,14 +97,14 @@ main {
   font-size: 1.2rem;
   font-family: "Unbounded", cursive;
 }
-.cardbox .cardtext, .cardbox .cardtable, .cardbox .cardtable3, .cardbox .cardtable2shifted, .cardbox .cardtable2 {
+.cardbox .cardtext, .cardbox .cardtable, .cardbox .cardtable3, .cardbox .cardtable2shifted, .cardbox .form_reg_user, .cardbox .cardtable2 {
   height: auto;
   width: 100%;
   margin: auto;
   border-radius: 0.5rem;
   padding: 1rem;
 }
-.cardbox .cardtable, .cardbox .cardtable3, .cardbox .cardtable2shifted, .cardbox .cardtable2 {
+.cardbox .cardtable, .cardbox .cardtable3, .cardbox .cardtable2shifted, .cardbox .form_reg_user, .cardbox .cardtable2 {
   display: grid;
   grid-template-columns: 1fr;
   text-align: center;
@@ -112,19 +112,22 @@ main {
   align-items: center;
   gap: 0.25rem 1rem;
 }
-.cardbox .cardtable .justr, .cardbox .cardtable3 .justr, .cardbox .cardtable2shifted .justr, .cardbox .cardtable2 .justr {
+.cardbox .cardtable .justr, .cardbox .cardtable3 .justr, .cardbox .cardtable2shifted .justr, .cardbox .form_reg_user .justr, .cardbox .form_reg_user label, .cardbox .cardtable2 .justr {
   justify-self: right;
   text-align: right;
 }
-.cardbox .cardtable .justl, .cardbox .cardtable3 .justl, .cardbox .cardtable2shifted .justl, .cardbox .cardtable2 .justl {
+.cardbox .cardtable .justl, .cardbox .cardtable3 .justl, .cardbox .cardtable2shifted .justl, .cardbox .form_reg_user .justl, .cardbox .form_reg_user .helptext, .cardbox .form_reg_user input, .cardbox .cardtable2 .justl {
   justify-self: left;
   text-align: left;
 }
 .cardbox .cardtable2 {
   grid-template-columns: 1fr 1fr;
 }
-.cardbox .cardtable2shifted {
+.cardbox .cardtable2shifted, .cardbox .form_reg_user {
   grid-template-columns: 1fr 2fr;
+}
+.cardbox .form_reg_user .helptext {
+  font-size: 0.8rem;
 }
 .cardbox .cardtable3 {
   grid-template-columns: 1fr 2fr 2fr;
@@ -138,6 +141,13 @@ input[type=text] {
 }
 
 input[type=password] {
+  padding: 0.25rem;
+  margin: 0.1rem;
+  border: 0px solid #392D32;
+  border-radius: 0.25rem;
+}
+
+input[type=email] {
   padding: 0.25rem;
   margin: 0.1rem;
   border: 0px solid #392D32;
@@ -169,4 +179,9 @@ input[type=password] {
 
 .smallicon {
   width: 1.8rem;
+}
+
+.errorlist {
+  font-size: 0.8rem;
+  color: #F07167;
 }/*# sourceMappingURL=style.css.map */

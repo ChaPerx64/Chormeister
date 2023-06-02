@@ -13,6 +13,7 @@ $mainfont: 'Jost', sans-serif;
 $labelfont: 'Unbounded', cursive;
 $biggestsize: 1.8rem;
 $sizeh3: 1.2rem;
+$smallsize: 0.8rem;
 
 //Colors
 $color-bg-main: #F0DFF6;
@@ -170,6 +171,19 @@ main {
     @extend .cardtable;
     grid-template-columns: 1fr 2fr;
   }
+  .form_reg_user {
+    @extend .cardtable2shifted;
+    label {
+      @extend .justr;
+    }
+    input {
+      @extend .justl;
+    }
+    .helptext {
+      font-size: $smallsize;
+      @extend .justl;
+    }
+  }
   .cardtable3 {
     @extend .cardtable;
     grid-template-columns: 1fr 2fr 2fr;
@@ -188,7 +202,12 @@ input[type=password] {
   border: 0px solid $color-font-main;
   border-radius: 0.25rem;
 }
-
+input[type=email] {
+  padding: 0.25rem;
+  margin: 0.1rem;
+  border: 0px solid $color-font-main;
+  border-radius: 0.25rem;
+}
 
 
 .button {
@@ -218,4 +237,11 @@ input[type=password] {
 
 .smallicon {
   width: 1.8rem;
+}
+
+
+
+.errorlist {
+  font-size: $smallsize;
+  color: $color-accent1;
 }
