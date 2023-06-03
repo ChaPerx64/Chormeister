@@ -1,0 +1,21 @@
+{% extends 'main.html' %} {% block content %}
+
+<div class="widecard">
+  <div class="cardtitle">
+    {% if chor %}
+      Editing {{chor.name}} info
+    {% else %}
+      Creating a new Chor
+    {% endif %}
+  </div>
+  <form method="POST" action="">
+    <div class="cardtable2">{% csrf_token %} {{form}}</div>
+    <div class="cardtable">
+      <p><input class="button" type="submit" value="Submit" /></p>
+      <p>&nbsp;</p>
+      <p>You can invite members into Chor later</p>
+    </div>
+  </form>
+</div>
+
+{% endblock content %}

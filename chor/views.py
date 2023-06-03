@@ -1,15 +1,17 @@
-from django.shortcuts import render, redirect
-from django.db.models import Count, Q
+from django.urls import is_valid_path
 from .models import Chor, Song, SongPropertyValue, SongPropertyName, SongPerformance
-from .forms import SongPropertyNameForm, SongCreationFormConstructor, SongPerformanceForm
+from .forms import SongPropertyNameForm, SongCreationFormConstructor, SongPerformanceForm, ChorForm
+from django.db.models import Count, Q
 from django.contrib.auth.decorators import login_required
-
+from django.core.handlers.wsgi import WSGIRequest
+from django.shortcuts import render, redirect
 
 # General chor views
+
+
 @login_required(login_url='user-login')
-def chorhomepage(request, chor_id):
+def chorhomepage(request: WSGIRequest, chor_id):
     chor = Chor.objects.get(id=chor_id)
-    # songs = Song.objects.filter(chor=chor_id)
     songs = chor.song_set.all()\
         .annotate(numperformances=Count('songperformance'))\
         .order_by('-numperformances')[0:3]
@@ -27,7 +29,39 @@ def chorhomepage(request, chor_id):
 
 
 @login_required(login_url='user-login')
-def chorsongs(request, chor_id):
+def createChor(request: WSGIRequest):
+    form = ChorForm()
+    if request.method == 'POST':
+        form = ChorForm(request.POST)
+        if form.is_valid():
+            chor = form.save(commit=False)
+            chor.save()
+            return redirect('chor-homepage', chor.pk)
+    context = {
+        'form': form,
+        'chor': None,
+    }
+    return render(request, 'chor/chor-form.html', context)
+
+
+@login_required(login_url='user-login')
+def editChor(request: WSGIRequest, chor_id):
+    chor = Chor.objects.get(id=chor_id)
+    form = ChorForm(instance=chor)
+    if request.method == 'POST':
+        form = ChorForm(request.POST, instance=chor)
+        if form.is_valid():
+            form.save()
+            return redirect('chor-homepage', chor.pk)
+    context = {
+        'form': form,
+        'chor': chor,
+    }
+    return render(request, 'chor/chor-form.html', context)
+
+
+@login_required(login_url='user-login')
+def chorsongs(request: WSGIRequest, chor_id):
     chor = Chor.objects.get(id=chor_id)
     sortby = request.GET.get('s')
     qstr = request.GET.get('q')
@@ -76,7 +110,7 @@ def chorsongs(request, chor_id):
 
 
 @login_required(login_url='user-login')
-def chorPerformances(request, chor_id):
+def chorPerformances(request: WSGIRequest, chor_id):
     chor = Chor.objects.get(id=chor_id)
     performances = SongPerformance.objects.filter(song__chor=chor)
     out_list = list()
@@ -95,7 +129,7 @@ def chorPerformances(request, chor_id):
 
 
 @login_required(login_url='user-login')
-def chorSongProperties(request, chor_id):
+def chorSongProperties(request: WSGIRequest, chor_id):
     chor = Chor.objects.get(id=chor_id)
     properties = chor.songpropertyname_set.all()
     context = {
@@ -108,7 +142,7 @@ def chorSongProperties(request, chor_id):
 
 # Song pages
 @login_required(login_url='user-login')
-def song(request, pk):
+def song(request: WSGIRequest, pk):
     song = Song.objects.get(id=pk)
     songpropertynames = song.chor.songpropertyname_set.all()
 
@@ -136,7 +170,7 @@ def song(request, pk):
 
 
 @login_required(login_url='user-login')
-def createSong(request, chor_id):
+def createSong(request: WSGIRequest, chor_id):
     chor = Chor.objects.get(id=chor_id)
 
     ''' Creating fields list for a custom form '''
@@ -181,7 +215,7 @@ def createSong(request, chor_id):
 
 
 @login_required(login_url='user-login')
-def updateSong(request, pk):
+def updateSong(request: WSGIRequest, pk):
     song = Song.objects.get(id=pk)
     chor = song.chor
 
@@ -235,7 +269,7 @@ def updateSong(request, pk):
 
 
 @login_required(login_url='user-login')
-def deleteSong(request, pk):
+def deleteSong(request: WSGIRequest, pk):
     song = Song.objects.get(id=pk)
     chor_id = song.chor.pk
     if request.method == "POST":
@@ -250,7 +284,7 @@ def deleteSong(request, pk):
 
 # SongProperty views
 @login_required(login_url='user-login')
-def createProperty(request, chor_id):
+def createProperty(request: WSGIRequest, chor_id):
     form = SongPropertyNameForm()
     if request.method == "POST":
         form = SongPropertyNameForm(request.POST)
@@ -266,7 +300,7 @@ def createProperty(request, chor_id):
 
 
 @login_required(login_url='user-login')
-def songPropertyNameDelete(request, prop_id):
+def songPropertyNameDelete(request: WSGIRequest, prop_id):
     prop = SongPropertyName.objects.get(id=prop_id)
     chor_id = prop.chor.pk
     if request.method == "POST":
@@ -280,7 +314,7 @@ def songPropertyNameDelete(request, prop_id):
 
 # Performance views """
 @login_required(login_url='user-login')
-def deletePerformance(request, perf_id):
+def deletePerformance(request: WSGIRequest, perf_id):
     perf = SongPerformance.objects.get(id=perf_id)
     chor_id = perf.song.chor.pk
     if request.method == "POST":
@@ -294,7 +328,7 @@ def deletePerformance(request, perf_id):
 
 
 @login_required(login_url='user-login')
-def createPerformance(request, song_id):
+def createPerformance(request: WSGIRequest, song_id):
     song = Song.objects.get(id=song_id)
     form = SongPerformanceForm()
     if request.method == "POST":

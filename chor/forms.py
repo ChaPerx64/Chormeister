@@ -2,7 +2,7 @@
 from django.forms import ModelForm, Form
 from django import forms
 from django.forms.utils import ErrorList
-from .models import Song, SongPropertyName, SongPropertyValue, SongPerformance
+from .models import Song, SongPropertyName, SongPropertyValue, SongPerformance, Chor
 
 
 class SongForm(ModelForm):
@@ -14,7 +14,10 @@ class SongForm(ModelForm):
 def SongCreationFormConstructor(fieldnames: list[str]):
     attr = {'name': forms.CharField(label='Name', max_length=255)}
     for fieldname in fieldnames:
-        attr.update({fieldname: forms.CharField(label=fieldname, max_length=255, required=False)})
+        attr.update({
+            fieldname: forms.CharField(
+                label=fieldname, max_length=255, required=False)
+        })
     return type('SongCreationForm', (Form,), attr)
 
 
@@ -29,8 +32,14 @@ class SongPropertyValueForm(ModelForm):
         model = SongPropertyValue
         fields = '__all__'
 
+
 class SongPerformanceForm(ModelForm):
     class Meta:
         model = SongPerformance
         fields = ['dtofperformance']
-        
+
+
+class ChorForm(ModelForm):
+    class Meta:
+        model = Chor
+        fields = '__all__'

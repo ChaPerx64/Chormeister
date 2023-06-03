@@ -190,6 +190,13 @@ input[type=email] {
   border-radius: 0.25rem;
 }
 
+textarea {
+  padding: 0.25rem;
+  margin: 0.1rem;
+  border: 0px solid #392D32;
+  border-radius: 0.25rem;
+}
+
 .button, .dangerbtn, .dangerbtnicon {
   padding: 0.3rem;
   border-radius: 0.25rem;

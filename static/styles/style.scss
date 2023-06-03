@@ -238,6 +238,12 @@ input[type=email] {
   border: 0px solid $color-font-main;
   border-radius: 0.25rem;
 }
+textarea {
+  padding: 0.25rem;
+  margin: 0.1rem;
+  border: 0px solid $color-font-main;
+  border-radius: 0.25rem;
+}
 
 .button {
   padding: 0.3rem;
