@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 h1, h2, h3 {
@@ -12,6 +13,7 @@ h1, h2, h3 {
 
 body {
   font-family: "Jost", sans-serif;
+  height: 100vh;
   font-size: 16px;
   background-color: #F0DFF6;
   color: #392D32;
@@ -37,7 +39,7 @@ nav {
   background-color: #392D32;
   color: #ffffff;
   display: grid;
-  grid-template-columns: 5rem 1fr 5rem;
+  grid-template-columns: 3rem 1fr 5rem 7rem;
   align-items: center;
   justify-items: center;
   position: sticky;
@@ -47,9 +49,19 @@ nav a {
   color: #ffffff;
   text-decoration: none;
 }
+nav .ovalborder {
+  padding: 0px 1rem;
+  border: solid 2px;
+  border-radius: 1rem;
+}
 
 .navlogo {
   justify-self: center;
+}
+@media only screen and (max-width: 600px) {
+  .navlogo {
+    visibility: hidden;
+  }
 }
 
 main {
@@ -118,14 +130,14 @@ main {
 .cardbox .card_actions a:hover {
   color: #F07167;
 }
-.cardbox .cardtext, .cardbox .cardtable, .cardbox .cardtable3, .cardbox .cardtable2shifted, .cardbox .form_reg_user, .cardbox .cardtable2 {
+.cardbox .cardtext, .cardbox .cardtable, .cardbox .cardtable3inversed, .cardbox .cardtable3, .cardbox .cardtable2shifted, .cardbox .form_reg_user, .cardbox .cardtable2 {
   height: auto;
   width: 100%;
   margin: auto;
   border-radius: 0.5rem;
   padding: 1rem;
 }
-.cardbox .cardtable, .cardbox .cardtable3, .cardbox .cardtable2shifted, .cardbox .form_reg_user, .cardbox .cardtable2 {
+.cardbox .cardtable, .cardbox .cardtable3inversed, .cardbox .cardtable3, .cardbox .cardtable2shifted, .cardbox .form_reg_user, .cardbox .cardtable2 {
   display: grid;
   grid-template-columns: 1fr;
   text-align: center;
@@ -133,11 +145,11 @@ main {
   align-items: center;
   gap: 0.25rem 1rem;
 }
-.cardbox .cardtable .justr, .cardbox .cardtable3 .justr, .cardbox .cardtable2shifted .justr, .cardbox .form_reg_user .justr, .cardbox .form_reg_user label, .cardbox .cardtable2 .justr {
+.cardbox .cardtable .justr, .cardbox .cardtable3inversed .justr, .cardbox .cardtable3 .justr, .cardbox .cardtable2shifted .justr, .cardbox .form_reg_user .justr, .cardbox .form_reg_user label, .cardbox .cardtable2 .justr {
   justify-self: right;
   text-align: right;
 }
-.cardbox .cardtable .justl, .cardbox .cardtable3 .justl, .cardbox .cardtable2shifted .justl, .cardbox .form_reg_user .justl, .cardbox .form_reg_user .helptext, .cardbox .form_reg_user input, .cardbox .cardtable2 .justl {
+.cardbox .cardtable .justl, .cardbox .cardtable3inversed .justl, .cardbox .cardtable3 .justl, .cardbox .cardtable2shifted .justl, .cardbox .form_reg_user .justl, .cardbox .form_reg_user .helptext, .cardbox .form_reg_user input, .cardbox .cardtable2 .justl {
   justify-self: left;
   text-align: left;
 }
@@ -152,6 +164,9 @@ main {
 }
 .cardbox .cardtable3 {
   grid-template-columns: 1fr 2fr 2fr;
+}
+.cardbox .cardtable3inversed {
+  grid-template-columns: 2fr 2fr 1fr;
 }
 
 input[type=text] {
@@ -195,11 +210,13 @@ input[type=email] {
 }
 
 .dangerbtnicon {
+  background-color: rgba(255, 255, 255, 0);
+  border: solid 2px #F07167;
   padding: 0rem;
 }
 
 .smallicon {
-  width: 1.8rem;
+  width: 1.6rem;
 }
 
 .errorlist {

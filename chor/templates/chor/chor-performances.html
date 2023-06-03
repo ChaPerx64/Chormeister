@@ -13,9 +13,9 @@
       >
     </div>
   </div>
-  <div class="cardtable3">
+  <div class="cardtable3inversed">
     {% for performance in performances%} {% if performance %}
-    <div class="justr">{{performance.dtofperformance|date:'d-m-Y, D'}}</div>
+    <div class="justr">{{performance.dtofperformance|date:'d.m.y, D'}}</div>
     <div class="justl">
       <a href="{% url 'song' performance.song.pk %}"
         >{{performance.song.name}}</a

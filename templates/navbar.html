@@ -17,9 +17,12 @@
     </a>
   </div>
   {% if request.user.is_authenticated %}
-  <p>{{request.user.username}}</p>
-  <a href="{% url 'user-logout' %}">Logout</a>
+  <a href="{% url 'user-homepage' request.user.id %}"
+    >{{request.user.username}}</a
+  >
+  <a class="ovalborder" href="{% url 'user-logout' %}">Logout</a>
   {% else %}
-  <a href="{% url 'user-login' %}">Login</a>
+  <p></p>
+  <a class="ovalborder" href="{% url 'user-login' %}">Login</a>
   {% endif %}
 </nav>
