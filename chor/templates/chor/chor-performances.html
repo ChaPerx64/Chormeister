@@ -16,7 +16,11 @@
   <div class="cardtable3">
     {% for performance in performances%} {% if performance %}
     <div class="justr">{{performance.dtofperformance|date:'d-m-Y, D'}}</div>
-    <div class="justl">{{performance.song.name}}</div>
+    <div class="justl">
+      <a href="{% url 'song' performance.song.pk %}"
+        >{{performance.song.name}}</a
+      >
+    </div>
     <button
       class="dangerbtnicon"
       onclick="window.location.href='{% url 'delete-performance' performance.id %}'"

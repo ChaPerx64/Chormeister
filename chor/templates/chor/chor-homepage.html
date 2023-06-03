@@ -37,7 +37,11 @@
   <div class="cardtable2shifted">
     {% for performance in performances %}
     <div class="justr">{{performance.dtofperformance|date:'M, dS, D'}}</div>
-    <div class="justl">{{performance.song.name}}</div>
+    <div class="justl">
+      <a href="{% url 'song' performance.song.pk %}"
+        >{{performance.song.name}}</a
+      >
+    </div>
     {% endfor %}
   </div>
   <div class="card_actions">

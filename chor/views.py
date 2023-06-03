@@ -89,7 +89,7 @@ def chorPerformances(request, chor_id):
     context = {
         'chor': chor,
         'performances': out_list,
-        'backlink': '../'
+        'backlink': '../',
     }
     return render(request, 'chor/chor-performances.html', context)
 
