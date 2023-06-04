@@ -15,7 +15,7 @@
     {% endif %} {% endif %}
   </div>
   {% if ownerview %}
-  <div class="card_actions">
+  <div class="area_actions">
     <div class="cardtable">
       <a href="{% url 'create-chor' %}">Create a "Chor"</a>
       <p>Find a "Chor" to join</p>
@@ -34,11 +34,10 @@
     <div class="justl">{{value}}</div>
     {% endfor %}
   </div>
-  <div class="card_actions">
+  <div class="area_actions">
     <div class="cardtable">
       {% if ownerview %}
-      <a href="{% url 'user-edit' %}">Edit my profile</a>
-      <a href="{% url 'user-delete' %}">Delete my profile</a>
+      <a href="{% url 'user-edit' %}">✏️ Edit my profile</a>
       {% else %}
       <p>Send invitation to "Chor"</p>
       {% endif %}

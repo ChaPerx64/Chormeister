@@ -1,6 +1,7 @@
+from enum import unique
 from django.db import models
-from django.contrib.auth.models import User
-from chor.models import Chor
+from chor.models import User
+# from chor.models import Chor
 
 # class ChorUser(models.Model):
 #     inneruser = models.OneToOneField(
@@ -21,7 +22,7 @@ class UserRoleName(models.Model):
 
     @classmethod
     def get_default_pk(cls):
-        userolename, created = cls.objects.get_or_create(name='Chor member')
+        userolename, created = cls.objects.get_or_create(name='member')
         return userolename.pk
 
     def __str__(self) -> str:
@@ -30,7 +31,7 @@ class UserRoleName(models.Model):
 
 class UserChorRole(models.Model):
     chor = models.ForeignKey(
-        Chor,
+        "chor.Chor", #declared in Chor.models
         on_delete=models.CASCADE
     )
     user = models.ForeignKey(
@@ -42,7 +43,11 @@ class UserChorRole(models.Model):
         on_delete=models.SET_DEFAULT,
         default=UserRoleName.get_default_pk
     )
+    description = models.CharField(max_length=255, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = [['chor', 'user']]
 
     def __str__(self) -> str:
         return ' - '.join((str(self.chor), str(self.user), str(self.role)))

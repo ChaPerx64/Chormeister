@@ -29,7 +29,7 @@ body a {
   transition: 0.25s;
 }
 body a:hover {
-  color: #F07167;
+  color: rgb(240, 113, 103);
 }
 
 nav {
@@ -90,7 +90,7 @@ main {
   justify-content: center;
   align-items: flex-start;
 }
-.cardbox .card, .cardbox .widecard {
+.cardbox .card, .cardbox .card_danger, .cardbox .widecard {
   background-color: rgba(255, 255, 255, 0.25);
   border-radius: 1rem;
   padding: 1rem;
@@ -101,13 +101,9 @@ main {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
-.cardbox .widecard {
-  width: 50rem;
-  max-width: 60rem;
-  height: auto;
-}
-.cardbox .cardtitle, .cardbox .card_actions {
+.cardbox .card .cardtitle, .cardbox .card_danger .cardtitle, .cardbox .widecard .cardtitle, .cardbox .card .area_actions, .cardbox .card_danger .area_actions, .cardbox .widecard .area_actions, .cardbox .card .area_danger, .cardbox .card_danger .area_danger, .cardbox .widecard .area_danger {
   margin: 0.5rem;
   padding: 0.5rem;
   background-color: #67515A;
@@ -117,27 +113,35 @@ main {
   font-size: 1.2rem;
   font-family: "Unbounded", cursive;
 }
-.cardbox .card_actions {
+.cardbox .card .area_actions, .cardbox .card_danger .area_actions, .cardbox .widecard .area_actions, .cardbox .card .area_danger, .cardbox .card_danger .area_danger, .cardbox .widecard .area_danger {
   padding: 0px;
   background-color: #63ADF2;
   color: #ffffff;
   font-size: 16px;
   font-family: "Jost", sans-serif;
 }
-.cardbox .card_actions a {
+.cardbox .card .area_actions a, .cardbox .card_danger .area_actions a, .cardbox .widecard .area_actions a, .cardbox .card .area_danger a, .cardbox .card_danger .area_danger a, .cardbox .widecard .area_danger a {
   color: #ffffff;
 }
-.cardbox .card_actions a:hover {
-  color: #F07167;
+.cardbox .card .area_actions a:hover, .cardbox .card_danger .area_actions a:hover, .cardbox .widecard .area_actions a:hover, .cardbox .card .area_danger a:hover, .cardbox .card_danger .area_danger a:hover, .cardbox .widecard .area_danger a:hover {
+  color: rgb(240, 113, 103);
 }
-.cardbox .cardtext, .cardbox .cardtable, .cardbox .cardtable3inversed, .cardbox .cardtable3, .cardbox .cardtable2shifted, .cardbox .form_reg_user, .cardbox .cardtable2 {
+.cardbox .card .area_danger, .cardbox .card_danger .area_danger, .cardbox .widecard .area_danger {
+  background-color: rgb(240, 113, 103);
+  color: #ffffff;
+}
+.cardbox .card .area_danger a:hover, .cardbox .card_danger .area_danger a:hover, .cardbox .widecard .area_danger a:hover {
+  color: orange;
+}
+.cardbox .card .cardtext, .cardbox .card_danger .cardtext, .cardbox .widecard .cardtext, .cardbox .card .cardtable, .cardbox .card_danger .cardtable, .cardbox .widecard .cardtable, .cardbox .card .cardtable3inversed, .cardbox .card_danger .cardtable3inversed, .cardbox .widecard .cardtable3inversed, .cardbox .card .cardtable3, .cardbox .card_danger .cardtable3, .cardbox .widecard .cardtable3, .cardbox .card .cardtable2shifted, .cardbox .card_danger .cardtable2shifted, .cardbox .widecard .cardtable2shifted, .cardbox .card .form_reg_user, .cardbox .card_danger .form_reg_user, .cardbox .widecard .form_reg_user, .cardbox .card .cardtable2, .cardbox .card_danger .cardtable2, .cardbox .widecard .cardtable2 {
   height: auto;
   width: 100%;
   margin: auto;
   border-radius: 0.5rem;
   padding: 1rem;
+  overflow-wrap: anywhere;
 }
-.cardbox .cardtable, .cardbox .cardtable3inversed, .cardbox .cardtable3, .cardbox .cardtable2shifted, .cardbox .form_reg_user, .cardbox .cardtable2 {
+.cardbox .card .cardtable, .cardbox .card_danger .cardtable, .cardbox .widecard .cardtable, .cardbox .card .cardtable3inversed, .cardbox .card_danger .cardtable3inversed, .cardbox .widecard .cardtable3inversed, .cardbox .card .cardtable3, .cardbox .card_danger .cardtable3, .cardbox .widecard .cardtable3, .cardbox .card .cardtable2shifted, .cardbox .card_danger .cardtable2shifted, .cardbox .widecard .cardtable2shifted, .cardbox .card .form_reg_user, .cardbox .card_danger .form_reg_user, .cardbox .widecard .form_reg_user, .cardbox .card .cardtable2, .cardbox .card_danger .cardtable2, .cardbox .widecard .cardtable2 {
   display: grid;
   grid-template-columns: 1fr;
   text-align: center;
@@ -145,28 +149,47 @@ main {
   align-items: center;
   gap: 0.25rem 1rem;
 }
-.cardbox .cardtable .justr, .cardbox .cardtable3inversed .justr, .cardbox .cardtable3 .justr, .cardbox .cardtable2shifted .justr, .cardbox .form_reg_user .justr, .cardbox .form_reg_user label, .cardbox .cardtable2 .justr {
+.cardbox .card .cardtable .justr, .cardbox .card_danger .cardtable .justr, .cardbox .widecard .cardtable .justr, .cardbox .card .cardtable3inversed .justr, .cardbox .card_danger .cardtable3inversed .justr, .cardbox .widecard .cardtable3inversed .justr, .cardbox .card .cardtable3 .justr, .cardbox .card_danger .cardtable3 .justr, .cardbox .widecard .cardtable3 .justr, .cardbox .card .cardtable2shifted .justr, .cardbox .card_danger .cardtable2shifted .justr, .cardbox .widecard .cardtable2shifted .justr, .cardbox .card .form_reg_user .justr, .cardbox .card_danger .form_reg_user .justr, .cardbox .widecard .form_reg_user .justr, .cardbox .card .form_reg_user label, .cardbox .card_danger .form_reg_user label, .cardbox .widecard .form_reg_user label, .cardbox .card .cardtable2 .justr, .cardbox .card_danger .cardtable2 .justr, .cardbox .widecard .cardtable2 .justr {
   justify-self: right;
   text-align: right;
 }
-.cardbox .cardtable .justl, .cardbox .cardtable3inversed .justl, .cardbox .cardtable3 .justl, .cardbox .cardtable2shifted .justl, .cardbox .form_reg_user .justl, .cardbox .form_reg_user .helptext, .cardbox .form_reg_user input, .cardbox .cardtable2 .justl {
+.cardbox .card .cardtable .justl, .cardbox .card_danger .cardtable .justl, .cardbox .widecard .cardtable .justl, .cardbox .card .cardtable3inversed .justl, .cardbox .card_danger .cardtable3inversed .justl, .cardbox .widecard .cardtable3inversed .justl, .cardbox .card .cardtable3 .justl, .cardbox .card_danger .cardtable3 .justl, .cardbox .widecard .cardtable3 .justl, .cardbox .card .cardtable2shifted .justl, .cardbox .card_danger .cardtable2shifted .justl, .cardbox .widecard .cardtable2shifted .justl, .cardbox .card .form_reg_user .justl, .cardbox .card_danger .form_reg_user .justl, .cardbox .widecard .form_reg_user .justl, .cardbox .card .form_reg_user .helptext, .cardbox .card_danger .form_reg_user .helptext, .cardbox .widecard .form_reg_user .helptext, .cardbox .card .form_reg_user input, .cardbox .card_danger .form_reg_user input, .cardbox .widecard .form_reg_user input, .cardbox .card .cardtable2 .justl, .cardbox .card_danger .cardtable2 .justl, .cardbox .widecard .cardtable2 .justl {
   justify-self: left;
   text-align: left;
 }
-.cardbox .cardtable2 {
+.cardbox .card .cardtable2, .cardbox .card_danger .cardtable2, .cardbox .widecard .cardtable2 {
   grid-template-columns: 1fr 1fr;
 }
-.cardbox .cardtable2shifted, .cardbox .form_reg_user {
+.cardbox .card .cardtable2shifted, .cardbox .card_danger .cardtable2shifted, .cardbox .widecard .cardtable2shifted, .cardbox .card .form_reg_user, .cardbox .card_danger .form_reg_user, .cardbox .widecard .form_reg_user {
   grid-template-columns: 1fr 2fr;
 }
-.cardbox .form_reg_user .helptext {
+.cardbox .card .form_reg_user .helptext, .cardbox .card_danger .form_reg_user .helptext, .cardbox .widecard .form_reg_user .helptext {
   font-size: 0.8rem;
 }
-.cardbox .cardtable3 {
+.cardbox .card .cardtable3, .cardbox .card_danger .cardtable3, .cardbox .widecard .cardtable3 {
   grid-template-columns: 1fr 2fr 2fr;
 }
-.cardbox .cardtable3inversed {
+.cardbox .card .cardtable3inversed, .cardbox .card_danger .cardtable3inversed, .cardbox .widecard .cardtable3inversed {
   grid-template-columns: 2fr 2fr 1fr;
+}
+.cardbox .widecard {
+  width: 50rem;
+  max-width: 60rem;
+  height: auto;
+}
+.cardbox .card_danger {
+  background-color: rgba(240, 113, 103, 0.5);
+}
+.cardbox .card_danger .cardtitle, .cardbox .card_danger .card .area_actions, .cardbox .card_danger .card_danger .area_actions, .cardbox .card .card_danger .area_actions, .cardbox .card_danger .card .area_danger, .cardbox .card_danger .card_danger .area_danger, .cardbox .card .card_danger .area_danger, .cardbox .card_danger .widecard .area_actions, .cardbox .widecard .card_danger .area_actions, .cardbox .card_danger .widecard .area_danger, .cardbox .widecard .card_danger .area_danger {
+  background-color: #83130B;
+  color: #ffffff;
+}
+.cardbox .card_danger .area_actions, .cardbox .card_danger .card .area_danger, .cardbox .card_danger .card_danger .area_danger, .cardbox .card .card_danger .area_danger, .cardbox .card_danger .widecard .area_danger, .cardbox .widecard .card_danger .area_danger {
+  background-color: rgb(240, 113, 103);
+  color: #ffffff;
+}
+.cardbox .card_danger .area_actions a:hover, .cardbox .card_danger .card .area_danger a:hover, .cardbox .card_danger .card_danger .area_danger a:hover, .cardbox .card .card_danger .area_danger a:hover, .cardbox .card_danger .widecard .area_danger a:hover, .cardbox .widecard .card_danger .area_danger a:hover {
+  color: orange;
 }
 
 input[type=text] {
@@ -204,9 +227,15 @@ textarea {
   transition: 0.5s;
   overflow: hidden;
 }
+.button:hover, .dangerbtn:hover, .dangerbtnicon:hover {
+  background-color: orange;
+}
+.button:active, .dangerbtn:active, .dangerbtnicon:active {
+  background-color: #F0DFF6;
+}
 
 .dangerbtn, .dangerbtnicon {
-  background-color: #F07167;
+  background-color: rgb(240, 113, 103);
   color: #ffffff;
 }
 .dangerbtn:hover, .dangerbtnicon:hover {
@@ -218,7 +247,7 @@ textarea {
 
 .dangerbtnicon {
   background-color: rgba(255, 255, 255, 0);
-  border: solid 2px #F07167;
+  border: solid 2px rgb(240, 113, 103);
   padding: 0rem;
 }
 
@@ -228,5 +257,5 @@ textarea {
 
 .errorlist {
   font-size: 0.8rem;
-  color: #F07167;
+  color: rgb(240, 113, 103);
 }/*# sourceMappingURL=style.css.map */

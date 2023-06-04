@@ -4,7 +4,11 @@
 
 <div class="widecard">
   <div class="cardtitle">
-    Creating/Editing a song
+    {% if song %}
+    Editing "{{song}}" info
+    {% else %}
+    Creating a song
+    {% endif %}
   </div>
   <form method="POST" action="">
     <div class="cardtable2">
@@ -14,6 +18,20 @@
       <p><input class="button" type="submit" value="Submit"></p>
     </div>
   </form>
+  <p>&nbsp;</p>
 </div>
+{% if song %}
+<div class="card_danger">
+  <div class="cardtitle">
+    Danger zone
+  </div>
+  <div class="area_actions">
+    <div class="cardtable">
+      <a href="{% url 'delete-song' song.id %}">Delete song</a>
+    </div>
+  </div>
+  <p>&nbsp;</p>
+</div>
+{% endif %}
 
 {% endblock content %}

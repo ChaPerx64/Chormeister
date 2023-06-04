@@ -11,41 +11,6 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.forms.models import model_to_dict
 
 
-# Unrestricted pages
-def loginPage(request: WSGIRequest):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user:
-            login(request, user)
-            return redirect('user-homepage', user_id=user.pk)
-        else:
-            messages.error(request, "Username-passord pair is incorrect")
-    context = {
-        'backlink': '/'
-    }
-    return render(request, 'user/login-register.html', context)
-
-
-def registerPage(request: WSGIRequest):
-    form = UserCreationForm()
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.save()
-            login(request, user)
-            return redirect('user-homepage', user.pk)
-    context = {
-        'renderreg': True,
-        'form': form,
-        'backlink': '/'
-    }
-    return render(request, 'user/login-register.html', context)
-
-
-# Restricted pages
 @login_required(login_url='user-login')
 def userHomepage(request: WSGIRequest, user_id: str):
     user = User.objects.get(pk=user_id)
@@ -71,10 +36,44 @@ def userHomepage(request: WSGIRequest, user_id: str):
     return render(request, 'user/user-homepage.html', context)
 
 
+def loginPage(request: WSGIRequest):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user:
+            login(request, user)
+            return redirect('user-homepage', user_id=user.pk)
+        else:
+            messages.error(request, "Username-passord pair is incorrect")
+    context = {
+        'backlink': '/'
+    }
+    return render(request, 'user/login-register.html', context)
+
+
 @login_required(login_url='user-login')
 def logoutUser(request: WSGIRequest):
     logout(request)
     return redirect('landing')
+
+
+# User CRUD pages
+def registerPage(request: WSGIRequest):
+    form = UserCreationForm()
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+            login(request, user)
+            return redirect('user-homepage', user.pk)
+    context = {
+        'rendermode': 'register',
+        'form': form,
+        'backlink': '/'
+    }
+    return render(request, 'user/login-register.html', context)
 
 
 @login_required(login_url='user-login')
@@ -89,11 +88,10 @@ def editUser(request: WSGIRequest):
             login(request, user)
             return redirect('user-homepage', user.pk)
     context = {
-        'renderreg': True,
         'form': form,
         'backlink': f'/user/{user.pk}/'
     }
-    return render(request, 'user/login-register.html', context)
+    return render(request, 'user/user-edit.html', context)
 
 
 @login_required(login_url='user-login')
@@ -104,6 +102,7 @@ def deleteUser(request: WSGIRequest):
         user.delete()
         return redirect('landing')
     context = {
+        'rendermode': None,
         'obj': user,
         'backlink': f'/user/{user.pk}/'
     }

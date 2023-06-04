@@ -42,4 +42,4 @@ class SongPerformanceForm(ModelForm):
 class ChorForm(ModelForm):
     class Meta:
         model = Chor
-        fields = '__all__'
+        fields = '__all__' #['name', 'description']

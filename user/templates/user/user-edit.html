@@ -1,0 +1,41 @@
+{% extends 'main.html' %}
+
+{% block title %}
+
+<h1>{{user.name}}</h1>
+
+{% endblock title%}
+
+{% block content %}
+
+<div>
+  <form method="POST" action="">
+    {% csrf_token %}
+    <div class="widecard">
+      <div class="cardtitle">
+        Editing profile info
+      </div>
+      <div class="form_reg_user">
+        {{form}}
+      </div>
+      <div class="cardtable">
+        <input class="button" type="submit" value="Save" />
+        <p>&nbsp;</p>
+        <a href="{% url 'user-login' %}"><p>Already singed up?</p></a>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="card_danger">
+  <div class="cardtitle">
+    Danger zone
+  </div>
+  <div class="area_actions">
+    <div class="cardtable">
+      <a href="{% url 'user-delete' %}">Delete my profile</a>
+    </div>
+  </div>
+  <p>&nbsp;</p>
+</div>
+
+{% endblock content %}

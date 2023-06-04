@@ -12,10 +12,9 @@
     <div class="justl">{{value}}</div>
     {% endfor %}
   </div>
-  <div class="card_actions">
+  <div class="area_actions">
     <div class="cardtable">
-      <a href="{% url 'update-song' song.id %}">Edit song</a>
-      <a href="{% url 'delete-song' song.id %}">Delete song</a>
+      <a href="{% url 'update-song' song.id %}">✏️ Edit song</a>
       <a href="{% url 'create-performance' song.id %}">Add performance date</a>
     </div>
   </div>

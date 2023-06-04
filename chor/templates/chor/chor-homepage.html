@@ -11,9 +11,9 @@
     <div class="justr">Description:</div>
     <div class="justl">{{chor.description}}</div>
   </div>
-  <div class="card_actions">
+  <div class="area_actions">
     <div class="cardtable">
-      <a href="{% url 'edit-chor' chor.id %}">Edit info</a>
+      <a href="{% url 'update-chor' chor.id %}">✏️ Edit info</a>
       <p>See the members</p>
     </div>
   </div>
@@ -25,7 +25,7 @@
     <a href="{% url 'song' song.id %}">{{song.name}}</a>
     {% endfor %}
   </div>
-  <div class="card_actions">
+  <div class="area_actions">
     <div class="cardtable">
       <a href="{% url 'create-song' chor.id %}">Add a song</a>
       <a href="{% url 'chor-songs' chor.id %}">See the songs</a>
@@ -44,7 +44,7 @@
     </div>
     {% endfor %}
   </div>
-  <div class="card_actions">
+  <div class="area_actions">
     <div class="cardtable">
       <a href="{% url 'chor-performances' chor.id %}">See all performances</a>
     </div>

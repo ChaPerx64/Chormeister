@@ -4,13 +4,16 @@ from . import views
 urlpatterns = [
     # General chor pages
     path('chor<str:chor_id>/', views.chorhomepage, name='chor-homepage'),
-    path('create-chor/', views.createChor, name='create-chor'),
-    path('edit-chor/<str:chor_id>/', views.editChor, name='edit-chor'),
     path('chor<str:chor_id>/songs/', views.chorsongs, name='chor-songs'),
     path('chor<str:chor_id>/performances/',
          views.chorPerformances, name='chor-performances'),
     path('chor<str:chor_id>/songproperties/',
          views.chorSongProperties, name="chor-songproperties"),
+
+    # Chor CRUD ops
+    path('create-chor/', views.createChor, name='create-chor'),
+    path('chor<str:chor_id>/edit-info/', views.updateChor, name='update-chor'),
+    path('chor<str:chor_id>/edit-info/', views.deleteChor, name='delete-chor'),
 
     # Song pages
     path('song/<str:pk>/', views.song, name="song"),

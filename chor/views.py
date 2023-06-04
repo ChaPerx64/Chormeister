@@ -1,10 +1,14 @@
-from django.urls import is_valid_path
+
 from .models import Chor, Song, SongPropertyValue, SongPropertyName, SongPerformance
-from .forms import SongPropertyNameForm, SongCreationFormConstructor, SongPerformanceForm, ChorForm
+from .forms import SongPropertyNameForm, SongPerformanceForm
+
 from django.db.models import Count, Q
 from django.contrib.auth.decorators import login_required
 from django.core.handlers.wsgi import WSGIRequest
 from django.shortcuts import render, redirect
+
+from .views_Chor_CRUD import *
+from .views_Song_CRUD import *
 
 # General chor views
 
@@ -26,38 +30,6 @@ def chorhomepage(request: WSGIRequest, chor_id):
         'backlink': '/',
     }
     return render(request, 'chor/chor-homepage.html', context)
-
-
-@login_required(login_url='user-login')
-def createChor(request: WSGIRequest):
-    form = ChorForm()
-    if request.method == 'POST':
-        form = ChorForm(request.POST)
-        if form.is_valid():
-            chor = form.save(commit=False)
-            chor.save()
-            return redirect('chor-homepage', chor.pk)
-    context = {
-        'form': form,
-        'chor': None,
-    }
-    return render(request, 'chor/chor-form.html', context)
-
-
-@login_required(login_url='user-login')
-def editChor(request: WSGIRequest, chor_id):
-    chor = Chor.objects.get(id=chor_id)
-    form = ChorForm(instance=chor)
-    if request.method == 'POST':
-        form = ChorForm(request.POST, instance=chor)
-        if form.is_valid():
-            form.save()
-            return redirect('chor-homepage', chor.pk)
-    context = {
-        'form': form,
-        'chor': chor,
-    }
-    return render(request, 'chor/chor-form.html', context)
 
 
 @login_required(login_url='user-login')
@@ -169,119 +141,6 @@ def song(request: WSGIRequest, pk):
     return render(request, 'chor/song.html', context)
 
 
-@login_required(login_url='user-login')
-def createSong(request: WSGIRequest, chor_id):
-    chor = Chor.objects.get(id=chor_id)
-
-    ''' Creating fields list for a custom form '''
-    attrnames = chor.songpropertyname_set.all()
-    attrlist = list()
-    for attr in attrnames:
-        attrlist.append(attr.name)
-
-    ''' Creating Form Class dynamically with custom constructor '''
-    SongCreationForm = SongCreationFormConstructor(attrlist)
-    form = SongCreationForm()
-
-    ''' Logic for dealing with saving of the created data '''
-    if request.method == "POST":
-        form = SongCreationForm(request.POST)
-        if form.is_valid():
-            song = Song.objects.create(
-                chor_id=chor_id,
-                name=form.cleaned_data.get('name')
-            )
-            new_attr_values = list()
-            for attr in attrnames:
-                new_value = form.cleaned_data.get(attr.name)
-                if new_value:
-                    spv = SongPropertyValue.objects.create(
-                        songpropertyname=attr,
-                        song=song,
-                        value=new_value,
-                    )
-                    new_attr_values.append(spv)
-            if song:
-                song.save()
-                for val in new_attr_values:
-                    val.save()
-                return redirect('chor-songs', chor_id=chor_id)
-    context = {
-        'form': form,
-        'chor': chor,
-        'backlink': f'/chor{chor.pk}/songs/'
-    }
-    return render(request, 'chor/song_form.html', context)
-
-
-@login_required(login_url='user-login')
-def updateSong(request: WSGIRequest, pk):
-    song = Song.objects.get(id=pk)
-    chor = song.chor
-
-    ''' Creating fields list for a custom form '''
-    attrnames = chor.songpropertyname_set.all()
-    attrlist = list()
-    for attr in attrnames:
-        attrlist.append(attr.name)
-
-    ''' Gathering initial data for the form '''
-    initialdata = {'name': song.name}
-    songattribs = song.songpropertyvalue_set.all()
-    for item in songattribs:
-        initialdata.update({item.songpropertyname.name: item.value})
-
-    ''' Creating Form Class dynamically with custom constructor '''
-    SongCreationForm = SongCreationFormConstructor(attrlist)
-    form = SongCreationForm(initial=initialdata)
-
-    ''' Logic for dealing with saving changes '''
-    if request.method == "POST":
-        form = SongCreationForm(request.POST)
-        if form.is_valid():
-            for key, value in form.cleaned_data.items():
-                if key == 'name':
-                    song.name = value
-                    song.save()
-                else:
-                    isnew = True
-                    for attr in songattribs:
-                        if key == attr.songpropertyname.name:
-                            attr.value = value
-                            attr.save()
-                            isnew = False
-                    if isnew:
-                        spn = SongPropertyName.objects.filter(
-                            Q(chor=chor) & Q(name=key))[0]
-                        SongPropertyValue.objects.create(
-                            songpropertyname=spn,
-                            song=song,
-                            value=value,
-                        ).save()
-            return redirect('chor-songs', chor_id=chor.pk)
-
-    context = {
-        'form': form,
-        'chor': chor,
-        'backlink': f'/song/{song.pk}/'
-    }
-    return render(request, 'chor/song_form.html', context)
-
-
-@login_required(login_url='user-login')
-def deleteSong(request: WSGIRequest, pk):
-    song = Song.objects.get(id=pk)
-    chor_id = song.chor.pk
-    if request.method == "POST":
-        song.delete()
-        return redirect('chor-songs', chor_id=chor_id)
-    context = {
-        'obj': song,
-        'backlink': f'/song/{song.pk}/',
-    }
-    return render(request, 'delete.html', context)
-
-
 # SongProperty views
 @login_required(login_url='user-login')
 def createProperty(request: WSGIRequest, chor_id):
@@ -343,3 +202,15 @@ def createPerformance(request: WSGIRequest, song_id):
         'song': song,
     }
     return render(request, 'chor/performance_form.html', context)
+
+
+# Members related
+@login_required(login_url='user-login')
+def chorMembers(request: WSGIRequest, chor_id):
+    chor = Chor.objects.get(id=chor_id)
+    members = chor.userchorrole__user_set.all()
+    context = {
+        'chor': chor,
+        'members': members,
+    }
+    return render(request, '', context)

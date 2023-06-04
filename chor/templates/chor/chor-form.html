@@ -12,10 +12,25 @@
     <div class="cardtable2">{% csrf_token %} {{form}}</div>
     <div class="cardtable">
       <p><input class="button" type="submit" value="Submit" /></p>
-      <p>&nbsp;</p>
-      <p>You can invite members into Chor later</p>
+      {% if not chor %}
+        <p>&nbsp;</p>
+        <p>You can invite members into Chor later</p>
+      {% endif %}
     </div>
   </form>
 </div>
+{% if chor %}
+<div class="card_danger">
+  <div class="cardtitle">
+    Danger zone
+  </div>
+  <div class="area_actions">
+    <div class="cardtable">
+      <a href="{% url 'delete-chor' chor.id %}">Delete chor</a>
+    </div>
+  </div>
+  <p>&nbsp;</p>
+</div>
+{% endif %}
 
 {% endblock content %}
