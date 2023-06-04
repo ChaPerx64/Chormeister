@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import FieldError
 from django.contrib.auth.models import User
 from user.models import UserChorRole, UserRoleName
 
@@ -20,7 +21,7 @@ class Chor (models.Model):
         editable=False
     )
     created_by = models.CharField(
-        max_length=255,
+        max_length=320,
         editable=False,
     )
 
@@ -32,7 +33,10 @@ class Chor (models.Model):
 
     def save(self, *args, **kwargs):
         if not self.created_by:
-            self.created_by = str(self.owner)
+            if self.owner:
+                self.created_by = f'user.id: {self.owner.pk}, username: {self.owner.username}'
+            else:
+                raise FieldError('chor.owner field cannot be NULL during creation')
         super(Chor, self).save(*args, **kwargs)
 
     def make_admin(self, user: User):

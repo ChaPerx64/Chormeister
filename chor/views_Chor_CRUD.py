@@ -9,13 +9,15 @@ from django.shortcuts import render, redirect
 
 @login_required(login_url='user-login')
 def createChor(request: WSGIRequest):
+    user = User.objects.get(id=request.user.pk)
     form = ChorForm()
     if request.method == 'POST':
         form = ChorForm(request.POST)
         if form.is_valid():
             chor = form.save(commit=False)
+            chor.owner = user
             chor.save()
-            chor.make_admin(User.objects.get(id=request.user.pk))
+            chor.make_admin(user)
             return redirect('chor-homepage', chor.pk)
     context = {
         'form': form,
@@ -42,6 +44,7 @@ def updateChor(request: WSGIRequest, chor_id):
     return render(request, 'chor/chor-form.html', context)
 
 
+@login_required(login_url='user-login')
 def deleteChor(request: WSGIRequest, chor_id):
     chor = Chor.objects.get(id=chor_id)
     if request.method == "POST":

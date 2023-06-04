@@ -13,26 +13,36 @@
       >
     </div>
   </div>
-  <div class="cardtable3inversed">
-    {% for performance in performances%} {% if performance %}
-    <div class="justr">{{performance.dtofperformance|date:'d.m.y, D'}}</div>
-    <div class="justl">
-      <a href="{% url 'song' performance.song.pk %}"
-        >{{performance.song.name}}</a
-      >
+  {% if performances %}
+    <div class="cardtable3inversed">
+      {% for performance in performances%}
+        {% if performance %}
+          <div class="justr">
+            {{performance.dtofperformance|date:'d.m.y, D'}}
+          </div>
+          <div class="justl">
+            <a href="{% url 'song' performance.song.pk %}">
+              {{performance.song.name}}
+            </a>
+          </div>
+          <button
+            class="dangerbtnicon"
+            onclick="window.location.href='{% url 'delete-performance' performance.id %}'"
+          >
+            <img class="smallicon" src="{% static 'img/trash-svgrepo-com.svg' %}" />
+          </button>
+        {% else %}
+          <p>&nbsp</p>
+          <p></p>
+          <p></p>
+        {% endif %}
+      {% endfor %}
     </div>
-    <button
-      class="dangerbtnicon"
-      onclick="window.location.href='{% url 'delete-performance' performance.id %}'"
-    >
-      <img class="smallicon" src="{% static 'img/trash-svgrepo-com.svg' %}" />
-    </button>
-    {% else %}
-    <p>&nbsp</p>
-    <p></p>
-    <p></p>
-    {% endif %} {% endfor %}
-  </div>
+  {% else %}
+    <div class="cardtable">
+      <p>No information</p>
+    </div>
+  {% endif %}
 </div>
 
 {% endblock content %}

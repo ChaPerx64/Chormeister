@@ -56,19 +56,19 @@
     <div class="justl">Name</div>
     <div class="justl">{{sortby}}</div>
     {% for song in songs%}
-    <div class="justr">{{song.song__id}}</div>
+    <div class="justr">{{forloop.counter}}</div>
     <div class="justl">
       <a href="{% url 'song' song.song__id%}">{{song.song__name}}</a>
     </div>
     <div class="justl">{{song.value}}</div>
     {% endfor %} {% else %}
     <div class="justr">#</div>
-    <p>Name</p>
-    <p>Performances</p>
+    <div class="justl">Name</div>
+    <div class="justl"># of performances</div>
     {% for song in songs%}
-    <div class="justr">{{song.id}}</div>
+    <div class="justr">{{forloop.counter}}</div>
     <div class="justl"><a href="{% url 'song' song.id%}">{{song.name}}</a></div>
-    <div>{{song.numperformances}}</div>
+    <div class="justl">{{song.numperformances}}</div>
     {% endfor %} {% endif %}
   </div>
 </div>

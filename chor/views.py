@@ -16,17 +16,8 @@ from .views_Song_CRUD import *
 @login_required(login_url='user-login')
 def chorhomepage(request: WSGIRequest, chor_id):
     chor = Chor.objects.get(id=chor_id)
-    songs = chor.song_set.all()\
-        .annotate(numperformances=Count('songperformance'))\
-        .order_by('-numperformances')[0:3]
-    performances = SongPerformance.objects\
-        .filter(song__chor=chor)[0:4]
-    members = list()
     context = {
-        'songs': songs,
         'chor': chor,
-        'members': members,
-        'performances': performances,
         'backlink': '/',
     }
     return render(request, 'chor/chor-homepage.html', context)
@@ -86,12 +77,13 @@ def chorPerformances(request: WSGIRequest, chor_id):
     chor = Chor.objects.get(id=chor_id)
     performances = SongPerformance.objects.filter(song__chor=chor)
     out_list = list()
-    prev_month = performances[0].dtofperformance.month
-    for perf in performances:
-        if prev_month != perf.dtofperformance.month:
-            out_list.append('')
-        out_list.append(perf)
-        prev_month = perf.dtofperformance.month
+    if len(performances):
+        prev_month = performances[0].dtofperformance.month
+        for perf in performances:
+            if prev_month != perf.dtofperformance.month:
+                out_list.append('')
+            out_list.append(perf)
+            prev_month = perf.dtofperformance.month
     context = {
         'chor': chor,
         'performances': out_list,

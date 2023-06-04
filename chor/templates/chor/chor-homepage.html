@@ -14,46 +14,27 @@
   <div class="area_actions">
     <div class="cardtable">
       <a href="{% url 'update-chor' chor.id %}">✏️ Edit info</a>
-      <p>See the members</p>
     </div>
   </div>
 </div>
 <div class="card">
-  <div class="cardtitle">Songs</div>
-  <div class="cardtable">
-    {% for song in songs %}
-    <a href="{% url 'song' song.id %}">{{song.name}}</a>
-    {% endfor %}
+  <div class="cardtitle">
+    See:
   </div>
   <div class="area_actions">
     <div class="cardtable">
-      <a href="{% url 'create-song' chor.id %}">Add a song</a>
-      <a href="{% url 'chor-songs' chor.id %}">See the songs</a>
+      <a href="{% url 'chor-songs' chor.id %}">🎵 Songs</a>
     </div>
-  </div>
-</div>
-<div class="card">
-  <div class="cardtitle">Recent performances</div>
-  <div class="cardtable2shifted">
-    {% for performance in performances %}
-    <div class="justr">{{performance.dtofperformance|date:'M, dS, D'}}</div>
-    <div class="justl">
-      <a href="{% url 'song' performance.song.pk %}"
-        >{{performance.song.name}}</a
-      >
-    </div>
-    {% endfor %}
   </div>
   <div class="area_actions">
     <div class="cardtable">
-      <a href="{% url 'chor-performances' chor.id %}">See all performances</a>
+      <a href="{% url 'chor-performances' chor.id %}">✅ Performances</a>
     </div>
   </div>
-</div>
-<div class="card">
-  <div class="cardtitle">Upcoming Activity</div>
-  <div class="cardtable">
-    <p>coming soon...</p>
+  <div class="area_actions">
+    <div class="cardtable">
+      <a href="">👥 Chor members</a>
+    </div>
   </div>
 </div>
 
