@@ -9,9 +9,9 @@ from django.shortcuts import render, redirect
 @login_required(login_url='user-login')
 def chorMembers(request: WSGIRequest, chor_id):
     chor = Chor.objects.get(id=chor_id)
-    members = chor.userchorrole__user_set\
-        .filter(chor=chor)\
-        .orderby('username')
+    members = chor.participants.all()\
+        .order_by('username')
+    print(f'\nMembers:\n{members}\n')
     context = {
         'chor': chor,
         'members': members,

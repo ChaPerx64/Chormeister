@@ -10,17 +10,19 @@
   <div class="cardtitle">
     Members
   </div>
-  <div class="cardtable3shifted">
+  <div class="cardtable3">
     <!-- Headers -->
     <div class="justr">#</div>
     <div class="justl">Username</div>
     <p>Actions</p>
     <!-- Table -->
+    {% for member in members %}
     <div class="justr">{{forloop.counter}}</div>
-    <div class="justl">{{user.username}}</div>
+    <div class="justl">{{member.username}}</div>
     <div>
       <a>A1</a><a>A2</a><a>A3</a>
     </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock content %}
