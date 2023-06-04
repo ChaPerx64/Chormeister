@@ -44,7 +44,11 @@ def updateChor(request: WSGIRequest, chor_id):
 
 def deleteChor(request: WSGIRequest, chor_id):
     chor = Chor.objects.get(id=chor_id)
+    if request.method == "POST":
+        chor.delete()
+        return redirect('user-homepage')
     context = {
-        'obj': chor
+        'obj': chor,
+        'backlink': '../'
     }
     return render(request, 'delete.html', context)

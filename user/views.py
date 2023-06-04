@@ -12,7 +12,12 @@ from django.forms.models import model_to_dict
 
 
 @login_required(login_url='user-login')
-def userHomepage(request: WSGIRequest, user_id: str):
+def userHomepage(request: WSGIRequest):
+    return redirect('user-page', request.user.pk)
+
+
+@login_required(login_url='user-login')
+def userPage(request: WSGIRequest, user_id: str):
     user = User.objects.get(pk=user_id)
     chors = Chor.objects.filter(userchorrole__user__pk=user.pk)
     ownerview = True if request.user.pk == user.pk else False
@@ -43,7 +48,7 @@ def loginPage(request: WSGIRequest):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            return redirect('user-homepage', user_id=user.pk)
+            return redirect('user-page', user_id=user.pk)
         else:
             messages.error(request, "Username-passord pair is incorrect")
     context = {
@@ -67,7 +72,7 @@ def registerPage(request: WSGIRequest):
             user = form.save(commit=False)
             user.save()
             login(request, user)
-            return redirect('user-homepage', user.pk)
+            return redirect('user-page', user.pk)
     context = {
         'rendermode': 'register',
         'form': form,
@@ -86,7 +91,7 @@ def editUser(request: WSGIRequest):
             user = form.save(commit=False)
             user.save()
             login(request, user)
-            return redirect('user-homepage', user.pk)
+            return redirect('user-page', user.pk)
     context = {
         'form': form,
         'backlink': f'/user/{user.pk}/'

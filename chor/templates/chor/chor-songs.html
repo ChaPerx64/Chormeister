@@ -1,8 +1,12 @@
-{% extends 'main.html' %} {% block title %}
+{% extends 'main.html' %}
+
+{% block title %}
 
 <h1>Songs of {{chor.name}}</h1>
 
-{% endblock title %} {% block content %}
+{% endblock title %}
+
+{% block content %}
 
 <div class="card">
   <div class="cardtitle">Search</div>
@@ -39,19 +43,6 @@
   </div>
 </div>
 
-<!-- <div class="card">
-  <div class="cardtitle">Search</div>
-  <div class="cardtable">
-    <form method="GET" action="{% url 'chor-songs' chor.id %}">
-      {% if qstr %}
-      <input type="text" name="q" placeholder="{{qstr}}" />
-      {% else %}
-      <input type="text" name="q" placeholder="Search Songs..." />
-      {% endif %}
-    </form>
-  </div>
-</div> -->
-
 <div class="widecard">
   <div class="cardtitle">List of songs:</div>
   <div class="area_actions">
@@ -62,8 +53,8 @@
   <div class="cardtable3">
     {% if sortby %}
     <div class="justr">#</div>
-    <p>Name</p>
-    <p>{{sortby}}</p>
+    <div class="justl">Name</div>
+    <div class="justl">{{sortby}}</div>
     {% for song in songs%}
     <div class="justr">{{song.song__id}}</div>
     <div class="justl">

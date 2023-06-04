@@ -90,7 +90,7 @@ def updateSong(request: WSGIRequest, pk):
                             attr.value = value
                             attr.save()
                             isnew = False
-                    if isnew:
+                    if isnew & (value != ''):
                         spn = SongPropertyName.objects.filter(
                             Q(chor=chor) & Q(name=key))[0]
                         SongPropertyValue.objects.create(

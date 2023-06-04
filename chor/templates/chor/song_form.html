@@ -10,15 +10,20 @@
     Creating a song
     {% endif %}
   </div>
+  <div class="area_actions">
+    <div class="cardtable">
+      <a href="{% url 'create-property' chor.id %}">Add a new property</a>
+    </div>
+  </div>
   <form method="POST" action="">
     <div class="cardtable2">
       {% csrf_token %}
       {{form}}
-      <button class="button" onclick="window.location.href='{% url 'create-property' chor.id %}'">Add new property field</button>
-      <p><input class="button" type="submit" value="Submit"></p>
+    </div>
+    <div class="cardtable">
+      <input class="button" type="submit" value="Submit">
     </div>
   </form>
-  <p>&nbsp;</p>
 </div>
 {% if song %}
 <div class="card_danger">

@@ -13,7 +13,7 @@ urlpatterns = [
     # Chor CRUD ops
     path('create-chor/', views.createChor, name='create-chor'),
     path('chor<str:chor_id>/edit-info/', views.updateChor, name='update-chor'),
-    path('chor<str:chor_id>/edit-info/', views.deleteChor, name='delete-chor'),
+    path('chor<str:chor_id>/delete/', views.deleteChor, name='delete-chor'),
 
     # Song pages
     path('song/<str:pk>/', views.song, name="song"),

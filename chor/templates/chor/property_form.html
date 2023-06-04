@@ -15,11 +15,13 @@
   <form method="POST" action="">
     <div class="cardtable2">
       {% csrf_token %}
-      <p></p><p></p>
       {{form}}
-      <p></p><p><input class="button" type="submit" value="Submit"></p>
+    </div>
+    <div class="cardtable">
+      <input class="button" type="submit" value="Submit">
     </div>
   </form>
+  <p>&nbsp;</p>
 </div>
 
 {% endblock content %}

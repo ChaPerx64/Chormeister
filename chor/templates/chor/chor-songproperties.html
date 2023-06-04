@@ -12,19 +12,14 @@
 
 {% block content %}
 
-<div class="card">
-  <div class="cardtitle">
-    Actions
-  </div>
-  <div class="cardtable">
-    <a href="{% url 'create-property' chor.id %}">Add a new property</a>
-  </div>
-</div>
-
-
 <div class="widecard">
   <div class="cardtitle">
     List of song property fields:
+  </div>
+  <div class="area_actions">
+    <div class="cardtable">
+      <a href="{% url 'create-property' chor.id %}">Add a new property</a>
+    </div>
   </div>
   <div class="cardtable2">
     {% for prop in properties %}
