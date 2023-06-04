@@ -18,11 +18,16 @@ class Chor (models.Model):
         User,
         null=True,
         on_delete=models.SET_NULL,
-        editable=False
+        editable=False,
+        related_name='chor_owned'
     )
     created_by = models.CharField(
         max_length=320,
         editable=False,
+    )
+    participants = models.ManyToManyField(
+        User,
+        through=UserChorRole
     )
 
     class Meta:

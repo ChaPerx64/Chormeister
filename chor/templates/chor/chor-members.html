@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+
+
+{% block title %}
+<h1>Members of "{{chor.name}}"</h1>
+{% endblock title %}
+
+{% block content %}
+<div class="widecard">
+  <div class="cardtitle">
+    Members
+  </div>
+  <div class="cardtable3shifted">
+    <!-- Headers -->
+    <div class="justr">#</div>
+    <div class="justl">Username</div>
+    <p>Actions</p>
+    <!-- Table -->
+    <div class="justr">{{forloop.counter}}</div>
+    <div class="justl">{{user.username}}</div>
+    <div>
+      <a>A1</a><a>A2</a><a>A3</a>
+    </div>
+  </div>
+</div>
+{% endblock content %}

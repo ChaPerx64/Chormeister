@@ -19,7 +19,7 @@ def userHomepage(request: WSGIRequest):
 @login_required(login_url='user-login')
 def userPage(request: WSGIRequest, user_id: str):
     user = User.objects.get(pk=user_id)
-    chors = Chor.objects.filter(userchorrole__user__pk=user.pk)
+    chors = user.chor_set.all()
     ownerview = True if request.user.pk == user.pk else False
     usr_attribs = dict()
     for key, value in model_to_dict(user).items():

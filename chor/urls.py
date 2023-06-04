@@ -33,4 +33,7 @@ urlpatterns = [
          views.createPerformance, name='create-performance'),
     path('deletePerformance/<str:perf_id>/',
          views.deletePerformance, name='delete-performance'),
+
+    # members pages
+    path('chor<str:chor_id>/members/', views.chorMembers, name='chor-members'),
 ]

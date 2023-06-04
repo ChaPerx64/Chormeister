@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 
 from .views_Chor_CRUD import *
 from .views_Song_CRUD import *
+from .views_members import *
 
 # General chor views
 
@@ -194,15 +195,3 @@ def createPerformance(request: WSGIRequest, song_id):
         'song': song,
     }
     return render(request, 'chor/performance_form.html', context)
-
-
-# Members related
-@login_required(login_url='user-login')
-def chorMembers(request: WSGIRequest, chor_id):
-    chor = Chor.objects.get(id=chor_id)
-    members = chor.userchorrole__user_set.all()
-    context = {
-        'chor': chor,
-        'members': members,
-    }
-    return render(request, '', context)
