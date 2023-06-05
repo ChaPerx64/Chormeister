@@ -201,7 +201,7 @@ main {
     }
     .cardtable2shifted {
       @extend .cardtable;
-      grid-template-columns: 1fr 2fr;
+      grid-template-columns: 1fr 3fr;
     }
     .form_reg_user {
       @extend .cardtable2shifted;

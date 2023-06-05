@@ -10,13 +10,13 @@ class ChorRole(models.Model):
 
     @classmethod
     def get_member_role(cls):
-        userolename, created = cls.objects.get_or_create(name='member')
-        return userolename
+        memberrole, created = cls.objects.get_or_create(name='member')
+        return memberrole
     
     @classmethod
     def get_admin_role(cls):
-        userolename, created = cls.objects.get_or_create(name='admin')
-        return userolename
+        adminrole, created = cls.objects.get_or_create(name='admin')
+        return adminrole
 
     def __str__(self) -> str:
         return self.name

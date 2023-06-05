@@ -11,6 +11,7 @@
   <div class="cardtitle">
     Members
   </div>
+  {% if members %}
   {% if adminview %} <div class="cardtable5"> {% else %} <div class="cardtable3"> {% endif %}
     <!-- Headers -->
     <div class="justr">#</div>
@@ -31,18 +32,26 @@
       {% if adminview %}
         <div class="justr">
           {% if member.chorrole == adminrole %}
-            <button class="button">Revoke admin</button>
+            <button class="button" onclick="window.location.href='{% url 'chor-make-member' chor.id %}?u={{member.id}}'">Revoke admin</button>
           {% else %}
-            <button class="button">Make admin</button>
+            <button class="button" onclick="window.location.href='{% url 'chor-make-admin' chor.id %}?u={{member.id}}'">Make admin</button>
           {% endif %}
         </div>
         <div class="justl">
-          <button class="dangerbtnicon">
+          <button
+            class="dangerbtnicon"
+            onclick="dangerButtonClicked(event, '{% url 'chor-kick-member' chor.id %}?u={{member.id}}')"
+            >
             <img class="smallicon" src="{% static 'img/cross-svgrepo-com.svg' %}" />
           </button>
         </div>
       {% endif %}
     {% endfor %}
   </div>
+  {% else %}
+  <div class="cardtable">
+    No members
+  </div>
+  {% endif %}
 </div>
 {% endblock content %}

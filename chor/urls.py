@@ -36,4 +36,7 @@ urlpatterns = [
 
     # members pages
     path('chor<str:chor_id>/members/', views.chorMembers, name='chor-members'),
+    path('chor<str:chor_id>/make-member/', views.makeMember, name='chor-make-member'),
+    path('chor<str:chor_id>/kick-member/', views.kickMember, name='chor-kick-member'),
+    path('chor<str:chor_id>/make-admin/', views.makeAdmin, name='chor-make-admin'),
 ]

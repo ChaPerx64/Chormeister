@@ -50,6 +50,7 @@
       <a href="{% url 'create-song' chor.id %}">Add a new song</a>
     </div>
   </div>
+  {% if songs %}
   <div class="cardtable3">
     {% if sortby %}
     <div class="justr">#</div>
@@ -71,6 +72,9 @@
     <div class="justl">{{song.numperformances}}</div>
     {% endfor %} {% endif %}
   </div>
+  {% else %}
+    <div class="cardtable">No songs</div>
+  {% endif %}
 </div>
 
 {% endblock content %}

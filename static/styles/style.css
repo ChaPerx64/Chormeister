@@ -161,7 +161,7 @@ main {
   grid-template-columns: 1fr 1fr;
 }
 .cardbox .card .cardtable2shifted, .cardbox .card_danger .cardtable2shifted, .cardbox .widecard .cardtable2shifted, .cardbox .card .form_reg_user, .cardbox .card_danger .form_reg_user, .cardbox .widecard .form_reg_user {
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 3fr;
 }
 .cardbox .card .form_reg_user .helptext, .cardbox .card_danger .form_reg_user .helptext, .cardbox .widecard .form_reg_user .helptext {
   font-size: 0.8rem;

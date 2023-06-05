@@ -1,6 +1,7 @@
 from django.db import models
-from django.core.exceptions import FieldError
+from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 from user.models import UserChorRole, ChorRole
 
 
@@ -21,7 +22,8 @@ class Chor(models.Model):
     )
     participants = models.ManyToManyField(
         User,
-        through=UserChorRole
+        through=UserChorRole,
+        editable=False,
     )
 
     class Meta:
@@ -43,17 +45,44 @@ class Chor(models.Model):
         userchorrole, created = UserChorRole.objects.get_or_create(
             user=user,
             chor=self,
-            role=ChorRole.get_admin_role,
         )
+        userchorrole.role = ChorRole.get_admin_role()
         userchorrole.save()
 
     def make_member(self, user: User):
         userchorrole, created = UserChorRole.objects.get_or_create(
             user=user,
             chor=self,
-            role=ChorRole.get_member_role,
         )
+        userchorrole.role = ChorRole.get_member_role()
         userchorrole.save()
+
+    def kick_member(self, user: User):
+        userchorrole = get_object_or_404(UserChorRole, chor=self, user=user)
+        userchorrole.delete()
+    
+    def user_is_admin(self, user: User):
+        try:
+            if user.userchorrole_set.get(chor=self).role == ChorRole.get_admin_role():
+                return True
+            return False
+        except ObjectDoesNotExist:
+            return False
+    
+    def user_is_member(self, user: User):
+        try:
+            if user.userchorrole_set.get(chor=self).role == ChorRole.get_member_role():
+                return True
+            return False
+        except:
+            return False
+    
+    def user_is_owner(self, user: User):
+        if self.owner:
+            if user.id == self.owner.id:
+                return True
+        return False
+
 
 
 class Song(models.Model):
