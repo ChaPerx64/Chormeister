@@ -224,6 +224,10 @@ main {
       @extend .cardtable;
       grid-template-columns: 2fr 2fr 1fr;
     }
+    .cardtable5 {
+      @extend .cardtable;
+      grid-template-columns: 1fr 3fr 3fr 2fr 2fr;
+    }
   }
   .widecard {
     @extend .card;
@@ -280,10 +284,10 @@ textarea {
   transition: 0.5s;
   overflow: hidden;
   &:hover {
-    background-color: $color-accent4;
+    background-color: $color-bg-main;
   }
   &:active {
-    background-color: $color-bg-main;
+    background-color: $color-accent4;
   }
 }
 
@@ -292,10 +296,10 @@ textarea {
   background-color: $color-accent1;
   color: $color-font-light;
   &:hover {
-    background-color: $color-accent4;
+    background-color: $color-accent1-bg;
   }
   &:active {
-    background-color: $color-bg-main;
+    background-color: $color-accent4;
   }
 }
 
@@ -303,11 +307,13 @@ textarea {
   @extend .dangerbtn;
   background-color: rgba(255,255,255,0);
   border: solid 2px $color-accent1;
-  padding: 0rem;
+  padding: 0px;
 }
 
 .smallicon {
   width: 1.6rem;
+  height: 1.6rem;
+  vertical-align: middle;
 }
 
 .errorlist {

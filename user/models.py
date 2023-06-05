@@ -1,29 +1,22 @@
-from enum import unique
 from django.db import models
 from chor.models import User
-# from chor.models import Chor
-
-# class ChorUser(models.Model):
-#     inneruser = models.OneToOneField(
-#         User,
-#         on_delete=models.CASCADE
-#     )
-#     email = models.OneToOneField(
-#         inneruser.email,
-#         on_delete=models.CASCADE
-#     )
 
 
-class UserRoleName(models.Model):
+class ChorRole(models.Model):
     name = models.CharField(
         max_length=255,
         unique=True
     )
 
     @classmethod
-    def get_default_pk(cls):
+    def get_member_role(cls):
         userolename, created = cls.objects.get_or_create(name='member')
-        return userolename.pk
+        return userolename
+    
+    @classmethod
+    def get_admin_role(cls):
+        userolename, created = cls.objects.get_or_create(name='admin')
+        return userolename
 
     def __str__(self) -> str:
         return self.name
@@ -39,9 +32,9 @@ class UserChorRole(models.Model):
         on_delete=models.CASCADE
     )
     role = models.ForeignKey(
-        UserRoleName,
+        ChorRole,
         on_delete=models.SET_DEFAULT,
-        default=UserRoleName.get_default_pk
+        default=ChorRole.get_member_role().pk
     )
     description = models.CharField(max_length=255, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)

@@ -1,5 +1,6 @@
 {% extends 'main.html' %}
 
+{% load static %}
 
 {% block title %}
 <h1>Members of "{{chor.name}}"</h1>
@@ -10,18 +11,37 @@
   <div class="cardtitle">
     Members
   </div>
-  <div class="cardtable3">
+  {% if adminview %} <div class="cardtable5"> {% else %} <div class="cardtable3"> {% endif %}
     <!-- Headers -->
     <div class="justr">#</div>
     <div class="justl">Username</div>
-    <p>Actions</p>
+    <div class="justl">Full Name</div>
+    {% if adminview %}<p></p><p></p>{% endif %}
     <!-- Table -->
     {% for member in members %}
-    <div class="justr">{{forloop.counter}}</div>
-    <div class="justl">{{member.username}}</div>
-    <div>
-      <a>A1</a><a>A2</a><a>A3</a>
-    </div>
+      <div class="justr">
+        {% if member.chorrole == adminrole %}📯 {% endif %}{{forloop.counter}}
+      </div>
+      <div class="justl">
+        {{member.username}}
+      </div>
+      <div class="justl">
+        {{member.first_name}} {{member.last_name}}
+      </div>
+      {% if adminview %}
+        <div class="justr">
+          {% if member.chorrole == adminrole %}
+            <button class="button">Revoke admin</button>
+          {% else %}
+            <button class="button">Make admin</button>
+          {% endif %}
+        </div>
+        <div class="justl">
+          <button class="dangerbtnicon">
+            <img class="smallicon" src="{% static 'img/cross-svgrepo-com.svg' %}" />
+          </button>
+        </div>
+      {% endif %}
     {% endfor %}
   </div>
 </div>

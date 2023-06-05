@@ -1,16 +1,10 @@
 from django.db import models
 from django.core.exceptions import FieldError
 from django.contrib.auth.models import User
-from user.models import UserChorRole, UserRoleName
-
-# Create your models here.
-
-# DEFAULT ROLENAMES:
-DEF_MEMBER_ROLENAME = 'member'
-DEF_ADMIN_ROLENAME = 'admin'
+from user.models import UserChorRole, ChorRole
 
 
-class Chor (models.Model):
+class Chor(models.Model):
     name = models.CharField(max_length=255, unique=True)
     created = models.DateTimeField(auto_now_add=True)
     description = models.TextField(null=True)
@@ -41,14 +35,15 @@ class Chor (models.Model):
             if self.owner:
                 self.created_by = f'user.id: {self.owner.pk}, username: {self.owner.username}'
             else:
-                raise FieldError('chor.owner field cannot be NULL during creation')
+                raise FieldError(
+                    'chor.owner field cannot be NULL during creation')
         super(Chor, self).save(*args, **kwargs)
 
     def make_admin(self, user: User):
         userchorrole, created = UserChorRole.objects.get_or_create(
             user=user,
             chor=self,
-            role=UserRoleName.objects.get(name=DEF_ADMIN_ROLENAME),
+            role=ChorRole.get_admin_role,
         )
         userchorrole.save()
 
@@ -56,12 +51,12 @@ class Chor (models.Model):
         userchorrole, created = UserChorRole.objects.get_or_create(
             user=user,
             chor=self,
-            role=UserRoleName.objects.get(name=DEF_MEMBER_ROLENAME),
+            role=ChorRole.get_member_role,
         )
         userchorrole.save()
 
 
-class Song (models.Model):
+class Song(models.Model):
     chor = models.ForeignKey(
         Chor,
         on_delete=models.CASCADE
