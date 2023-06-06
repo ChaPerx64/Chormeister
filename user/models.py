@@ -1,6 +1,6 @@
 from django.db import models
 from chor.models import User
-
+from uuid import uuid4
 
 class ChorRole(models.Model):
     name = models.CharField(
@@ -12,7 +12,7 @@ class ChorRole(models.Model):
     def get_member_role(cls):
         memberrole, created = cls.objects.get_or_create(name='member')
         return memberrole
-    
+
     @classmethod
     def get_admin_role(cls):
         adminrole, created = cls.objects.get_or_create(name='admin')
@@ -24,7 +24,7 @@ class ChorRole(models.Model):
 
 class UserChorRole(models.Model):
     chor = models.ForeignKey(
-        "chor.Chor", #declared in Chor.models
+        "chor.Chor",  # declared in Chor.models
         on_delete=models.CASCADE
     )
     user = models.ForeignKey(
@@ -44,3 +44,19 @@ class UserChorRole(models.Model):
 
     def __str__(self) -> str:
         return ' - '.join((str(self.chor), str(self.user), str(self.role)))
+
+
+class InviteLink(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    chor = models.OneToOneField(
+        "chor.Chor",     # declared in Chor.models
+        on_delete=models.CASCADE,
+        editable=False
+    )
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.id)
+
+    # def as_url_param(self):
+    #     return f''

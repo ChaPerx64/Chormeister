@@ -12,7 +12,27 @@
     Members
   </div>
   {% if members %}
-  {% if adminview %} <div class="cardtable5"> {% else %} <div class="cardtable3"> {% endif %}
+  {% if adminview %}
+  <div class="area_actions">
+    <div class="cardtable2">
+      <a class="justr" href="{% url 'chor-create-invite' chor.id %}">Create a new invite link</a>
+      <div class="justl">
+        <input
+          id="field_to_copy"
+          type="text"
+          value="{% if invitelink %}localhost:8000/access-invite/?l={{invitelink.id}}{% else %}No link{% endif %}"
+          readonly
+        >
+        <button class="button" onclick="copyContent()">Copy!</button>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% if adminview %}
+  <div class="cardtable5">
+  {% else %}
+  <div class="cardtable3">
+  {% endif %}
     <!-- Headers -->
     <div class="justr">#</div>
     <div class="justl">Username</div>
@@ -53,5 +73,10 @@
     No members
   </div>
   {% endif %}
+  <div class="area_danger">
+    <div class="cardtable">
+      <a href="{% url 'chor-kick-member' chor.id %}?u={{request.user.id}}">🏃 Leave Chor</a>
+    </div>
+  </div>
 </div>
 {% endblock content %}

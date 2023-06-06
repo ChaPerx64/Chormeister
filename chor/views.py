@@ -10,13 +10,13 @@ from django.shortcuts import render, redirect
 from .views_Chor_CRUD import *
 from .views_Song_CRUD import *
 from .views_members import *
+from .views_InviteLinks import *
 
 # General chor views
 
 
 @login_required(login_url='user-login')
 def chorhomepage(request: WSGIRequest, chor_id):
-    # chor = Chor.objects.get(id=chor_id)
     chor = get_object_or_404(Chor, id=chor_id)
     context = {
         'chor': chor,

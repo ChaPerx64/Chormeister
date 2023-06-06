@@ -39,4 +39,8 @@ urlpatterns = [
     path('chor<str:chor_id>/make-member/', views.makeMember, name='chor-make-member'),
     path('chor<str:chor_id>/kick-member/', views.kickMember, name='chor-kick-member'),
     path('chor<str:chor_id>/make-admin/', views.makeAdmin, name='chor-make-admin'),
+
+    # InviteLink views
+    path('chor<str:chor_id>/create-invite/', views.createInviteLink, name='chor-create-invite'),
+    path('access-invite/', views.inviteLinkAccessed, name='access-invite'),
 ]

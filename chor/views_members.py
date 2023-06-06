@@ -1,9 +1,9 @@
-from .models import Chor, Song, SongPropertyValue, SongPropertyName, SongPerformance
-from .forms import SongPropertyNameForm, SongPerformanceForm
-from user.models import User, ChorRole, UserChorRole
+from .models import Chor
+from user.models import User, ChorRole, InviteLink
 
-from django.db.models import Count, Q, F
+from django.db.models import F
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.handlers.wsgi import WSGIRequest
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -16,6 +16,10 @@ def chorMembers(request: WSGIRequest, chor_id):
     members = chor.participants.all()\
         .annotate(chorrole=F('userchorrole__role'))\
         .order_by('-chorrole', 'username')
+    try:
+        invitelink = InviteLink.objects.get(chor=chor)
+    except ObjectDoesNotExist:
+        invitelink = None
     if chor.user_is_admin(user):
         adminview = True
     else:
@@ -25,6 +29,7 @@ def chorMembers(request: WSGIRequest, chor_id):
         'members': members,
         'adminrole': adminrole.pk,
         'adminview': adminview,
+        'invitelink': invitelink,
         'backlink': '../'
     }
     return render(request, 'chor/chor-members.html', context)
@@ -51,7 +56,13 @@ def makeAdmin(request: WSGIRequest, chor_id):
 @login_required(login_url='user-login')
 def kickMember(request: WSGIRequest, chor_id):
     chor = Chor.objects.get(id=chor_id)
-    member = User.objects.get(id=request.GET.get('u'))
-    if chor.user_is_admin(request.user) and (not chor.user_is_owner(member)):
-        chor.kick_member(member)
+    kicker = User.objects.get(id=request.user.pk)
+    kickee = User.objects.get(id=request.GET.get('u'))
+    if kicker == kickee:
+        if not chor.user_is_owner(kickee):
+            chor.kick_member(kickee)
+            return redirect('user-homepage')
+    else:
+        if chor.user_is_admin(kicker) and (not chor.user_is_owner(kickee)):
+            chor.kick_member(kickee)
     return redirect('chor-members', chor_id)

@@ -1,5 +1,4 @@
 # Custom imports
-from chor.models import Chor
 from .forms import UserCreationForm, UserCreationFormFull
 # Django lib imports
 from django.shortcuts import render, redirect
