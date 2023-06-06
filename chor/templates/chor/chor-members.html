@@ -20,7 +20,7 @@
         <input
           id="field_to_copy"
           type="text"
-          value="{% if invitelink %}localhost:8000/access-invite/?l={{invitelink.id}}{% else %}No link{% endif %}"
+          value="{% if invitelink %}{{invitelink}}{% else %}No link{% endif %}"
           readonly
         >
         <button class="button" onclick="copyContent()">Copy!</button>

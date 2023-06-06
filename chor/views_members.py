@@ -1,5 +1,6 @@
 from .models import Chor
 from user.models import User, ChorRole, InviteLink
+from cmdjango.settings import CHORMEISTER_DOMAIN
 from cmdjango.views import render_chor
 
 from django.db.models import F
@@ -24,7 +25,7 @@ def chorMembers(request: WSGIRequest, chor_id):
         .annotate(chorrole=F('userchorrole__role'))\
         .order_by('-chorrole', 'username')
     try:
-        invitelink = InviteLink.objects.get(chor=chor)
+        invitelink = f'http://{CHORMEISTER_DOMAIN}/?l={InviteLink.objects.get(chor=chor)}'
     except ObjectDoesNotExist:
         invitelink = None
     context = {
