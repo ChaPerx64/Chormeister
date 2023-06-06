@@ -11,17 +11,48 @@
 <div>
   <form method="POST" action="">
     {% csrf_token %}
-    <div class="widecard">
+    <div class="card">
       <div class="cardtitle">
         Editing profile info
       </div>
       <div class="form_reg_user">
-        {{form}}
+
+        <label for="id_username">Username:</label>
+        <div class="area_actions">
+          <div class="cardtable helptext">
+            <input type="text" name="username" maxlength="150" autofocus required id="id_username">
+            150 characters or fewer. Letters, digits and @/./+/-/_ only.
+          </div>
+        </div>
+
+        <label for="id_email">Email address:</label>
+        <div class="area_actions">
+          <div class="cardtable helptext">
+            <input type="email" name="email" required id="id_email">
+          </div>
+        </div>
+
+        <label for="id_password1">Password:</label>
+        <div class="area_actions">
+          <div class="cardtable helptext">
+            <input type="password" name="password1" autocomplete="new-password" required id="id_password1">
+            <li>Your password can’t be too similar to your other personal information.</li>
+            <li>Your password must contain at least 8 characters.</li>
+            <li>Your password can’t be a commonly used password.</li>
+            <li>Your password can’t be entirely numeric.</li>
+          </div>
+        </div>
+
+        <label for="id_password2">Password confirmation:</label>
+        <div class="area_actions">
+          <div class="cardtable helptext">
+            <input type="password" name="password2" autocomplete="new-password" required id="id_password2">
+            <p class="helptext">Enter the same password as before, for verification.</p>
+          </div>
+        </div>
       </div>
       <div class="cardtable">
         <input class="button" type="submit" value="Save" />
-        <p>&nbsp;</p>
-        <a href="{% url 'user-login' %}"><p>Already singed up?</p></a>
       </div>
     </div>
   </form>
