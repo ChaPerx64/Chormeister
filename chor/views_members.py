@@ -5,6 +5,7 @@ from django.db.models import F
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.handlers.wsgi import WSGIRequest
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 
 
@@ -61,6 +62,7 @@ def kickMember(request: WSGIRequest, chor_id):
     if kicker == kickee:
         if not chor.user_is_owner(kickee):
             chor.kick_member(kickee)
+            messages.success(request, f'You left {chor.name}')
             return redirect('user-homepage')
     else:
         if chor.user_is_admin(kicker) and (not chor.user_is_owner(kickee)):

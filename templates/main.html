@@ -9,21 +9,26 @@
     <title>Chormeister</title>
   </head>
   <body>
-    {% include 'navbar.html' %} {% if messages %}
-    <ul class="messages">
-      {% for message in messages %}
-      <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>
-        {{ message }}
-      </div>
-      {% endfor %}
-    </ul>
-    {% endif %}
-
+    {% include 'navbar.html' %}
+    
     <main>
+      {% if messages %}
+      <div class="flashmessages">
+        {% for message in messages %}
+        <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+          {{ message }}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
       <div class="titlediv">
         <div>{% block title %} {% endblock title %}</div>
       </div>
-      <div class="cardbox">{% block content %} {% endblock content %}</div>
+      
+      <div class="cardbox">
+        {% block content %} {% endblock content %}
+      </div>
     </main>
   </body>
   <script src="{% static 'js/main.js' %}"></script>

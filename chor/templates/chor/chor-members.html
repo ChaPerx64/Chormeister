@@ -14,9 +14,9 @@
   {% if members %}
   {% if adminview %}
   <div class="area_actions">
-    <div class="cardtable2">
-      <a class="justr" href="{% url 'chor-create-invite' chor.id %}">Create a new invite link</a>
-      <div class="justl">
+    <div class="cardtable">
+      <a href="{% url 'chor-create-invite' chor.id %}">Create new invite link</a>
+      <div>
         <input
           id="field_to_copy"
           type="text"
@@ -29,14 +29,13 @@
   </div>
   {% endif %}
   {% if adminview %}
-  <div class="cardtable5">
+  <div class="cardtable4">
   {% else %}
-  <div class="cardtable3">
+  <div class="cardtable2shifted">
   {% endif %}
     <!-- Headers -->
     <div class="justr">#</div>
-    <div class="justl">Username</div>
-    <div class="justl">Full Name</div>
+    <div class="justl">User</div>
     {% if adminview %}<p></p><p></p>{% endif %}
     <!-- Table -->
     {% for member in members %}
@@ -44,17 +43,18 @@
         {% if member.chorrole == adminrole %}📯 {% endif %}{{forloop.counter}}
       </div>
       <div class="justl">
-        {{member.username}}
-      </div>
-      <div class="justl">
-        {{member.first_name}} {{member.last_name}}
+        {{member.username}}<br><small>{{member.first_name}} {{member.last_name}}</small>
       </div>
       {% if adminview %}
         <div class="justr">
           {% if member.chorrole == adminrole %}
-            <button class="button" onclick="window.location.href='{% url 'chor-make-member' chor.id %}?u={{member.id}}'">Revoke admin</button>
+            <button class="button" onclick="window.location.href='{% url 'chor-make-member' chor.id %}?u={{member.id}}'">
+              <small>Revoke admin</small>
+            </button>
           {% else %}
-            <button class="button" onclick="window.location.href='{% url 'chor-make-admin' chor.id %}?u={{member.id}}'">Make admin</button>
+            <button class="button" onclick="window.location.href='{% url 'chor-make-admin' chor.id %}?u={{member.id}}'">
+              <small>Make admin</small>
+            </button>
           {% endif %}
         </div>
         <div class="justl">

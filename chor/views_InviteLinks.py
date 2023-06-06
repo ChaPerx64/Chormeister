@@ -5,6 +5,7 @@ from .models import Chor
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.handlers.wsgi import WSGIRequest
+from django.contrib import messages
 
 
 # InviteLink CRUD
@@ -27,4 +28,5 @@ def inviteLinkAccessed(request: WSGIRequest):
     invite = get_object_or_404(InviteLink, id=request.GET.get('l'))
     chor = invite.chor
     chor.make_member(request.user)
+    messages.success(request, f'Use are now part of {chor.name}')
     return redirect('chor-homepage', chor.id)

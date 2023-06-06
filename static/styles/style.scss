@@ -29,7 +29,8 @@ $color-accent1-bg: rgba(240, 113, 103, 0.5);
 $color-accent1-darker: #83130B;
 // $color-accent2: #784FBA;
 $color-accent2: #67515A;
-$color-accent3: #63ADF2;
+$color-accent3: rgba(99, 173, 242, 1); // #63ADF2
+$color-accent3-bg: rgba(99, 173, 242, 0.25);
 $color-accent4: orange;
 $color-font-light: #ffffff;
 // $gradient-bg-main: radial-gradient(at left top, #F6F1F1, #AFD3E2);
@@ -83,6 +84,7 @@ nav {
   justify-items: center;
   position: sticky;
   top: 0;
+  z-index: 100;
   a {
     color: $color-font-light;
     text-decoration: none;
@@ -105,6 +107,7 @@ main {
   max-width: $mainwidth;
   margin: auto;
   overflow-x: hidden;
+  position: relative;
 }
 
 .titlediv {
@@ -224,9 +227,9 @@ main {
       @extend .cardtable;
       grid-template-columns: 2fr 2fr 1fr;
     }
-    .cardtable5 {
+    .cardtable4 {
       @extend .cardtable;
-      grid-template-columns: 1fr 3fr 3fr 2fr 2fr;
+      grid-template-columns: 1fr 3fr 2fr 2fr;
     }
   }
   .widecard {
@@ -319,4 +322,21 @@ textarea {
 .errorlist {
   font-size: $smallsize;
   color: $color-accent1;
+}
+
+.flashmessages {
+  position: fixed;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 3rem;
+  .success {
+    width: $cardwidth;
+    margin: 0.5rem;
+    padding: 0.3rem 0.5rem;
+    background-color: $color-accent3-bg;
+    border-radius: $border-rad;
+    text-align: center;
+  }
 }
