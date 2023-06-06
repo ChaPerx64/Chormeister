@@ -65,6 +65,24 @@ nav .ovalborder {
   }
 }
 
+footer {
+  width: 100%;
+  height: 3rem;
+  padding: 0.5rem;
+  background-color: #67515A;
+  color: #ffffff;
+  font-size: 0.8rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  z-index: 100;
+}
+footer a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
 main {
   max-width: 100%;
   margin: auto;
@@ -141,6 +159,7 @@ main {
   margin: auto;
   border-radius: 0.5rem;
   padding: 1rem;
+  text-align: left;
   overflow-wrap: anywhere;
 }
 .cardbox .card .cardtable, .cardbox .card_danger .cardtable, .cardbox .widecard .cardtable, .cardbox .card .cardtable4, .cardbox .card_danger .cardtable4, .cardbox .widecard .cardtable4, .cardbox .card .cardtable3inversed, .cardbox .card_danger .cardtable3inversed, .cardbox .widecard .cardtable3inversed, .cardbox .card .cardtable3, .cardbox .card_danger .cardtable3, .cardbox .widecard .cardtable3, .cardbox .card .cardtable2shifted, .cardbox .card_danger .cardtable2shifted, .cardbox .widecard .cardtable2shifted, .cardbox .card .cardtable2, .cardbox .card_danger .cardtable2, .cardbox .widecard .cardtable2 {

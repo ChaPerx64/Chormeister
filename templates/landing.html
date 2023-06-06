@@ -1,7 +1,86 @@
 {% extends 'main.html' %}
 
 {% block title %}
-
-<h1>Welcome to Chormeister!</h1>
-
+<h1>Welcome to CHORMEISTER<sub>beta</sub>!</h1>
 {% endblock title %}
+
+{% block content %}
+<div class="card">
+  <div class="cardtitle">What is Chormeister?</div>
+  <div class="cardtable">
+    <p>Chormeister is a tool that helps your group of performers keep track of your musical activities and organize it</p>
+  </div>
+  <div class="area_actions">
+    <div class="cardtable">
+      <a href="{% url 'user-register' %}">Sing up right now!</a>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="cardtitle">Have you been there?</div>
+  <div class="cardtable">
+    <p>These are the situations that it can help you with:</p>
+  </div>
+  <div class="area_actions">
+    <div class="cardtext">
+      <p>🤔 — What songs did we play last Valentine Day? The crowd really seemed to like it.</p>
+      <p>💭 — Errmmmm... no idea</p>
+    </div>
+  </div>
+  <div class="area_actions">
+    <div class="cardtext">
+      <p>😫 — Why do you guys always play the same ten songs?</p>
+      <p>🤷 — We don't know any better</p>
+      <p><i>*pushes the songbook with over 200 songs under the rug*</i></p>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="cardtitle">Have you been there? ×2</div>
+  <div class="cardtable">
+    <p>The situations it <i>will</i> be able to help you with:</p>
+  </div>
+  <div class="area_actions">
+    <div class="cardtext">
+      <p>🙋 — Mrs.Williams! What songs do we sing this sunday week?</p>
+      <p>🙂 — Okay, let me resend this email I've sent you... <i>to you and <b>20 others like you</b></i></p>
+    </div>
+  </div>
+  <div class="area_actions">
+    <div class="cardtext">
+      <p>🙄 — Hey, Matt! Where did you get these sheet scores? They're in the wrong key!</p>
+      <p>👀😰 — ...</p>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="cardtitle">Have you been there? ×3</div>
+  <div class="cardtable">
+    <p>The situations we apire to achieve:</p>
+  </div>
+  <div class="area_actions">
+    <div class="cardtext">
+      <p>😎 — This concert was lit! If only we could aggregate all reactions to our performance accross social media...</p>
+      <p>🦾 — Actually, we can!</p>
+      <p>😮 — What about rating our every live performance in every tour just by placing a camera to observe the crowd react?</p>
+      <p>🦾 — This also!</p>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <p>&nbsp;</p>
+  <div class="area_actions">
+    <div class="cardtable">
+      <a href="{% url 'user-register' %}">Sing up!</a>
+    </div>
+  </div>
+  <p>&nbsp;</p>
+</div>
+{% endblock content %}
+
+{% block footer %}
+<footer>
+  <p>© 2023, Chaian Par-ool</p>
+  <p><a href="mailto:chapar.dev@proton.me">Email me</a></p>
+</footer>
+{% endblock footer %}
