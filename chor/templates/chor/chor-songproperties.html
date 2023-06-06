@@ -16,12 +16,14 @@
   <div class="cardtitle">
     List of song property fields:
   </div>
+  {% if adminview %}
   <div class="area_actions">
     <div class="cardtable">
       <a href="{% url 'create-property' chor.id %}">Add a new property</a>
     </div>
   </div>
   <div class="cardtable2">
+    {% if properties %}
     {% for prop in properties %}
       <div class="justr">{{prop.name.capitalize}}</div>
       <div class="justl">
@@ -30,7 +32,21 @@
         </button>
       </div>
     {% endfor %}
+    {% else %}
+      <p>No properties kept</p>
+    {% endif %}
   </div>
+  {% else %}
+  <div class="cardtable">
+    {% if properties %}
+    {% for prop in properties %}
+      <p>{{prop.name.capitalize}}</p>
+    {% endfor %}
+    {% else %}
+    <p>No properties kept</p>
+    {% endif %}
+  </div>
+  {% endif %}
 </div>
 
 {% endblock content %}

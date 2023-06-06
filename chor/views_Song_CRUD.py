@@ -1,16 +1,60 @@
 
+from cmdjango.views import render_chor
 from .models import Chor, Song, SongPropertyValue, SongPropertyName
 from .forms import SongCreationFormConstructor
 
 from django.db.models import Q
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.handlers.wsgi import WSGIRequest
 from django.shortcuts import render, redirect
 
 
+# Song pages
+@login_required(login_url='user-login')
+def song(request: WSGIRequest, pk):
+    song = Song.objects.get(id=pk)
+    chor = song.chor
+
+    # access restriction
+    if not chor.user_is_member(request.user.pk):
+        messages.error(request, 'You are not a member of the choir')
+        return redirect('user-homepage')
+
+    songpropertynames = song.chor.songpropertyname_set.all()
+
+    ''' Initializing attributes dict with empty values of all fields '''
+    attributes = dict()
+    for name in songpropertynames:
+        attributes.update({name.name: ''})
+    songpropvalues = song.songpropertyvalue_set.all()
+
+    ''' Filling attributes dict with proopertyvalues from database '''
+    for spv in songpropvalues:
+        attributes.update({spv.songpropertyname.name: spv.value})
+
+    ''' Finding performances of the song '''
+    performances = song.songperformance_set.all()
+
+    ''' Putting out '''
+    context = {
+        'song': song,
+        'chor': chor,
+        'attributes': attributes,
+        'performances': performances,
+        'backlink': f'/chor{song.chor.pk}/songs/',
+    }
+    return render_chor(request, 'chor/song.html', context)
+
+
 @login_required(login_url='user-login')
 def createSong(request: WSGIRequest, chor_id):
     chor = Chor.objects.get(id=chor_id)
+
+    # access restriction
+    if not chor.user_is_admin(request.user.pk):
+        messages.error(request, 'Admin level access needed')
+        return redirect('chor-songs', chor.pk)
 
     ''' Creating fields list for a custom form '''
     attrnames = chor.songpropertyname_set.all()
@@ -59,6 +103,11 @@ def updateSong(request: WSGIRequest, pk):
     song = Song.objects.get(id=pk)
     chor = song.chor
 
+    # access restriction
+    if not chor.user_is_admin(request.user.pk):
+        messages.error(request, 'Admin level access needed')
+        return redirect('song', song.pk)
+
     ''' Creating fields list for a custom form '''
     attrnames = chor.songpropertyname_set.all()
     attrlist = list()
@@ -87,8 +136,11 @@ def updateSong(request: WSGIRequest, pk):
                     isnew = True
                     for attr in songattribs:
                         if key == attr.songpropertyname.name:
-                            attr.value = value
-                            attr.save()
+                            if value != '':
+                                attr.value = value
+                                attr.save()
+                            else:
+                                attr.delete()
                             isnew = False
                     if isnew & (value != ''):
                         spn = SongPropertyName.objects.filter(
@@ -112,10 +164,16 @@ def updateSong(request: WSGIRequest, pk):
 @login_required(login_url='user-login')
 def deleteSong(request: WSGIRequest, pk):
     song = Song.objects.get(id=pk)
-    chor_id = song.chor.pk
+    chor = song.chor
+
+    # access restriction
+    if not chor.user_is_admin(request.user.pk):
+        messages.error(request, 'Admin level access needed')
+        return redirect('song', song.pk)
+
     if request.method == "POST":
         song.delete()
-        return redirect('chor-songs', chor_id=chor_id)
+        return redirect('chor-songs', chor_id=chor.pk)
     context = {
         'obj': song,
         'backlink': f'/song/{song.pk}/',

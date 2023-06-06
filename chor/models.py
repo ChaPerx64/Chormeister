@@ -61,7 +61,9 @@ class Chor(models.Model):
         userchorrole = get_object_or_404(UserChorRole, chor=self, user=user)
         userchorrole.delete()
     
-    def user_is_admin(self, user: User):
+    def user_is_admin(self, user: User | int):
+        if type(user) == int:
+            user = User.objects.get(id=user)
         try:
             if user.userchorrole_set.get(chor=self).role == ChorRole.get_admin_role():
                 return True
@@ -70,14 +72,18 @@ class Chor(models.Model):
             return False
     
     def user_is_member(self, user: User):
+        if type(user) == int:
+            user = User.objects.get(id=user)
         try:
-            if user.userchorrole_set.get(chor=self).role == ChorRole.get_member_role():
+            if user.userchorrole_set.get(chor=self):
                 return True
             return False
         except:
             return False
     
     def user_is_owner(self, user: User):
+        if type(user) == int:
+            user = User.objects.get(id=user)
         if self.owner:
             if user.id == self.owner.id:
                 return True

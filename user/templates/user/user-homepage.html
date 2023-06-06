@@ -15,20 +15,23 @@
 {% if ownerview %}
   <div class="card">
     <div class="cardtitle">My Chors</div>
+    {% if chors %}
     <div class="cardtable2shifted">
-      {% if chors %}
-        {% for chor in chors %}
-          <div class="justr">{{forloop.counter}}</div>
-          <a class="justl" href="{% url 'chor-homepage' chor.id %}">{{chor.name}}</a>
-        {% endfor %}
-      {% else %}
-        <p>You are not participating in any Chor!</p>
-      {% endif %}
+      {% for chor in chors %}
+        <div class="justr">{{forloop.counter}}</div>
+        <a class="justl" href="{% url 'chor-homepage' chor.id %}">{{chor.name}}</a>
+      {% endfor %}
     </div>
+    {% else %}
+    <div class="cardtable">
+      <p>You are not participating in any Chor!</p>
+      <small>To join other Chor, ask its admin to send you an invite link</small>
+    </div>
+    {% endif %}
+    
     <div class="area_actions">
       <div class="cardtable">
         <a href="{% url 'create-chor' %}">Create a Chor</a>
-        <p>Join a Chor</p>
       </div>
     </div>
   </div>

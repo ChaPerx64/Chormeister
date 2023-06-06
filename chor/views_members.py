@@ -1,19 +1,25 @@
 from .models import Chor
 from user.models import User, ChorRole, InviteLink
+from cmdjango.views import render_chor
 
 from django.db.models import F
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib import messages
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 
 
 @login_required(login_url='user-login')
 def chorMembers(request: WSGIRequest, chor_id):
     adminrole = ChorRole.get_admin_role()
     chor = get_object_or_404(Chor, id=chor_id)
-    user = User.objects.get(id=request.user.pk)
+
+    # access restriction
+    if not chor.user_is_member(request.user.pk):
+        messages.error(request, 'Access restricted')
+        return redirect('user-homepage')
+
     members = chor.participants.all()\
         .annotate(chorrole=F('userchorrole__role'))\
         .order_by('-chorrole', 'username')
@@ -21,19 +27,14 @@ def chorMembers(request: WSGIRequest, chor_id):
         invitelink = InviteLink.objects.get(chor=chor)
     except ObjectDoesNotExist:
         invitelink = None
-    if chor.user_is_admin(user):
-        adminview = True
-    else:
-        adminview = False
     context = {
         'chor': chor,
         'members': members,
         'adminrole': adminrole.pk,
-        'adminview': adminview,
         'invitelink': invitelink,
         'backlink': '../'
     }
-    return render(request, 'chor/chor-members.html', context)
+    return render_chor(request, 'chor/chor-members.html', context)
 
 
 @login_required(login_url='user-login')

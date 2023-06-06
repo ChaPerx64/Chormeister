@@ -1,4 +1,5 @@
 # Custom imports
+import re
 from .forms import UserCreationForm, UserCreationFormFull
 # Django lib imports
 from django.shortcuts import render, redirect
@@ -72,6 +73,9 @@ def registerPage(request: WSGIRequest):
             user.save()
             login(request, user)
             return redirect('user-page', user.pk)
+        for key, value in form.errors.items():
+            # messages.error(request, f'Error: {value}')
+            messages.error(request, str(form.errors))
     context = {
         'rendermode': 'register',
         'form': form,

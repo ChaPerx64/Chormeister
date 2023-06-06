@@ -6,34 +6,43 @@
 
 <div class="card">
   <div class="cardtitle">Song info</div>
-  <div class="cardtable2shifted">
+  <div class="cardtable2">
     {% for key, value in attributes.items %}
     <div class="justr">{{key.capitalize}}:</div>
     <div class="justl">{{value}}</div>
     {% endfor %}
   </div>
+  {% if adminview %}
   <div class="area_actions">
     <div class="cardtable">
       <a href="{% url 'update-song' song.id %}">✏️ Edit song</a>
       <a href="{% url 'create-performance' song.id %}">Add performance date</a>
     </div>
   </div>
+  {% endif %}
 </div>
 
 <div class="card">
   <div class="cardtitle">Performances</div>
   {% if performances %}
-  <div class="cardtable2">
+  {% if adminview %}<div class="cardtable2">{% else %}<div class="cardtable">{% endif %}
     {% for performance in performances %}
-    <div class="justr">{{performance.dtofperformance|date:'Y-m-d, D'}}</div>
-    <div class="justl">
+      {%if  adminview %}
+      <div class="justr">{{performance.dtofperformance|date:'Y-m-d, D'}}</div>
+      {% else %}
+      <div>{{performance.dtofperformance|date:'Y-m-d, D'}}</div>
+      {% endif %}
+      {% if adminview %}
+      <!-- <div class="justl"> -->
       <button
-        class="dangerbtnicon"
+        class="dangerbtnicon justl"
         onclick="window.location.href='{% url 'delete-performance' performance.id %}'"
       >
         <img class="smallicon" src="{% static 'img/trash-svgrepo-com.svg' %}" />
       </button>
-    </div>
+      {% else %}
+        <p>&nbsp;</p>
+      {% endif %}
     {% endfor %}
   </div>
   {% else %}

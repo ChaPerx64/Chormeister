@@ -11,11 +11,13 @@
     <div class="justr">Description:</div>
     <div class="justl">{{chor.description}}</div>
   </div>
+  {% if adminview %}
   <div class="area_actions">
     <div class="cardtable">
       <a href="{% url 'update-chor' chor.id %}">✏️ Edit info</a>
     </div>
   </div>
+  {% endif %}
 </div>
 <div class="card">
   <div class="cardtitle">

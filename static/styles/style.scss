@@ -18,22 +18,20 @@ $smallsize: 0.8rem;
 
 //Colors
 $color-bg-main: #F0DFF6;
-// $color-bg-second: #AFD3E2;
-// $color-bg-darker: #19A7CE;
-// $color-bg-darkest: #146C94;
 $color-bg-darkest: #392D32;
 $color-font-main: #392D32;
 $color-card-bg: rgba(255, 255, 255, 0.25);
 $color-accent1: rgb(240, 113, 103);
 $color-accent1-bg: rgba(240, 113, 103, 0.5);
 $color-accent1-darker: #83130B;
-// $color-accent2: #784FBA;
 $color-accent2: #67515A;
 $color-accent3: rgba(99, 173, 242, 1); // #63ADF2
 $color-accent3-bg: rgba(99, 173, 242, 0.25);
 $color-accent4: orange;
+$color-accent5: rgba(30, 174, 155, 1);
+$color-accent5-bg: rgba(30, 174, 155, 0.5);
+$color-accent5-darker: rgba(12, 69, 63, 1);
 $color-font-light: #ffffff;
-// $gradient-bg-main: radial-gradient(at left top, #F6F1F1, #AFD3E2);
 $gradient-bg-main: radial-gradient(at left top, $color-bg-main, $color-accent3);
 
 //Old colors:
@@ -207,16 +205,16 @@ main {
       grid-template-columns: 1fr 3fr;
     }
     .form_reg_user {
-      @extend .cardtable2shifted;
-      label {
-        @extend .justr;
-      }
-      input {
-        @extend .justl;
-      }
+      // @extend .cardtable;
+      text-align: center;
       .helptext {
         font-size: $smallsize;
-        @extend .justl;
+      }
+      span {
+        font-size: $smallsize;
+      }
+      ul {
+        font-size: $smallsize;
       }
     }
     .cardtable3 {
@@ -320,8 +318,8 @@ textarea {
 }
 
 .errorlist {
-  font-size: $smallsize;
-  color: $color-accent1;
+  // font-size: $smallsize;
+  color: $color-accent1-darker;
 }
 
 .flashmessages {
@@ -331,12 +329,23 @@ textarea {
   flex-direction: column;
   align-items: center;
   top: 3rem;
-  .success {
-    width: $cardwidth;
+  .message {
+    max-width: $cardwidth;
     margin: 0.5rem;
     padding: 0.3rem 0.5rem;
-    background-color: $color-accent3-bg;
     border-radius: $border-rad;
     text-align: center;
+  }
+  .ifno {
+    background-color: $color-accent3-bg;
+    color: $color-accent3;
+  }
+  .success {
+    background-color: $color-accent5-bg;
+    color: $color-accent5-darker;
+  }
+  .error {
+    background-color: $color-accent1-bg;
+    color: $color-accent1-darker;
   }
 }

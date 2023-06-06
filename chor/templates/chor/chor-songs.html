@@ -45,11 +45,13 @@
 
 <div class="widecard">
   <div class="cardtitle">List of songs:</div>
+  {% if adminview %}
   <div class="area_actions">
     <div class="cardtable">
       <a href="{% url 'create-song' chor.id %}">Add a new song</a>
     </div>
   </div>
+  {% endif %}
   {% if songs %}
   <div class="cardtable3">
     {% if sortby %}

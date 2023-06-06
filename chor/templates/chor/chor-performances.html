@@ -6,6 +6,7 @@
 
 <div class="widecard">
   <div class="cardtitle">Past performances:</div>
+  {% if adminview %}
   <div class="area_actions">
     <div class="cardtext">
       <a href="{% url 'chor-songs' chor.id %}"
@@ -13,8 +14,9 @@
       >
     </div>
   </div>
+  {% endif %}
   {% if performances %}
-    <div class="cardtable3inversed">
+    {% if adminview %}<div class="cardtable3inversed">{% else %}<div class="cardtable2">{% endif %}
       {% for performance in performances%}
         {% if performance %}
           <div class="justr">
@@ -25,16 +27,16 @@
               {{performance.song.name}}
             </a>
           </div>
+          {% if adminview %}
           <button
             class="dangerbtnicon"
             onclick="window.location.href='{% url 'delete-performance' performance.id %}'"
           >
             <img class="smallicon" src="{% static 'img/trash-svgrepo-com.svg' %}" />
           </button>
+          {% endif %}
         {% else %}
-          <p>&nbsp</p>
-          <p></p>
-          <p></p>
+          {% if adminview %}<p>&nbsp</p><p></p><p></p>{% else %}<p>&nbsp</p><p></p>{% endif %}
         {% endif %}
       {% endfor %}
     </div>

@@ -12,6 +12,12 @@ from django.contrib import messages
 @login_required(login_url='user-login')
 def createInviteLink(request: WSGIRequest, chor_id):
     chor = get_object_or_404(Chor, id=chor_id)
+
+    # access restriction
+    if not chor.user_is_admin(request.user.pk):
+        messages.error(request, 'Admin level access needed')
+        return redirect('chor-homepage', chor.pk)
+
     if chor.user_is_admin(request.user):
         created = False
         while not created:
