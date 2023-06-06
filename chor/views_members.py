@@ -25,7 +25,7 @@ def chorMembers(request: WSGIRequest, chor_id):
         .annotate(chorrole=F('userchorrole__role'))\
         .order_by('-chorrole', 'username')
     try:
-        invitelink = f'http://{CHORMEISTER_DOMAIN}/?l={InviteLink.objects.get(chor=chor)}'
+        invitelink = f'http://{CHORMEISTER_DOMAIN}/access-invite/?l={InviteLink.objects.get(chor=chor)}'
     except ObjectDoesNotExist:
         invitelink = None
     context = {
