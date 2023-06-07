@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,15 +21,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ze4205bijgdu7^p3gf96x67v@mfv74uez0$^r60%#u*vtt08#+'
+try:
+    SECRET_KEY = os.environ["SECRET_KEY"]
+except KeyError as e:
+    raise RuntimeError("Could not find a SECRET_KEY in environment") from e
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-CHORMEISTER_DOMAIN = 'localhost'
+CHORMEISTER_DOMAIN = 'chormeister.webtm.ru'
 ALLOWED_HOSTS = [
     CHORMEISTER_DOMAIN,
-    '127.0.0.1'
+    '188.225.86.226'
 ]
 
 
@@ -129,7 +134,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-STATIC_ROOT = ''
+STATIC_ROOT = f'var/www/{CHORMEISTER_DOMAIN}/static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
