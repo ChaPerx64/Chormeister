@@ -28,12 +28,12 @@ except KeyError as e:
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 CHORMEISTER_DOMAIN = 'chormeister.webtm.ru'
+SERVER_IP = '188.225.86.226'
 ALLOWED_HOSTS = [
-    CHORMEISTER_DOMAIN,
-    '188.225.86.226'
+    CHORMEISTER_DOMAIN
 ]
 
 
@@ -134,7 +134,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-STATIC_ROOT = f'var/www/{CHORMEISTER_DOMAIN}/static'
+STATIC_ROOT = f'/var/www/{CHORMEISTER_DOMAIN}/static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
