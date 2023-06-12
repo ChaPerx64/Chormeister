@@ -19,6 +19,9 @@ jobs:
         script_stop: true
         script: |
           cd chormeisterweb/Chormeister_Django
-          bash pull-install.sh
+          git pull origin main
+          git status
+          source venv/bin/activate
+          pip install -r requirements.txt
           bash start.sh
           
