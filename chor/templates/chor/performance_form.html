@@ -2,17 +2,20 @@
 
 {% block content %}
 
+<form method="POST" action="">
 <div class="widecard">
-  <div class="cardtitle">
-    Creating/Editing a performance
-  </div>
-  <form method="POST" action="">
+    <div class="cardtitle">
+      Creating/Editing a performance
+    </div>
     <div class="cardtable2">
       {% csrf_token %}
-      {{form}}
-      <p></p><p><input class="button" type="submit" value="Submit"></p>
+      <label for="id_dtofperformance">Date of performance:</label>
+      <input type="date" name="dtofperformance" required="" id="id_dtofperformance">
     </div>
-  </form>
+    <div class="cardtable">
+      <p><input class="button" type="submit" value="Submit"></p>
+    </div>
 </div>
+</form>
 
 {% endblock content %}
