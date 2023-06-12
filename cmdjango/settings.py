@@ -11,29 +11,30 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import os
+from dotenv import dotenv_values
+
+# Loading environment values
+cm_config = dotenv_values()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-try:
-    SECRET_KEY = os.environ["SECRET_KEY"]
-except KeyError as e:
-    raise RuntimeError("Could not find a SECRET_KEY in environment") from e
-
+SECRET_KEY = cm_config.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+if cm_config.get('DEBUG') == 'True':
+    DEBUG = True
+else:
+    DEBUG = False
 
-CHORMEISTER_DOMAIN = 'chormeister.webtm.ru'
-SERVER_IP = '188.225.86.226'
+CHORMEISTER_DOMAIN = cm_config.get('CHORMEISTER_DOMAIN')
 ALLOWED_HOSTS = [
-    CHORMEISTER_DOMAIN
+    CHORMEISTER_DOMAIN,
+    cm_config.get('CHORMEISTER_IP')
 ]
 
 
@@ -134,7 +135,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-STATIC_ROOT = f'/var/www/{CHORMEISTER_DOMAIN}/static'
+STATIC_ROOT = cm_config.get('STATIC_ROOT')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
