@@ -17,6 +17,8 @@
       <a href="{% url 'update-chor' chor.id %}">✏️ Edit info</a>
     </div>
   </div>
+  {% else %}
+  <p>&nbsp;</p>
   {% endif %}
 </div>
 <div class="card">
