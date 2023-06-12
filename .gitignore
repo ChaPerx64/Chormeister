@@ -5,3 +5,5 @@ __pycache__
 /staticfiles
 .DJANGO_SECRET_KEY
 .env
+!.gitignore
+!.github/
