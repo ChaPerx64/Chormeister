@@ -16,9 +16,10 @@
   <div class="area_actions">
     <div class="cardtable">
       <a href="{% url 'update-song' song.id %}">✏️ Edit song</a>
-      <a href="{% url 'create-performance' song.id %}">Add performance date</a>
     </div>
   </div>
+  {% else %}
+    <p>&nbsp;</p>
   {% endif %}
 </div>
 
@@ -40,8 +41,6 @@
       >
         <img class="smallicon" src="{% static 'img/trash-svgrepo-com.svg' %}" />
       </button>
-      {% else %}
-        <p>&nbsp;</p>
       {% endif %}
     {% endfor %}
   </div>
@@ -49,6 +48,15 @@
   <div class="cardtable">
     <p>No information</p>
   </div>
+  {% endif %}
+  {% if adminview %}
+  <div class="area_actions">
+    <div class="cardtable">
+      <a href="{% url 'create-performance' song.id %}">Add performance date</a>
+    </div>
+  </div>
+  {% else %}
+    <p>&nbsp;</p>
   {% endif %}
 </div>
 {% endblock %}
