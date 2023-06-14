@@ -34,7 +34,8 @@ else:
 CHORMEISTER_DOMAIN = cm_config.get('CHORMEISTER_DOMAIN')
 ALLOWED_HOSTS = [
     CHORMEISTER_DOMAIN,
-    cm_config.get('CHORMEISTER_IP')
+    cm_config.get('CHORMEISTER_IP'),
+    '127.0.0.1',
 ]
 
 
