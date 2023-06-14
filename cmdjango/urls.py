@@ -25,4 +25,5 @@ urlpatterns = [
     path('', landingPage, name='landing'),
     path('', include('chor.urls')),
     path('', include('user.urls')),
+    path('', include('api.urls')),
 ]

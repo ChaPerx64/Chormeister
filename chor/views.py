@@ -25,7 +25,7 @@ def chorhomepage(request: WSGIRequest, chor_id):
     if not chor.user_is_member(request.user.pk):
         messages.error(request, 'You are not a member of the choir')
         return redirect('user-homepage')
-    
+
     context = {
         'chor': chor,
         'backlink': '/',
