@@ -1,5 +1,5 @@
 from django.db import models
-from chor.models import User
+from django.contrib.auth.models import User
 from uuid import uuid4
 
 class ChorRole(models.Model):
