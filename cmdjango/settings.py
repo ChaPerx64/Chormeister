@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'cmdjango.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'chormeister',
+        'NAME': cm_config.get('PSQL_DBNAME'),
         'USER': cm_config.get('PSQL_USER'),
         'PASSWORD': cm_config.get('PSQL_PSWD'),
         'HOST': 'localhost',
