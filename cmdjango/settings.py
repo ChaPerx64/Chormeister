@@ -42,14 +42,14 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'user.apps.UserConfig',
+    'chor.apps.ChorConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'chor.apps.ChorConfig',
-    'user.apps.UserConfig',
     'rest_framework',
 ]
 
