@@ -4,6 +4,6 @@ __pycache__
 .vscode/
 /staticfiles
 .DJANGO_SECRET_KEY
-.env
+.env*
 !.gitignore
 !.github/

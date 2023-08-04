@@ -91,17 +91,13 @@ WSGI_APPLICATION = 'cmdjango.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': cm_config.get('PSQL_DBNAME'),
-        'USER': cm_config.get('PSQL_USER'),
-        'PASSWORD': cm_config.get('PSQL_PSWD'),
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': cm_config.get('POSTGRES_DB'),
+        'USER': cm_config.get('POSTGRES_USER'),
+        'PASSWORD': cm_config.get('POSTGRES_PASSWORD'),
+        'HOST': cm_config.get('POSTGRES_HOST'),
+        'PORT': cm_config.get('POSTGRES_PORT'),
     },
-    'sqlite': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
 }
 
 
