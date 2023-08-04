@@ -15,4 +15,7 @@ RUN chmod +x /usr/src/cm_app/entrypoint.sh
 
 COPY . .
 
+RUN mkdir -pv /var/log/gunicorn/
+RUN mkdir -pv /var/run/gunicorn/
+
 ENTRYPOINT ["sh", "/usr/src/cm_app/entrypoint.sh"]
