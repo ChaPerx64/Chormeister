@@ -1,0 +1,42 @@
+
+services:
+  web:
+    build: ./cm_app
+    command: gunicorn -c /usr/src/cm_app/config/gunicorn/conf.py
+    container_name: chormeister-web
+    expose:
+      - 8000
+    env_file:
+      - ./.envs/.env.psql
+      - ./.envs/.env
+    volumes:
+      - ./dumps:/dumps
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    restart: unless-stopped
+    depends_on:
+      - db
+  db:
+    image: postgres:15
+    container_name: chormeister-db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    restart: unless-stopped
+    env_file:
+      - ./.envs/.env.psql
+  server:
+    build: ./nginx
+    container_name: chormeister-server
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    ports:
+      - 80:80
+    restart: unless-stopped
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:

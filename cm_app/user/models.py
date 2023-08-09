@@ -34,8 +34,7 @@ class UserChorRole(models.Model):
     )
     role = models.ForeignKey(
         ChorRole,
-        on_delete=models.SET_DEFAULT,
-        default=ChorRole.get_member_role().pk
+        on_delete=models.PROTECT,
     )
     description = models.CharField(max_length=255, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)

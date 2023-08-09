@@ -9,12 +9,8 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
-from dotenv import dotenv_values
-
-# Loading environment values
-cm_config = dotenv_values()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,18 +19,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = cm_config.get('DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if cm_config.get('DEBUG') == 'True':
+if os.getenv('DEBUG'):
     DEBUG = True
 else:
     DEBUG = False
 
-CHORMEISTER_DOMAIN = cm_config.get('CHORMEISTER_DOMAIN')
+CHORMEISTER_DOMAIN = os.getenv('CHORMEISTER_DOMAIN')
 ALLOWED_HOSTS = [
     CHORMEISTER_DOMAIN,
-    cm_config.get('CHORMEISTER_IP'),
+    os.getenv('CHORMEISTER_IP'),
     '127.0.0.1',
 ]
 
@@ -91,17 +87,13 @@ WSGI_APPLICATION = 'cmdjango.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': cm_config.get('PSQL_DBNAME'),
-        'USER': cm_config.get('PSQL_USER'),
-        'PASSWORD': cm_config.get('PSQL_PSWD'),
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT'),
     },
-    'sqlite': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
 }
 
 
@@ -145,9 +137,14 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-STATIC_ROOT = cm_config.get('STATIC_ROOT')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "mediafiles"
+
+STATIC_ROOT = os.getenv('STATIC_ROOT')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+BASH_DIR = 'dumps'
