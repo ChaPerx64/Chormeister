@@ -9,13 +9,13 @@ RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY ./entrypoint.sh .
-RUN sed -i 's/\r$//g' /usr/src/cm_app/entrypoint.sh
-RUN chmod +x /usr/src/cm_app/entrypoint.sh
+COPY ./bash/entrypoint.sh ./bash/entrypoint.sh
+RUN sed -i 's/\r$//g' /usr/src/cm_app/bash/entrypoint.sh
+RUN chmod +x /usr/src/cm_app/bash/entrypoint.sh
 
 COPY . .
 
 RUN mkdir -pv /var/log/gunicorn/
 RUN mkdir -pv /var/run/gunicorn/
 
-ENTRYPOINT ["sh", "/usr/src/cm_app/entrypoint.sh"]
+ENTRYPOINT ["sh", "/usr/src/cm_app/bash/entrypoint.sh"]

@@ -1,5 +1,5 @@
 # Custom imports
-import re
+from django.http import HttpResponseForbidden
 from .forms import UserCreationForm, UserCreationFormFull
 # Django lib imports
 from django.shortcuts import render, redirect

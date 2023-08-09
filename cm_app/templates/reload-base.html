@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+
+{% block title %}
+
+  <h1>LOAD DB FROM JSON</h1>
+
+{% endblock title %}
+
+{% block content %}
+
+<div class="widecard">
+  <div class="cardtitle">
+    Load from json
+  </div>
+  <form method="POST" action="" enctype="multipart/form-data">
+    <div class="cardtable2">
+      {% csrf_token %}
+      <label for="jsonfile">Choose a profile picture:</label>
+      <input type="file" id="jsonfile" name="jsonfile" accept=".json" />
+    </div>
+    <div class="cardtable">
+      <!-- <input class="button" type="submit" value="Upload"> -->
+      <button type="submit">Upload</button>
+    </div>
+  </form>
+  <p>&nbsp;</p>
+</div>
+
+{% endblock content %}

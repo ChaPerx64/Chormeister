@@ -7,3 +7,4 @@ __pycache__
 .env*
 !.gitignore
 !.github/
+dump.json
