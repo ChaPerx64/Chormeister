@@ -18,10 +18,8 @@ jobs:
         port: 22
         script_stop: true
         script: |
-          cd chormeisterweb/Chormeister_Django
+          cd chormeisterweb/Chormeister
           git pull origin main
           git status
-          source venv/bin/activate
-          pip install -r requirements.txt
-          bash start.sh
+          bash ./bash/rebuild.sh -d
           

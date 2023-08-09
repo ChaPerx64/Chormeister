@@ -34,3 +34,7 @@ echo ''
 echo 'CHECKING...'
 python manage.py check
 echo 'CHECKING... DONE'
+
+echo "CREATING SUPERUSER"
+python manage.py createsuperuser --no-input
+echo "DONE"

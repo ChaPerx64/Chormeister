@@ -8,7 +8,7 @@ services:
       - 8000
     env_file:
       - ./.envs/.env.psql
-      - ./.envs/.env.dev
+      - ./.envs/.env
     volumes:
       - ./dumps:/dumps
       - static_volume:/home/app/web/staticfiles
