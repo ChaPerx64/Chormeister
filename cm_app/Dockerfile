@@ -17,5 +17,6 @@ COPY . .
 
 RUN mkdir -pv /var/log/gunicorn/
 RUN mkdir -pv /var/run/gunicorn/
+RUN mkdir ./dumps
 
 ENTRYPOINT ["sh", "/usr/src/cm_app/bash/entrypoint.sh"]
