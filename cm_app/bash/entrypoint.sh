@@ -17,11 +17,6 @@ python manage.py check --database default
 echo "DONE"
 echo ""
 
-echo "MAKING MIGRATIONS..."
-python manage.py makemigrations --no-input
-echo "MAKING MIGRATIONS... DONE"
-echo ""
-
 echo "MIGRATING..."
 python manage.py migrate
 echo "DONE"
