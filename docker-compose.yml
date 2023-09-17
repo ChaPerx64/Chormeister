@@ -10,20 +10,36 @@ services:
       - ./.envs/.env.psql
       - ./.envs/.env
     volumes:
-      - ./dumps:/dumps
+      - ./cm_app:/usr/src/cm_app
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
     restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "sh", "/usr/src/cm_app/bash/healthcheck.sh" ]
+      start_period: 30s
+      start_interval: 1s
+      interval: 1s
+      timeout: 5s
+      retries: 3
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+        restart: true
   db:
-    image: postgres:15
+    image: postgres:15-alpine
     container_name: chormeister-db
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     restart: unless-stopped
     env_file:
       - ./.envs/.env.psql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 1s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+      start_interval: 1s
   server:
     build: ./nginx
     container_name: chormeister-server
@@ -34,9 +50,14 @@ services:
       - 80:80
     restart: unless-stopped
     depends_on:
-      - web
+      web:
+        condition: service_healthy
+        restart: true
 
 volumes:
   postgres_data:
+    name: chormeister-db-volume
   static_volume:
+    name: chormeister-static-volume
   media_volume:
+    name: chormeister-media-volume
