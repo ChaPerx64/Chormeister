@@ -1,5 +1,7 @@
 FROM python:3.11.4-alpine3.18
 
+RUN apk --update --no-cache add curl
+
 WORKDIR /usr/src/cm_app
 
 ENV PYTHONDONTWRITEBYTECODE 1
