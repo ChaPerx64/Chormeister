@@ -32,6 +32,7 @@ ALLOWED_HOSTS = [
     CHORMEISTER_DOMAIN,
     os.getenv('CHORMEISTER_IP'),
     '127.0.0.1',
+    'localhost',
 ]
 
 
