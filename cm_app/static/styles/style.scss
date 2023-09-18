@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Display&display=swap');
 
 //Dimensions
 $border-rad: 1rem;
@@ -9,8 +17,10 @@ $cardmargin: .5rem;
 $cardwidth: 25rem;
 
 //Fonts
-$mainfont: 'Jost', sans-serif;
-$labelfont: 'Unbounded', cursive;
+// $mainfont: 'Jost', sans-serif;
+// $mainfont: 'Noto Sans Display', sans-serif;
+$mainfont: 'Playfair Display', serif;
+$labelfont: 'Playfair Display SC', serif;
 $mainsize: 16px;
 $biggestsize: 1.8rem;
 $sizeh3: 1.2rem;
@@ -26,16 +36,18 @@ $color-accent1-bg: rgba(240, 113, 103, 0.5);
 $color-accent1-darker: #83130B;
 $color-accent2: #67515A;
 $color-accent3: rgba(99, 173, 242, 1); // #63ADF2
-$color-accent3-bg: rgba(99, 173, 242, 0.25);
+$color-accent3-bg: #6E7DAB;
 $color-accent4: orange;
 $color-accent5: rgba(30, 174, 155, 1);
 $color-accent5-bg: rgba(30, 174, 155, 0.5);
 $color-accent5-darker: rgba(12, 69, 63, 1);
 $color-font-light: #ffffff;
-$gradient-bg-main: radial-gradient(at left top, $color-bg-main, $color-accent3);
+// $gradient-bg-main: radial-gradient(at left top, $color-bg-main, $color-accent3);
+$gradient-bg-main: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
 
 //Old colors:
 // #146C94
+// Palette: https://coolors.co/392d32-e2d1c3-6e7dab
 
 * {
   margin: 0;
@@ -46,6 +58,7 @@ $gradient-bg-main: radial-gradient(at left top, $color-bg-main, $color-accent3);
 
 h1, h2, h3 {
   font-family: $labelfont;
+  font-weight: normal;
 }
 
 body {
@@ -170,7 +183,7 @@ main {
     .area_actions {
       @extend .cardtitle;
       padding: 0px;
-      background-color: $color-accent3;
+      background-color: $color-accent3-bg;
       color: $color-font-light;
       font-size: $mainsize;
       font-family: $mainfont;
@@ -302,11 +315,15 @@ textarea {
   border: 0px;
   transition: 0.5s;
   overflow: hidden;
+  background-color: $color-accent2;
+  color: #ffffff;
   &:hover {
     background-color: $color-bg-main;
+    color: $color-font-main;
   }
   &:active {
     background-color: $color-accent4;
+    color: $color-font-main;
   }
 }
 

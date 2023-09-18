@@ -1,5 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Jost&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Unbounded&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display+SC&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Display&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -8,16 +14,17 @@
 }
 
 h1, h2, h3 {
-  font-family: "Unbounded", cursive;
+  font-family: "Playfair Display SC", serif;
+  font-weight: normal;
 }
 
 body {
-  font-family: "Jost", sans-serif;
+  font-family: "Playfair Display", serif;
   height: 100vh;
   font-size: 16px;
   background-color: #F0DFF6;
   color: #392D32;
-  background: radial-gradient(at left top, #F0DFF6, rgb(99, 173, 242));
+  background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
   background-repeat: no-repeat;
   background-attachment: fixed;
   overflow-y: scroll;
@@ -131,14 +138,14 @@ main {
   text-align: center;
   color: #ffffff;
   font-size: 1.2rem;
-  font-family: "Unbounded", cursive;
+  font-family: "Playfair Display SC", serif;
 }
 .cardbox .card .area_actions, .cardbox .card_danger .area_actions, .cardbox .widecard .area_actions, .cardbox .card .area_danger, .cardbox .card_danger .area_danger, .cardbox .widecard .area_danger {
   padding: 0px;
-  background-color: rgb(99, 173, 242);
+  background-color: #6E7DAB;
   color: #ffffff;
   font-size: 16px;
-  font-family: "Jost", sans-serif;
+  font-family: "Playfair Display", serif;
 }
 .cardbox .card .area_actions a, .cardbox .card_danger .area_actions a, .cardbox .widecard .area_actions a, .cardbox .card .area_danger a, .cardbox .card_danger .area_danger a, .cardbox .widecard .area_danger a {
   color: #ffffff;
@@ -258,12 +265,16 @@ textarea {
   border: 0px;
   transition: 0.5s;
   overflow: hidden;
+  background-color: #67515A;
+  color: #ffffff;
 }
 .button:hover, .dangerbtn:hover, .dangerbtnicon:hover {
   background-color: #F0DFF6;
+  color: #392D32;
 }
 .button:active, .dangerbtn:active, .dangerbtnicon:active {
   background-color: orange;
+  color: #392D32;
 }
 
 .dangerbtn, .dangerbtnicon {
@@ -309,7 +320,7 @@ textarea {
   text-align: center;
 }
 .flashmessages .ifno {
-  background-color: rgba(99, 173, 242, 0.25);
+  background-color: #6E7DAB;
   color: rgb(99, 173, 242);
 }
 .flashmessages .success {
