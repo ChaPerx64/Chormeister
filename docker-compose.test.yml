@@ -1,0 +1,78 @@
+
+services:
+  web:
+    build: ./cm_app
+    command: gunicorn -c /usr/src/cm_app/config/gunicorn/conf.py
+    container_name: chormeister-web
+    expose:
+      - 8000
+    environment:
+      DJANGO_SECRET_KEY=7d8c8a8614e39a8a3efd5ab7e61acfe3c8fccc13c8cab52047dff31c41427e6ca82d10987c99ede7
+      CHORMEISTER_DOMAIN=chormeisters.com
+      CHORMEISTER_IP=188.225.86.226
+      STATIC_ROOT=/home/app/web/staticfiles/
+      DATABASE=postgres
+      DJANGO_SUPERUSER_USERNAME=someuser
+      DJANGO_SUPERUSER_PASSWORD=somepassword
+      DJANGO_SUPERUSER_EMAIL=some@example.com
+      POSTGRES_USER=psqluser
+      POSTGRES_PASSWORD=psqlpassword
+      POSTGRES_DB=psql_db
+      POSTGRES_HOST=db
+      POSTGRES_PORT=5432
+    volumes:
+      - ./cm_app:/usr/src/cm_app
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "sh", "/usr/src/cm_app/bash/healthcheck.sh" ]
+      start_period: 30s
+      start_interval: 1s
+      interval: 1s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+  db:
+    image: postgres:15-alpine
+    container_name: chormeister-db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER=psqluser
+      POSTGRES_PASSWORD=psqlpassword
+      POSTGRES_DB=psql_db
+      POSTGRES_HOST=db
+      POSTGRES_PORT=5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 1s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+      start_interval: 1s
+  server:
+    build: ./nginx
+    container_name: chormeister-server
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    ports:
+      - 80:80
+    restart: unless-stopped
+    depends_on:
+      web:
+        condition: service_healthy
+        restart: true
+
+volumes:
+  postgres_data:
+    name: chormeister-db-volume
+  static_volume:
+    name: chormeister-static-volume
+  media_volume:
+    name: chormeister-media-volume
