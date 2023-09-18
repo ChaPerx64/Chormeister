@@ -7,7 +7,7 @@ services:
     expose:
       - 8000
     environment:
-      - DJANGO_SECRET_KEY=7d8c8a8614e39a8a3efd5ab7e61acfe3c8fccc13c8cab52047dff31c41427e6ca82d10987c99ede7
+      - DJANGO_SECRET_KEY=somekey
       - CHORMEISTER_DOMAIN=chormeisters.com
       - CHORMEISTER_IP=188.225.86.226
       - STATIC_ROOT=/home/app/web/staticfiles/
