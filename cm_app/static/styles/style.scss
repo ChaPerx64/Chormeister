@@ -94,10 +94,11 @@ nav {
 }
 
 .navlogo {
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 660px) {
     visibility: hidden;
   }
   justify-self: center;
+  position: absolute;
 }
 
 footer {

@@ -59,8 +59,9 @@ nav .ovalborder {
 
 .navlogo {
   justify-self: center;
+  position: absolute;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 660px) {
   .navlogo {
     visibility: hidden;
   }
