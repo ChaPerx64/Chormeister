@@ -1,17 +1,17 @@
 
 services:
   web:
-    build:
-      context: ./cm_app
-      dockerfile: Dockerfile.test
+    build: ./cm_app
     command: gunicorn -c /usr/src/cm_app/config/gunicorn/conf.py
-    container_name: chormeister-web
+    container_name: test-chormeister-web
     expose:
       - 8000
+    networks:
+      - testing
     environment:
       - DJANGO_SECRET_KEY=somekey
       - CHORMEISTER_DOMAIN=chormeisters.com
-      - CHORMEISTER_IP=none
+      - CHORMEISTER_IP=someip
       - STATIC_ROOT=/home/app/web/staticfiles/
       - DATABASE=postgres
       - DJANGO_SUPERUSER_USERNAME=someuser
@@ -26,7 +26,7 @@ services:
       - ./cm_app:/usr/src/cm_app
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
-    restart: unless-stopped
+    restart: "no"
     healthcheck:
       test: [ "CMD", "sh", "/usr/src/cm_app/bash/healthcheck.sh" ]
       start_period: 30s
@@ -40,10 +40,12 @@ services:
         restart: true
   db:
     image: postgres:15-alpine
-    container_name: chormeister-db
+    container_name: test-chormeister-db
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    restart: unless-stopped
+    restart: "no"
+    networks:
+      - testing
     environment:
       - POSTGRES_USER=psqluser
       - POSTGRES_PASSWORD=psqlpassword
@@ -59,13 +61,15 @@ services:
       start_interval: 1s
   server:
     build: ./nginx
-    container_name: chormeister-server
+    container_name: test-chormeister-server
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
     ports:
       - 80:80
-    restart: unless-stopped
+    networks:
+      - testing
+    restart: "no"
     depends_on:
       web:
         condition: service_healthy
@@ -73,8 +77,11 @@ services:
 
 volumes:
   postgres_data:
-    name: chormeister-db-volume
+    name: test-chormeister-db-volume
   static_volume:
-    name: chormeister-static-volume
+    name: test-chormeister-static-volume
   media_volume:
-    name: chormeister-media-volume
+    name: test-chormeister-media-volume
+
+networks:
+  testing: 

@@ -2,5 +2,7 @@ Django==4.2.*
 gunicorn==21.*
 djangorestframework==3.14.*
 psycopg2-binary==2.9.*
-pytest-django
+# pytest-django
+pytest-env
 selenium
+python-dotenv

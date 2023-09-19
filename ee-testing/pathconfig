@@ -1,0 +1,1 @@
+export PATH=$PATH:/usr/src/testing/webdrivers/chromedriver_linux64/chromedriver
