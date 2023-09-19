@@ -16,7 +16,8 @@ jobs:
 
   shh-to-server-and-pull:
     runs-on: ubuntu-latest
-    
+    needs: check-if-builds
+
     steps:
     - name: Deploy using ssh
       uses: appleboy/ssh-action@master
